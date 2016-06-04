@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/sivHouse"
+            android:layout_width="@dimen/item_photo_width"
+            android:layout_height="@dimen/item_photo_height"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="8dp"
+            fresco:placeholderImage="@color/btn_blue_normal"
+            fresco:placeholderImageScaleType="centerCrop" />
+
+        <TextView
+            android:id="@+id/tvHouseName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/sivHouse"
+            android:maxLines="1"
+            android:padding="2dp"
+            android:text="奥格瑞玛"
+            android:textColor="@color/text_black_lite"
+            android:textSize="@dimen/text_size_normal" />
+
+        <TextView
+            android:id="@+id/tvHouseDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvHouseName"
+            android:layout_toRightOf="@+id/sivHouse"
+            android:lines="1"
+            android:padding="2dp"
+            android:text="20室8厅 面积72平方"
+            android:textColor="@color/text_gray"
+            android:textSize="@dimen/text_size_item_normal" />
+
+        <TextView
+            android:id="@+id/tvHousePrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignBaseline="@+id/tvHouseDetail"
+            android:padding="0dp"
+            android:layout_marginRight="16dp"
+            android:text="98万"
+            android:textColor="@color/red"
+            android:textSize="@dimen/text_size_item_normal"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:id="@+id/llStatues"
+            android:layout_marginTop="4dp"
+            android:layout_below="@id/tvHouseDetail"
+            android:layout_toRightOf="@+id/sivHouse"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvStatue1"
+                android:text="随时看房"
+                android:paddingLeft="4dp"
+                android:paddingRight="4dp"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:background="@drawable/round_rectangle_bg"
+                android:textSize="@dimen/text_size_item_table"
+                android:textColor="@color/text_gray"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <ImageView
+            android:src="@mipmap/icon_location"
+            android:layout_alignTop="@+id/tvHouseAddress"
+            android:layout_toRightOf="@+id/sivHouse"
+            android:layout_marginTop="2dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tvHouseAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/llStatues"
+            android:layout_toRightOf="@+id/sivHouse"
+            android:layout_toLeftOf="@+id/btnSendLink"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="4dp"
+            android:lines="1"
+            android:padding="0dp"
+            android:text="200室80厅 建筑面积72万平方, 非常大器"
+            android:textColor="@color/text_gray"
+            android:textSize="@dimen/text_size_item_normal" />
+
+        <Button
+            android:id="@+id/btnSendLink"
+            android:text="发送连接"
+            android:background="@drawable/round_rectangle_bg"
+            android:layout_alignTop="@+id/tvHouseAddress"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="-4dp"
+            android:layout_width="72dp"
+            android:layout_height="24dp" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line_1px"
+        android:layout_marginBottom="0dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/gray" />
+
+</LinearLayout>

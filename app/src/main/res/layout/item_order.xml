@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true">
+
+    <RelativeLayout
+        android:layout_marginTop="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tvOrderNoTitle"
+            android:text="@string/order_no"
+            android:textSize="@dimen/text_size_item_normal"
+            android:textColor="@color/text_gray"
+            android:gravity="center"
+            android:lines="1"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:layout_marginLeft="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tvOrderNo"
+            android:text="201603135115"
+            android:textSize="@dimen/text_size_item_normal"
+            android:textColor="@color/text_gray"
+            android:gravity="left"
+            android:lines="1"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:layout_toLeftOf="@+id/tvState"
+            android:layout_toRightOf="@+id/tvOrderNoTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tvState"
+            android:text="待存款"
+            android:textSize="@dimen/text_size_item_normal"
+            android:textColor="@color/orange"
+            android:gravity="right"
+            android:lines="1"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:layout_marginLeft="@dimen/line_table"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+    <TableLayout
+        android:layout_marginTop="2dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@color/gray"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TableRow
+            android:layout_marginTop="@dimen/line_table"
+            android:layout_marginRight="@dimen/line_table"
+            android:layout_marginLeft="@dimen/line_table"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView android:text="@string/party_a"
+                android:textSize="@dimen/text_size_item_table"
+                android:textColor="@color/text_gray"
+                android:gravity="center"
+                android:background="@color/white"
+                android:lines="1"
+                android:layout_weight="4"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tvAppointmentTime"
+                android:text="黄子华"
+                android:textSize="@dimen/text_size_item_table"
+                android:textColor="@color/text_gray_dark"
+                android:gravity="center"
+                android:background="@color/white"
+                android:lines="1"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:layout_marginLeft="@dimen/line_table"
+                android:layout_width="0dp"
+                android:layout_weight="5"
+                android:layout_height="wrap_content" />
+
+            <TextView android:text="@string/party_b"
+                android:textSize="@dimen/text_size_item_table"
+                android:textColor="@color/text_gray"
+                android:gravity="center"
+                android:background="@color/white"
+                android:layout_marginLeft="@dimen/line_table"
+                android:layout_width="0dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:layout_weight="4"
+                android:lines="1"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tvPartyB"
+                android:text="黄华强"
+                android:textSize="@dimen/text_size_item_table"
+                android:textColor="@color/text_gray_dark"
+                android:gravity="center"
+                android:background="@color/white"
+                android:layout_marginLeft="@dimen/line_table"
+                android:layout_width="0dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:layout_weight="5"
+                android:lines="1"
+                android:layout_height="wrap_content" />
+        </TableRow>
+        <TableRow
+            android:layout_marginTop="@dimen/line_table"
+            android:layout_marginRight="@dimen/line_table"
+            android:layout_marginLeft="@dimen/line_table"
+            
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView android:text="@string/party_agent"
+                android:textSize="@dimen/text_size_item_table"
+                android:textColor="@color/text_gray"
+                android:gravity="center"
+                android:background="@color/white"
+                android:lines="1"
+                android:layout_weight="4"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tvPartyAgent"
+                android:text="东方小强"
+                android:textSize="@dimen/text_size_item_table"
+                android:textColor="@color/text_gray_dark"
+                android:gravity="center"
+                android:background="@color/white"
+                android:lines="1"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:layout_marginLeft="@dimen/line_table"
+                android:layout_width="0dp"
+                android:layout_weight="5"
+                android:layout_height="wrap_content" />
+
+            <TextView android:text="@string/party_b_id"
+                android:textSize="@dimen/text_size_item_table"
+                android:textColor="@color/text_gray"
+                android:gravity="center"
+                android:background="@color/white"
+                android:layout_marginLeft="@dimen/line_table"
+                android:layout_width="0dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:layout_weight="4"
+                android:lines="1"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tvPartyBId"
+                android:text="442******544"
+                android:textSize="@dimen/text_size_item_table"
+                android:textColor="@color/text_gray_dark"
+                android:gravity="center"
+                android:background="@color/white"
+                android:layout_marginLeft="@dimen/line_table"
+                android:layout_width="0dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:layout_weight="5"
+                android:lines="1"
+                android:layout_height="wrap_content" />
+        </TableRow>
+        <TableRow
+            android:layout_marginTop="@dimen/line_table"
+            android:layout_marginRight="@dimen/line_table"
+            android:layout_marginLeft="@dimen/line_table"
+            
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView android:text="@string/party_agent_phone"
+                android:textSize="@dimen/text_size_item_table"
+                android:textColor="@color/text_gray"
+                android:gravity="center"
+                android:background="@color/white"
+                android:lines="1"
+                android:layout_weight="4"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tvPartyAgentPhone"
+                android:text="13302333033   "
+                android:textSize="@dimen/text_size_item_table"
+                android:textColor="@color/text_gray_dark"
+                android:gravity="center"
+                android:background="@color/white"
+                android:lines="1"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:layout_marginLeft="@dimen/line_table"
+                android:layout_width="0dp"
+                android:layout_weight="5"
+                android:layout_height="wrap_content" />
+
+            <TextView android:text="@string/party_b_bank_account"
+                android:textSize="@dimen/text_size_item_table"
+                android:textColor="@color/text_gray"
+                android:gravity="center"
+                android:background="@color/white"
+                android:layout_marginLeft="@dimen/line_table"
+                android:layout_width="0dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:layout_weight="4"
+                android:lines="1"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tvPartyBBankAccount"
+                android:text="6225*****718"
+                android:textSize="@dimen/text_size_item_table"
+                android:textColor="@color/text_gray_dark"
+                android:gravity="center"
+                android:background="@color/white"
+                android:layout_marginLeft="@dimen/line_table"
+                android:layout_width="0dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:layout_weight="5"
+                android:lines="1"
+                android:layout_height="wrap_content" />
+        </TableRow>
+        
+        <TableRow
+            android:layout_marginTop="@dimen/line_table"
+            android:layout_marginBottom="@dimen/line_table"
+            android:layout_marginRight="@dimen/line_table"
+            android:layout_marginLeft="@dimen/line_table"
+            
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView android:text="@string/amount_supervision"
+                android:textSize="@dimen/text_size_item_table"
+                android:textColor="@color/text_gray"
+                android:gravity="center"
+                android:background="@color/white"
+                android:lines="1"
+                android:layout_weight="4"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tvAmountSupervision"
+                android:text="12220.00"
+                android:textSize="@dimen/text_size_item_table"
+                android:textColor="@color/text_gray_dark"
+                android:gravity="center"
+                android:background="@color/white"
+                android:lines="1"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:layout_marginLeft="@dimen/line_table"
+                android:layout_width="0dp"
+                android:layout_weight="5"
+                android:layout_height="wrap_content" />
+
+            <TextView android:text="@string/text_bank"
+                android:textSize="@dimen/text_size_item_table"
+                android:textColor="@color/text_gray"
+                android:gravity="center"
+                android:background="@color/white"
+                android:layout_marginLeft="@dimen/line_table"
+                android:layout_width="0dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:layout_weight="4"
+                android:lines="1"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tvBank"
+                android:text="泰国银行"
+                android:textSize="@dimen/text_size_item_table"
+                android:textColor="@color/text_gray_dark"
+                android:gravity="center"
+                android:background="@color/white"
+                android:layout_marginLeft="@dimen/line_table"
+                android:layout_width="0dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:layout_weight="5"
+                android:lines="1"
+                android:layout_height="wrap_content" />
+        </TableRow>
+
+    </TableLayout>
+
+    <LinearLayout
+        android:gravity="right"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btnDetail"
+            android:text="@string/check_detail"
+            android:textColor="@color/btn_blue_normal"
+            android:backgroundTint="@color/white"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:layout_marginRight="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp" />
+
+        <Button
+            android:id="@+id/btnDeposit"
+            android:text="@string/apply_deposit"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/orange"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp" />
+
+    </LinearLayout>
+
+</LinearLayout>

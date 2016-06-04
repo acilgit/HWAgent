@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true">
+
+
+    <RelativeLayout
+        android:layout_marginTop="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tvOrderNoTitle"
+            android:text="二手房"
+            android:textSize="@dimen/text_size_item_normal"
+            android:textColor="@color/text_gray"
+            android:gravity="center"
+            android:lines="1"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:layout_marginLeft="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tvOrderNo"
+            android:text=" - 看房清单"
+            android:textSize="@dimen/text_size_item_normal"
+            android:textColor="@color/text_gray"
+            android:gravity="left"
+            android:lines="1"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:layout_toLeftOf="@+id/tvState"
+            android:layout_toRightOf="@+id/tvOrderNoTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tvState"
+            android:text="@string/item_showing_wait"
+            android:textSize="@dimen/text_size_item_normal"
+            android:textColor="@color/orange"
+            android:gravity="right"
+            android:lines="1"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:layout_marginLeft="@dimen/line_table"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="72dp">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/sivHead"
+            android:layout_width="@dimen/head_side"
+            android:layout_height="@dimen/head_side"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp"
+            fresco:placeholderImage="@color/btn_blue_normal"
+            fresco:placeholderImageScaleType="centerCrop"
+            fresco:roundAsCircle="true"
+            fresco:roundingBorderWidth="1dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="8dp"
+            android:layout_toRightOf="@+id/sivHead"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="2dp"
+                android:text="低方方"
+                android:textColor="@color/text_gray_dark"
+                android:textSize="@dimen/text_size_item_normal" />
+
+            <TextView
+                android:id="@+id/tvPhone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="2dp"
+                android:text="13412348888"
+                android:textColor="@color/text_gray_dark"
+                android:textSize="@dimen/text_size_item_normal" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_marginTop="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/sivHouse"
+            android:layout_height="@dimen/item_photo_height"
+            android:layout_width="@dimen/item_photo_width"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="8dp"
+            fresco:placeholderImage="@color/btn_blue_normal"
+            fresco:placeholderImageScaleType="centerCrop" />
+
+            <TextView
+                android:id="@+id/tvHouseName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="2dp"
+                android:layout_toRightOf="@+id/sivHouse"
+                android:text="奥格瑞玛"
+                android:textColor="@color/text_black_lite"
+                android:textSize="@dimen/text_size_item_normal" />
+
+            <TextView
+                android:id="@+id/tvHouseDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="2dp"
+                android:lines="2"
+                android:layout_below="@id/tvHouseName"
+                android:layout_toRightOf="@+id/sivHouse"
+                android:text="200室80厅 建筑面积72万平方"
+                android:textColor="@color/text_gray_dark"
+                android:textSize="@dimen/text_size_item_normal" />
+
+            <TextView
+                android:id="@+id/tvHousePrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/sivHouse"
+                android:layout_alignBottom="@+id/sivHouse"
+                android:padding="2dp"
+                android:text="98万"
+                android:textColor="@color/red"
+                android:textStyle="bold"
+                android:textSize="@dimen/text_size_item_normal" />
+
+    </RelativeLayout>
+
+    <TableLayout
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TableRow
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView android:text="@string/appointment_time"
+                android:textSize="@dimen/text_size_item_table"
+                android:textColor="@color/text_gray"
+                android:gravity="center"
+                android:background="@color/white"
+                android:lines="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tvAppointmentTime"
+                android:text="2016年06月32日 25:61:61"
+                android:textSize="@dimen/text_size_item_table"
+                android:textColor="@color/text_gray"
+                android:background="@color/white"
+                android:lines="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </TableRow>
+        <TableRow
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView android:text="@string/showing_time"
+                android:textSize="@dimen/text_size_item_table"
+                android:textColor="@color/text_gray"
+                android:gravity="center"
+                android:background="@color/white"
+                android:lines="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tvPartyAgent"
+                android:text="待定"
+                android:textSize="@dimen/text_size_item_table"
+                android:textColor="@color/text_gray"
+                android:background="@color/white"
+                android:lines="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </TableRow>
+        <TableRow
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView android:text="@string/meet_time"
+                android:textSize="@dimen/text_size_item_table"
+                android:textColor="@color/text_gray"
+                android:gravity="center"
+                android:background="@color/white"
+                android:lines="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tvPartyAgentPhone"
+                android:text="待定"
+                android:textSize="@dimen/text_size_item_table"
+                android:textColor="@color/text_gray"
+                android:background="@color/white"
+                android:lines="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </TableRow>
+
+
+    </TableLayout>
+
+        <View
+        android:gravity="right"
+            android:background="@color/gray"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line_1px"/>
+
+</LinearLayout>
