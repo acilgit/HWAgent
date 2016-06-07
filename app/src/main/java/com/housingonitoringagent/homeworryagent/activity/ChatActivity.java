@@ -1,37 +1,17 @@
 package com.housingonitoringagent.homeworryagent.activity;
 
-import android.graphics.drawable.Drawable;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.ImageSpan;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.housingonitoringagent.homeworryagent.R;
+import com.housingonitoringagent.homeworryagent.User;
 import com.housingonitoringagent.homeworryagent.extents.BaseActivity;
-import com.housingonitoringagent.homeworryagent.pages.MeFragment;
-import com.housingonitoringagent.homeworryagent.pages.RecordFragment;
-import com.hyphenate.EMContactListener;
-import com.hyphenate.EMMessageListener;
 import com.hyphenate.chat.EMChatManager;
-import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMMessage;
-import com.hyphenate.chat.adapter.EMAChatManager;
-import com.hyphenate.easeui.EaseConstant;
-import com.hyphenate.easeui.controller.EaseUI;
 import com.hyphenate.easeui.ui.EaseChatFragment;
 import com.hyphenate.easeui.widget.chatrow.EaseChatRow;
 import com.hyphenate.easeui.widget.chatrow.EaseCustomChatRowProvider;
@@ -39,9 +19,6 @@ import com.hyphenate.easeui.widget.chatrow.EaseCustomChatRowProvider;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.List;
-
-import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class ChatActivity  extends BaseActivity {
@@ -72,6 +49,7 @@ public class ChatActivity  extends BaseActivity {
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
 
+        init();
         //聊天人或群id
         toChatUsername = getIntent().getExtras().getString("userId");
         //可以直接new EaseChatFratFragment使用
@@ -80,17 +58,27 @@ public class ChatActivity  extends BaseActivity {
         chatFragment.setArguments(getIntent().getExtras());
 
         getSupportFragmentManager().beginTransaction().add(R.id.container, chatFragment).commit();
-        init();
     }
 
     private void init() {
         chatFragment.setChatFragmentListener(new EaseChatFragment.EaseChatFragmentListener() {
             @Override
             public void onSetMessageAttributes(EMMessage message) {
+                JSONObject json = new JSONObject();
+                try {
+                    json.put("avatar", User.getHeadUrl());
+                    json.put("nick", User.getNickname());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                message.setAttribute("user", json.toString());
             }
 
             @Override
             public void onEnterToChatDetails() {
+//                EMChatManager manager;
+//                EMMessage msg = EMMessage.createTxtSendMessage("abc", "123");
+//                msg.setAttribute("msgType", 1);
 
             }
 
@@ -102,7 +90,8 @@ public class ChatActivity  extends BaseActivity {
             @Override
             public boolean onMessageBubbleClick(EMMessage message) {
                 if (message.getIntAttribute("msgType", 0)==1) {
-
+                    onClickItem();
+                    return true;
                 }
                 return false;
             }
@@ -131,19 +120,7 @@ public class ChatActivity  extends BaseActivity {
                         if (type == 0) {
                             return type;
                         }
-                        try {
-                            JSONObject jsonObject = new JSONObject(message.getBody().toString());
-                            if (jsonObject.getInt("type") > 0) {
-                                type = jsonObject.getInt("type");
-                            } else {
-                                EMChatManager manager;
-                                EMMessage msg = EMMessage.createTxtSendMessage("abc", "123");
-                                msg.setAttribute("msgType", 1);
 
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
                         return type;
                     }
 
@@ -163,11 +140,22 @@ public class ChatActivity  extends BaseActivity {
 
                             @Override
                             protected void onUpdateView() {
+                                adapter.notifyDataSetChanged();
                             }
 
                             @Override
                             protected void onSetUpView() {
-                                adapter.notifyDataSetChanged();
+                                try {
+                                    JSONObject jsonObject = new JSONObject(message.getBody().toString());
+                                    if (jsonObject.getInt("type") > 0) {
+//                                        type = jsonObject.getInt("type");
+                                    } else {
+
+
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
                             }
 
                             @Override
@@ -181,7 +169,6 @@ public class ChatActivity  extends BaseActivity {
                 return provider;
             }
         });
-
     }
 
 
@@ -207,4 +194,7 @@ public class ChatActivity  extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private void onClickItem() {
+
+    }
 }

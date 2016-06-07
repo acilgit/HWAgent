@@ -270,7 +270,6 @@ public class User {
     public static void logOut() {
         App.getInstance().clearAppCache();
         App.getInstance().clearAppData();
-
     }
 
     public static int getType() {

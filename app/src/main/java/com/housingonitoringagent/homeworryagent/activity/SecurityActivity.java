@@ -1,13 +1,17 @@
 package com.housingonitoringagent.homeworryagent.activity;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.housingonitoringagent.homeworryagent.App;
 import com.housingonitoringagent.homeworryagent.R;
 import com.housingonitoringagent.homeworryagent.User;
 import com.housingonitoringagent.homeworryagent.extents.BaseActivity;
@@ -19,11 +23,11 @@ import butterknife.ButterKnife;
 /**
  * Created by Administrator on 2016/1/15 0015.
  */
-public class SecurityActivity extends BaseActivity implements View.OnClickListener{
+public class SecurityActivity extends BaseActivity implements View.OnClickListener {
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.rlLoginPassword)
+    @Bind(R.id.rlPassword)
     RelativeLayout rlLoginPassword;
     @Bind(R.id.rlSafeModifyPhone)
     RelativeLayout rlSafeModifyPhone;
@@ -33,6 +37,8 @@ public class SecurityActivity extends BaseActivity implements View.OnClickListen
     TextView tvSecurityLevel;
     @Bind(R.id.tvSafeModifyPhone)
     TextView tvSafeModifyPhone;
+    @Bind(R.id.btnLogout)
+    Button btnLogout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,23 +56,38 @@ public class SecurityActivity extends BaseActivity implements View.OnClickListen
 
         /* init listeners */
         rlLoginPassword.setOnClickListener(this);
-        rlSafeModifyPhone.setOnClickListener(this);
+//        rlSafeModifyPhone.setOnClickListener(this);
+        btnLogout.setOnClickListener(this);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == android.R.id.home)
-        {
-            onBackPressed();
-            return true;
-        }
         return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onClick(View v) {
-        EMClient.getInstance().logout(true);
-
+        switch (v.getId()) {
+            case R.id.rlSafeModifyPhone:
+                break;
+            case R.id.rlPassword:
+                start(ChangePasswordActivity.class);
+                break;
+            case R.id.btnLogout:
+                new AlertDialog.Builder(getThis()).setCancelable(true).setTitle(getString(R.string.logout))
+                        .setPositiveButton(R.string.logout, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                User.logOut();
+                                EMClient.getInstance().logout(true);
+                                start(LoginActivity.class);
+                            }
+                        }).setNegativeButton(R.string.cancel, null)
+                        .show();
+                break;
+            default:
+                break;
+        }
     }
 
     @Override

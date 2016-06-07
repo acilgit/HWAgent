@@ -17,6 +17,12 @@ import com.housingonitoringagent.homeworryagent.R;
 import com.housingonitoringagent.homeworryagent.extents.BaseActivity;
 import com.housingonitoringagent.homeworryagent.utils.UIUtils;
 import com.housingonitoringagent.homeworryagent.utils.uikit.BGARefreshLayoutBuilder;
+import com.housingonitoringagent.homeworryagent.utils.uikit.recyclerview.HorizontalDividerItemDecoration;
+import com.housingonitoringagent.homeworryagent.utils.uikit.recyclerview.VerticalDividerItemDecoration;
+import com.housingonitoringagent.homeworryagent.views.XAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -57,11 +63,52 @@ public class OrderListActivity extends BaseActivity implements View.OnClickListe
     }
 
     private void initViews() {
-        toolbar.setTitle(R.string.neighbor);
-        setSupportActionBar(toolbar);
         rvMain.setLayoutManager(new LinearLayoutManager(this));
-//        neighborAdapter = new HomeNeighbourAdapter(this, new ArrayList<NeighbourListBean.NeighbourMessagesBean.ContentBean>());
+        rvMain.addItemDecoration(new HorizontalDividerItemDecoration.Builder(getThis())
+                .colorResId(R.color.divider_line).sizeResId(R.dimen.line_1px)
+                .marginResId(R.dimen.item_margin_icon, R.dimen.item_margin_icon).build()
+        );
+
         BGARefreshLayoutBuilder.init(this, refreshView, true);
+
+        List<String> list = new ArrayList<>();
+        for (int i = 0; i < 20; i++) {
+            list.add("20123983400" + i);
+        }
+        XAdapter adapter = new XAdapter<String>(getThis(), list, R.layout.item_order) {
+            @Override
+            protected void handleItemViewClick(CustomHolder holder, String item) {
+                super.handleItemViewClick(holder, item);
+            }
+
+            @Override
+            public void creatingHolder(CustomHolder holder, List<String> dataList, int adapterPos, int viewType) {
+                View.OnClickListener clickListener = new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        getThis().start(ConfirmGiroActivity.class, new BaseActivity.BaseIntent() {
+                            @Override
+                            public void setIntent(Intent intent) {
+//                                intent.putExtra(getString(R.string.extra_agent_phone), "ID");
+                                intent.putExtra(getString(R.string.extra_agent_phone), "15622978086");
+                                intent.putExtra(getString(R.string.extra_party_a),getString(R.string.party_a) +"：15622978086");
+                                intent.putExtra(getString(R.string.extra_party_b),getString(R.string.party_b) +"：1234455667");
+                            }
+                        });
+                    }
+                };
+                holder.getView(R.id.btnDeposit).setOnClickListener(clickListener);
+            }
+
+            @Override
+            public void bindingHolder(CustomHolder holder, List<String> dataList, int pos) {
+                holder.setText(R.id.tvOrderNo, dataList.get(pos));
+            }
+        };
+        rvMain.setAdapter(adapter);
+
+//        neighborAdapter = new HomeNeighbourAdapter(this, new ArrayList<NeighbourListBean.NeighbourMessagesBean.ContentBean>());
+
    /*     List<NeighbourListBean.NeighbourMessagesBean.ContentBean> list = new ArrayList<>();
         final ViewGroup.LayoutParams tvParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 

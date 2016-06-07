@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DialogTitle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -23,6 +22,7 @@ import com.housingonitoringagent.homeworryagent.utils.net.VolleyResponseListener
 import com.housingonitoringagent.homeworryagent.utils.net.VolleyStringRequest;
 import com.housingonitoringagent.homeworryagent.utils.uikit.BGARefreshLayoutBuilder;
 import com.housingonitoringagent.homeworryagent.utils.uikit.QBLToast;
+import com.housingonitoringagent.homeworryagent.utils.uikit.recyclerview.HorizontalDividerItemDecoration;
 import com.housingonitoringagent.homeworryagent.views.XAdapter;
 
 import java.util.ArrayList;
@@ -109,6 +109,10 @@ public class HouseFragment extends Fragment implements BGARefreshLayout.BGARefre
         rvMain.setLayoutManager(new LinearLayoutManager(getActivity()));
 //        houseAdapter = new HomeNeighbourAdapter(this, new ArrayList<NeighbourListBean.NeighbourMessagesBean.ContentBean>());
         BGARefreshLayoutBuilder.init(getActivity(), refreshView, true);
+        rvMain.addItemDecoration(new HorizontalDividerItemDecoration.Builder(getThis())
+                .colorResId(R.color.divider_line).sizeResId(R.dimen.line_1px)
+                .marginResId(R.dimen.item_margin_icon, R.dimen.item_margin_icon).build()
+        );
 
         String title = "租的";
         if (fragmentType == TYPE_BUY) {
@@ -121,7 +125,13 @@ public class HouseFragment extends Fragment implements BGARefreshLayout.BGARefre
         }
        XAdapter adapter = new XAdapter<String>(getThis(), list, R.layout.item_house) {
 
-            @Override
+           @Override
+           protected void handleItemViewClick(CustomHolder holder, String item) {
+               super.handleItemViewClick(holder, item);
+               QBLToast.show("ok");
+           }
+
+           @Override
             public void creatingHolder(CustomHolder holder, List<String> dataList, int adapterPos, int viewType) {
             }
 

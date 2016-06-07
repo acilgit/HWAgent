@@ -76,7 +76,7 @@
                 android:layout_height="36dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"
-                android:background="#2c9dd5"
+                android:background="@drawable/bg_btn_primary"
                 android:text="@string/text_login"
                 android:textColor="@color/white"
                 android:textSize="18dp" />

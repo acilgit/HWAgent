@@ -728,17 +728,16 @@ int style AnimTop 0x7f070007
 int style AnimTop2 0x7f070008
 int style Anim_style 0x7f070009
 int style Anim_style2 0x7f070000
-int style AppTheme 0x7f07000a
-int style HeadScale 0x7f07000b
-int style MyAlertDialog 0x7f07000c
-int style MyDialogStyle 0x7f07000d
-int style MyDialogStyleBottom 0x7f07000e
-int style MyDialogStyleTop 0x7f07000f
-int style bottom_line_edit_text_style 0x7f070010
-int style chat_content_date_style 0x7f070011
-int style chat_text_date_style 0x7f070012
-int style chat_text_name_style 0x7f070013
-int style devide_line_eee 0x7f070014
+int style HeadScale 0x7f07000a
+int style MyAlertDialog 0x7f07000b
+int style MyDialogStyle 0x7f07000c
+int style MyDialogStyleBottom 0x7f07000d
+int style MyDialogStyleTop 0x7f07000e
+int style bottom_line_edit_text_style 0x7f07000f
+int style chat_content_date_style 0x7f070010
+int style chat_text_date_style 0x7f070011
+int style chat_text_name_style 0x7f070012
+int style devide_line_eee 0x7f070013
 int style horizontal_slide 0x7f070001
 int style nornal_style 0x7f070002
 int[] styleable EaseChatExtendMenu { 0x7f010000 }

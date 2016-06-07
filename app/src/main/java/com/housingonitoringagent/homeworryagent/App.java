@@ -35,6 +35,9 @@ import com.hyphenate.util.NetUtils;
 //import com.hyphenate.util.PathUtil;
 //import android.support.multidex.MultiDex;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -115,6 +118,7 @@ public class App extends Application {
         // 调用初始化方法初始化sdk
 //        EMClient.getInstance().init(instance, options);
         EaseUI.getInstance().init(instance, options);
+
         EMClient.getInstance().addConnectionListener(new EMConnectionListener() {
             @Override
             public void onConnected() {
@@ -136,6 +140,29 @@ public class App extends Application {
                 }
             }
         });
+        EaseUI.getInstance().setUserProfileProvider(new EaseUI.EaseUserProfileProvider() {
+            @Override
+            public EaseUser getUser(String username) {
+                EaseUser user = new EaseUser("");
+                if (username.equals(EMClient.getInstance().getCurrentUser())) {
+                    user.setAvatar(User.getHeadUrl());
+                    user.setNick(User.getNickname());
+                } else {
+                    try {
+//                        getSharedPreferences("", MODE_PRIVATE).getString(username))
+                        JSONObject json = new JSONObject(username);
+                        user.setAvatar(json.getString("avatar"));
+                        user.setNick(json.getString("nick"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                return user;
+            }
+        });
+
+
+//        getSharedPreferences("", MODE_PRIVATE).edit().putString(msg.getFrom, json)
 
 
         // 设置开启debug模式

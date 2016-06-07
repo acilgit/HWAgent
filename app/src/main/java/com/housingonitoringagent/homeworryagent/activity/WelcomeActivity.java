@@ -68,18 +68,18 @@ public class WelcomeActivity extends BaseActivity {
                                 nextStep();
                                 break;
                             case 1:
-                               int content = json.getIntValue("content");
-                                switch (content){
-                                    case -1:
-                                        QBLToast.show("账号已过期，需重新登录");
-                                        User.logOut();
-                                        nextStep();
-                                        break;
-                                    case 1:
+//                               int content = json.getIntValue("content");
+//                                switch (content){
+//                                    case -1:
+//                                        QBLToast.show("账号已过期，需重新登录");
+//                                        User.logOut();
+//                                        nextStep();
+//                                        break;
+//                                    case 1:
                                         cookieOk = true;
-                                        nextStep();
-                                        break;
-                                }
+//                                        nextStep();
+//                                        break;
+//                                }
                                 nextStep();
                                 break;
                         }

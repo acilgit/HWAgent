@@ -754,17 +754,16 @@ public final class R {
 		public static final int AnimTop2 = 0x7f070008;
 		public static final int Anim_style = 0x7f070009;
 		public static final int Anim_style2 = 0x7f070000;
-		public static final int AppTheme = 0x7f07000a;
-		public static final int HeadScale = 0x7f07000b;
-		public static final int MyAlertDialog = 0x7f07000c;
-		public static final int MyDialogStyle = 0x7f07000d;
-		public static final int MyDialogStyleBottom = 0x7f07000e;
-		public static final int MyDialogStyleTop = 0x7f07000f;
-		public static final int bottom_line_edit_text_style = 0x7f070010;
-		public static final int chat_content_date_style = 0x7f070011;
-		public static final int chat_text_date_style = 0x7f070012;
-		public static final int chat_text_name_style = 0x7f070013;
-		public static final int devide_line_eee = 0x7f070014;
+		public static final int HeadScale = 0x7f07000a;
+		public static final int MyAlertDialog = 0x7f07000b;
+		public static final int MyDialogStyle = 0x7f07000c;
+		public static final int MyDialogStyleBottom = 0x7f07000d;
+		public static final int MyDialogStyleTop = 0x7f07000e;
+		public static final int bottom_line_edit_text_style = 0x7f07000f;
+		public static final int chat_content_date_style = 0x7f070010;
+		public static final int chat_text_date_style = 0x7f070011;
+		public static final int chat_text_name_style = 0x7f070012;
+		public static final int devide_line_eee = 0x7f070013;
 		public static final int horizontal_slide = 0x7f070001;
 		public static final int nornal_style = 0x7f070002;
 	}

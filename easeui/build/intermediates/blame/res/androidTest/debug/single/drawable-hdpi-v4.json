@@ -1,11 +1,11 @@
 [
     {
-        "merged": "D:\\Projects\\HomeWorryAgent\\easeui\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\ee_14.png",
-        "source": "D:\\Projects\\HomeWorryAgent\\easeui\\build\\intermediates\\bundles\\debug\\res\\drawable-hdpi-v4\\ee_14.png"
-    },
-    {
         "merged": "D:\\Projects\\HomeWorryAgent\\easeui\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\ease_groups_icon.png",
         "source": "D:\\Projects\\HomeWorryAgent\\easeui\\build\\intermediates\\bundles\\debug\\res\\drawable-hdpi-v4\\ease_groups_icon.png"
+    },
+    {
+        "merged": "D:\\Projects\\HomeWorryAgent\\easeui\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\ee_14.png",
+        "source": "D:\\Projects\\HomeWorryAgent\\easeui\\build\\intermediates\\bundles\\debug\\res\\drawable-hdpi-v4\\ee_14.png"
     },
     {
         "merged": "D:\\Projects\\HomeWorryAgent\\easeui\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\ease_voice_unread.png",
@@ -68,12 +68,12 @@
         "source": "D:\\Projects\\HomeWorryAgent\\easeui\\build\\intermediates\\bundles\\debug\\res\\drawable-hdpi-v4\\ease_chatting_biaoqing_btn_normal.png"
     },
     {
-        "merged": "D:\\Projects\\HomeWorryAgent\\easeui\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\ease_record_animate_02.png",
-        "source": "D:\\Projects\\HomeWorryAgent\\easeui\\build\\intermediates\\bundles\\debug\\res\\drawable-hdpi-v4\\ease_record_animate_02.png"
-    },
-    {
         "merged": "D:\\Projects\\HomeWorryAgent\\easeui\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\ease_chatfrom_voice_playing.png",
         "source": "D:\\Projects\\HomeWorryAgent\\easeui\\build\\intermediates\\bundles\\debug\\res\\drawable-hdpi-v4\\ease_chatfrom_voice_playing.png"
+    },
+    {
+        "merged": "D:\\Projects\\HomeWorryAgent\\easeui\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\ease_record_animate_02.png",
+        "source": "D:\\Projects\\HomeWorryAgent\\easeui\\build\\intermediates\\bundles\\debug\\res\\drawable-hdpi-v4\\ease_record_animate_02.png"
     },
     {
         "merged": "D:\\Projects\\HomeWorryAgent\\easeui\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\ee_5.png",
@@ -88,12 +88,12 @@
         "source": "D:\\Projects\\HomeWorryAgent\\easeui\\build\\intermediates\\bundles\\debug\\res\\drawable-hdpi-v4\\ease_chat_video_mask_to.9.png"
     },
     {
-        "merged": "D:\\Projects\\HomeWorryAgent\\easeui\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\ee_8.png",
-        "source": "D:\\Projects\\HomeWorryAgent\\easeui\\build\\intermediates\\bundles\\debug\\res\\drawable-hdpi-v4\\ee_8.png"
-    },
-    {
         "merged": "D:\\Projects\\HomeWorryAgent\\easeui\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\ease_record_animate_13.png",
         "source": "D:\\Projects\\HomeWorryAgent\\easeui\\build\\intermediates\\bundles\\debug\\res\\drawable-hdpi-v4\\ease_record_animate_13.png"
+    },
+    {
+        "merged": "D:\\Projects\\HomeWorryAgent\\easeui\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\ee_8.png",
+        "source": "D:\\Projects\\HomeWorryAgent\\easeui\\build\\intermediates\\bundles\\debug\\res\\drawable-hdpi-v4\\ee_8.png"
     },
     {
         "merged": "D:\\Projects\\HomeWorryAgent\\easeui\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\ease_contact_list_selected.png",
@@ -120,16 +120,16 @@
         "source": "D:\\Projects\\HomeWorryAgent\\easeui\\build\\intermediates\\bundles\\debug\\res\\drawable-hdpi-v4\\ease_conversation_selected.png"
     },
     {
-        "merged": "D:\\Projects\\HomeWorryAgent\\easeui\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\ease_chatting_setmode_keyboard_btn_pressed.png",
-        "source": "D:\\Projects\\HomeWorryAgent\\easeui\\build\\intermediates\\bundles\\debug\\res\\drawable-hdpi-v4\\ease_chatting_setmode_keyboard_btn_pressed.png"
+        "merged": "D:\\Projects\\HomeWorryAgent\\easeui\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\ease_mm_title_back.png",
+        "source": "D:\\Projects\\HomeWorryAgent\\easeui\\build\\intermediates\\bundles\\debug\\res\\drawable-hdpi-v4\\ease_mm_title_back.png"
     },
     {
         "merged": "D:\\Projects\\HomeWorryAgent\\easeui\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\ease_chat_face_pressed.png",
         "source": "D:\\Projects\\HomeWorryAgent\\easeui\\build\\intermediates\\bundles\\debug\\res\\drawable-hdpi-v4\\ease_chat_face_pressed.png"
     },
     {
-        "merged": "D:\\Projects\\HomeWorryAgent\\easeui\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\ease_mm_title_back.png",
-        "source": "D:\\Projects\\HomeWorryAgent\\easeui\\build\\intermediates\\bundles\\debug\\res\\drawable-hdpi-v4\\ease_mm_title_back.png"
+        "merged": "D:\\Projects\\HomeWorryAgent\\easeui\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\ease_chatting_setmode_keyboard_btn_pressed.png",
+        "source": "D:\\Projects\\HomeWorryAgent\\easeui\\build\\intermediates\\bundles\\debug\\res\\drawable-hdpi-v4\\ease_chatting_setmode_keyboard_btn_pressed.png"
     },
     {
         "merged": "D:\\Projects\\HomeWorryAgent\\easeui\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\ease_msg_state_fail_resend_pressed.png",
@@ -168,12 +168,12 @@
         "source": "D:\\Projects\\HomeWorryAgent\\easeui\\build\\intermediates\\bundles\\debug\\res\\drawable-hdpi-v4\\ease_location_msg.9.png"
     },
     {
-        "merged": "D:\\Projects\\HomeWorryAgent\\easeui\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\ease_dx_checkbox_gray_on.png",
-        "source": "D:\\Projects\\HomeWorryAgent\\easeui\\build\\intermediates\\bundles\\debug\\res\\drawable-hdpi-v4\\ease_dx_checkbox_gray_on.png"
-    },
-    {
         "merged": "D:\\Projects\\HomeWorryAgent\\easeui\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\ease_record_animate_03.png",
         "source": "D:\\Projects\\HomeWorryAgent\\easeui\\build\\intermediates\\bundles\\debug\\res\\drawable-hdpi-v4\\ease_record_animate_03.png"
+    },
+    {
+        "merged": "D:\\Projects\\HomeWorryAgent\\easeui\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\ease_dx_checkbox_gray_on.png",
+        "source": "D:\\Projects\\HomeWorryAgent\\easeui\\build\\intermediates\\bundles\\debug\\res\\drawable-hdpi-v4\\ease_dx_checkbox_gray_on.png"
     },
     {
         "merged": "D:\\Projects\\HomeWorryAgent\\easeui\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\ease_chatto_bg_normal.9.png",

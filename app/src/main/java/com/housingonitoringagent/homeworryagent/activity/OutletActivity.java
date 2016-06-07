@@ -15,16 +15,8 @@ import android.widget.AdapterView;
 
 import com.housingonitoringagent.homeworryagent.R;
 import com.housingonitoringagent.homeworryagent.extents.BaseActivity;
-import com.housingonitoringagent.homeworryagent.pages.ConversationListFragment;
 import com.housingonitoringagent.homeworryagent.pages.HouseFragment;
-import com.housingonitoringagent.homeworryagent.pages.RecordFragment;
 import com.housingonitoringagent.homeworryagent.views.XAdapter;
-import com.hyphenate.chat.EMConversation;
-import com.hyphenate.easeui.EaseConstant;
-import com.hyphenate.easeui.ui.EaseConversationListFragment;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -61,10 +53,10 @@ public class OutletActivity extends BaseActivity implements View.OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_outlet);
         ButterKnife.bind(this);
-        toolbar.setTitle(R.string.title_order_list);
+        toolbar.setTitle(R.string.outlet);
 //        toolbar.setTitle("");
         setSupportActionBar(toolbar);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,7 +76,6 @@ public class OutletActivity extends BaseActivity implements View.OnClickListener
 //        rvMain.setLayoutManager(new LinearLayoutManager(this));
 //        adapter = new HomeNeighbourAdapter(this, new ArrayList<NeighbourListBean.NeighbourMessagesBean.ContentBean>());
 //        BGARefreshLayoutBuilder.init(this, refreshView, true);
-
 
    /*     List<NeighbourListBean.NeighbourMessagesBean.ContentBean> list = new ArrayList<>();
         final ViewGroup.LayoutParams tvParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);

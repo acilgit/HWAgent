@@ -15,8 +15,10 @@ import android.support.v4.widget.ViewDragHelper;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
@@ -62,9 +64,16 @@ public class BaseActivity extends AppCompatActivity {
     }*/
 
     public void start(Class<? extends BaseActivity> activityClass) {
-            Intent intent = new Intent();
-            intent.setClass(this, activityClass);
-            this.startActivity(intent);
+        Intent intent = new Intent();
+        intent.setClass(this, activityClass);
+        this.startActivity(intent);
+    }
+
+    public void start(Class<? extends BaseActivity> activityClass, BaseIntent baseIntent) {
+        Intent intent = new Intent();
+        intent.setClass(this, activityClass);
+        baseIntent.setIntent(intent);
+        this.startActivity(intent);
     }
 
     public void cancelVolleyRequestQueue() {
@@ -184,4 +193,18 @@ public class BaseActivity extends AppCompatActivity {
             Log.d("IllegalAccessException", e.toString());
         }
     }*/
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public interface BaseIntent {
+        void setIntent(Intent intent);
+    }
+
 }

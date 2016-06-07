@@ -8,17 +8,22 @@
     android:focusableInTouchMode="true"
     tools:context=".activity.ConfirmGiroActivity">
 
+    <LinearLayout
+        android:orientation="vertical"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <include layout="@layout/app_bar"/>
 
     <android.support.v4.widget.NestedScrollView
-
+        android:scrollbars="none"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white"
             android:orientation="vertical"
             android:paddingBottom="16dp"
             android:paddingTop="16dp">
@@ -225,6 +230,7 @@
                         android:layout_width="120dp"
                         android:layout_height="32dp"
                         android:layout_margin="4dp"
+                        style="@style/btn"
                         android:background="@drawable/round_rectangle_bg"
                         android:text="@string/text_send_code"
                         android:textColor="@color/text_gray_dark" />
@@ -233,20 +239,15 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
                 android:gravity="center_horizontal"
                 android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/btnConfirm"
-                    android:layout_width="120dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="0dp"
-                    android:layout_weight="1"
-                    android:background="@color/colorPrimary"
-                    android:text="@string/text_confirm"
-                    android:textColor="@color/white" />
+                    style="@style/btn_commit"
+                    android:text="@string/text_confirm" />
 
                 <Button
                     android:visibility="gone"
@@ -255,11 +256,12 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_marginLeft="12dp"
-                    android:background="@drawable/grey_border_1px"
+                    android:background="@drawable/gray_border_1px"
                     android:text="@string/text_back"
                     android:textColor="@color/light_black" />
             </LinearLayout>
         </LinearLayout>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
+    </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>

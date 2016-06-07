@@ -1,24 +1,18 @@
 package com.housingonitoringagent.homeworryagent.activity;
 
-import android.graphics.drawable.Drawable;
 import android.support.design.widget.TabLayout;
-import android.support.v7.widget.Toolbar;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.ImageSpan;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -26,18 +20,10 @@ import com.housingonitoringagent.homeworryagent.R;
 import com.housingonitoringagent.homeworryagent.extents.BaseActivity;
 import com.housingonitoringagent.homeworryagent.pages.ConversationListFragment;
 import com.housingonitoringagent.homeworryagent.pages.MeFragment;
-import com.housingonitoringagent.homeworryagent.pages.RecordFragment;
-import com.hyphenate.chat.EMChatManager;
+import com.housingonitoringagent.homeworryagent.pages.ShowingRecordFragment;
 import com.hyphenate.chat.EMConversation;
-import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.EaseConstant;
-import com.hyphenate.easeui.ui.EaseChatFragment;
 import com.hyphenate.easeui.ui.EaseConversationListFragment;
-import com.hyphenate.easeui.widget.chatrow.EaseChatRow;
-import com.hyphenate.easeui.widget.chatrow.EaseCustomChatRowProvider;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.List;
 
@@ -58,12 +44,12 @@ public class MainActivity extends BaseActivity {
     TabLayout tabMain;
     @Bind(R.id.vpMain)
     ViewPager vpMain;
-//    @Bind(R.id.toolbar)
-//    Toolbar toolbar;
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
 
     private MainPagerAdapter mainPagerAdapter;
     private EaseConversationListFragment conversationFragment;
-    private RecordFragment recordFragment;
+    private ShowingRecordFragment recordFragment;
     private MeFragment meFragment;
     private List<Fragment> fragments;
     private int[] tabIconsNormal = {
@@ -83,7 +69,6 @@ public class MainActivity extends BaseActivity {
             "通讯录"
     };
 
-    private String toChatUsername;
     private int currentPage = 0;
 
     @Override
@@ -92,7 +77,7 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-//        setSupportActionBar(toolbar);
+        setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mainPagerAdapter = new MainPagerAdapter(getSupportFragmentManager());
@@ -113,6 +98,7 @@ public class MainActivity extends BaseActivity {
                 ivTab.setImageResource(tabIconsSelected[position]);
                 tvTab.setTextColor(getResources().getColor(R.color.colorPrimary));
                 vpMain.setCurrentItem(position, true);
+                setToolbar(position);
             }
 
             @Override
@@ -132,6 +118,29 @@ public class MainActivity extends BaseActivity {
             }
         });
         init();
+    }
+
+    private void setToolbar(int pos) {
+        String title = "";
+        int menuId;
+        switch (pos) {
+            case 0:
+                title = getString(R.string.title_messages);
+                menuId = R.menu.menu_delete_message;
+                break;
+            case 1:
+                title = getString(R.string.title_showing);
+                menuId = R.menu.menu_delete_message;
+                break;
+            case 2:
+                title = getString(R.string.title_me);
+                menuId = R.menu.menu_delete_message;
+                break;
+            default:
+                break;
+        }
+        toolbar.setTitle(title);
+//        toolbar.menu
     }
 
     private void setupTabIcons() {
@@ -159,7 +168,7 @@ public class MainActivity extends BaseActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu_main, menu);
+//        getMenuInflater().inflate(R.menu., menu);
         return true;
     }
 
@@ -177,40 +186,6 @@ public class MainActivity extends BaseActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-   /* public static class PlaceholderFragment extends Fragment {
-        *//**
-         * The fragment argument representing the section number for this
-         * fragment.
-         *//*
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        public PlaceholderFragment() {
-        }
-
-        *//**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         *//*
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_chat, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            return rootView;
-        }
-    }*/
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
@@ -244,7 +219,7 @@ public class MainActivity extends BaseActivity {
 //                    break;
                 case 1:
                     if (recordFragment == null) {
-                        recordFragment = new RecordFragment();
+                        recordFragment = new ShowingRecordFragment();
                     }
                     return recordFragment;
 //                    break;

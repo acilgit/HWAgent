@@ -6882,8 +6882,9 @@
                     "startLine": 395,
                     "startColumn": 4,
                     "startOffset": 27012,
-                    "endColumn": 57,
-                    "endOffset": 27065
+                    "endLine": 408,
+                    "endColumn": 12,
+                    "endOffset": 27632
                 },
                 "from": {
                     "file": "D:\\Projects\\HomeWorryAgent\\easeui\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
@@ -6891,258 +6892,238 @@
                         "startLine": 395,
                         "startColumn": 4,
                         "startOffset": 27012,
-                        "endColumn": 57,
-                        "endOffset": 27065
+                        "endLine": 408,
+                        "endColumn": 12,
+                        "endOffset": 27632
                     }
                 }
             },
             {
                 "to": {
-                    "startLine": 396,
+                    "startLine": 409,
                     "startColumn": 4,
-                    "startOffset": 27070,
-                    "endLine": 409,
+                    "startOffset": 27637,
+                    "endLine": 414,
                     "endColumn": 12,
-                    "endOffset": 27690
+                    "endOffset": 27967
                 },
                 "from": {
                     "file": "D:\\Projects\\HomeWorryAgent\\easeui\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
                     "position": {
-                        "startLine": 396,
+                        "startLine": 409,
                         "startColumn": 4,
-                        "startOffset": 27070,
-                        "endLine": 409,
+                        "startOffset": 27637,
+                        "endLine": 414,
                         "endColumn": 12,
-                        "endOffset": 27690
+                        "endOffset": 27967
                     }
                 }
             },
             {
                 "to": {
-                    "startLine": 410,
+                    "startLine": 415,
                     "startColumn": 4,
-                    "startOffset": 27695,
-                    "endLine": 415,
+                    "startOffset": 27972,
+                    "endLine": 424,
                     "endColumn": 12,
-                    "endOffset": 28025
+                    "endOffset": 28535
                 },
                 "from": {
                     "file": "D:\\Projects\\HomeWorryAgent\\easeui\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
                     "position": {
-                        "startLine": 410,
+                        "startLine": 415,
                         "startColumn": 4,
-                        "startOffset": 27695,
-                        "endLine": 415,
+                        "startOffset": 27972,
+                        "endLine": 424,
                         "endColumn": 12,
-                        "endOffset": 28025
+                        "endOffset": 28535
                     }
                 }
             },
             {
                 "to": {
-                    "startLine": 416,
+                    "startLine": 425,
                     "startColumn": 4,
-                    "startOffset": 28030,
-                    "endLine": 425,
+                    "startOffset": 28540,
+                    "endLine": 439,
                     "endColumn": 12,
-                    "endOffset": 28593
+                    "endOffset": 29199
                 },
                 "from": {
                     "file": "D:\\Projects\\HomeWorryAgent\\easeui\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
                     "position": {
-                        "startLine": 416,
+                        "startLine": 425,
                         "startColumn": 4,
-                        "startOffset": 28030,
-                        "endLine": 425,
+                        "startOffset": 28540,
+                        "endLine": 439,
                         "endColumn": 12,
-                        "endOffset": 28593
+                        "endOffset": 29199
                     }
                 }
             },
             {
                 "to": {
-                    "startLine": 426,
+                    "startLine": 440,
                     "startColumn": 4,
-                    "startOffset": 28598,
-                    "endLine": 440,
+                    "startOffset": 29204,
+                    "endLine": 454,
                     "endColumn": 12,
-                    "endOffset": 29257
+                    "endOffset": 29859
                 },
                 "from": {
                     "file": "D:\\Projects\\HomeWorryAgent\\easeui\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
                     "position": {
-                        "startLine": 426,
+                        "startLine": 440,
                         "startColumn": 4,
-                        "startOffset": 28598,
-                        "endLine": 440,
+                        "startOffset": 29204,
+                        "endLine": 454,
                         "endColumn": 12,
-                        "endOffset": 29257
+                        "endOffset": 29859
                     }
                 }
             },
             {
                 "to": {
-                    "startLine": 441,
+                    "startLine": 455,
                     "startColumn": 4,
-                    "startOffset": 29262,
-                    "endLine": 455,
+                    "startOffset": 29864,
+                    "endLine": 463,
                     "endColumn": 12,
-                    "endOffset": 29917
+                    "endOffset": 30377
                 },
                 "from": {
                     "file": "D:\\Projects\\HomeWorryAgent\\easeui\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
                     "position": {
-                        "startLine": 441,
+                        "startLine": 455,
                         "startColumn": 4,
-                        "startOffset": 29262,
-                        "endLine": 455,
+                        "startOffset": 29864,
+                        "endLine": 463,
                         "endColumn": 12,
-                        "endOffset": 29917
+                        "endOffset": 30377
                     }
                 }
             },
             {
                 "to": {
-                    "startLine": 456,
+                    "startLine": 464,
                     "startColumn": 4,
-                    "startOffset": 29922,
-                    "endLine": 464,
+                    "startOffset": 30382,
+                    "endLine": 471,
                     "endColumn": 12,
-                    "endOffset": 30435
+                    "endOffset": 30751
                 },
                 "from": {
                     "file": "D:\\Projects\\HomeWorryAgent\\easeui\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
                     "position": {
-                        "startLine": 456,
+                        "startLine": 464,
                         "startColumn": 4,
-                        "startOffset": 29922,
-                        "endLine": 464,
+                        "startOffset": 30382,
+                        "endLine": 471,
                         "endColumn": 12,
-                        "endOffset": 30435
+                        "endOffset": 30751
                     }
                 }
             },
             {
                 "to": {
-                    "startLine": 465,
+                    "startLine": 472,
                     "startColumn": 4,
-                    "startOffset": 30440,
-                    "endLine": 472,
+                    "startOffset": 30756,
+                    "endLine": 481,
                     "endColumn": 12,
-                    "endOffset": 30809
+                    "endOffset": 31263
                 },
                 "from": {
                     "file": "D:\\Projects\\HomeWorryAgent\\easeui\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
                     "position": {
-                        "startLine": 465,
+                        "startLine": 472,
                         "startColumn": 4,
-                        "startOffset": 30440,
-                        "endLine": 472,
+                        "startOffset": 30756,
+                        "endLine": 481,
                         "endColumn": 12,
-                        "endOffset": 30809
+                        "endOffset": 31263
                     }
                 }
             },
             {
                 "to": {
-                    "startLine": 473,
+                    "startLine": 482,
                     "startColumn": 4,
-                    "startOffset": 30814,
-                    "endLine": 482,
+                    "startOffset": 31268,
+                    "endLine": 486,
                     "endColumn": 12,
-                    "endOffset": 31321
+                    "endOffset": 31471
                 },
                 "from": {
                     "file": "D:\\Projects\\HomeWorryAgent\\easeui\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
                     "position": {
-                        "startLine": 473,
+                        "startLine": 482,
                         "startColumn": 4,
-                        "startOffset": 30814,
-                        "endLine": 482,
+                        "startOffset": 31268,
+                        "endLine": 486,
                         "endColumn": 12,
-                        "endOffset": 31321
+                        "endOffset": 31471
                     }
                 }
             },
             {
                 "to": {
-                    "startLine": 483,
+                    "startLine": 487,
                     "startColumn": 4,
-                    "startOffset": 31326,
-                    "endLine": 487,
+                    "startOffset": 31476,
+                    "endLine": 491,
                     "endColumn": 12,
-                    "endOffset": 31529
+                    "endOffset": 31689
                 },
                 "from": {
                     "file": "D:\\Projects\\HomeWorryAgent\\easeui\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
                     "position": {
-                        "startLine": 483,
+                        "startLine": 487,
                         "startColumn": 4,
-                        "startOffset": 31326,
-                        "endLine": 487,
+                        "startOffset": 31476,
+                        "endLine": 491,
                         "endColumn": 12,
-                        "endOffset": 31529
+                        "endOffset": 31689
                     }
                 }
             },
             {
                 "to": {
-                    "startLine": 488,
+                    "startLine": 492,
                     "startColumn": 4,
-                    "startOffset": 31534,
-                    "endLine": 492,
+                    "startOffset": 31694,
+                    "endLine": 494,
                     "endColumn": 12,
-                    "endOffset": 31747
+                    "endOffset": 31846
                 },
                 "from": {
                     "file": "D:\\Projects\\HomeWorryAgent\\easeui\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
                     "position": {
-                        "startLine": 488,
+                        "startLine": 492,
                         "startColumn": 4,
-                        "startOffset": 31534,
-                        "endLine": 492,
+                        "startOffset": 31694,
+                        "endLine": 494,
                         "endColumn": 12,
-                        "endOffset": 31747
+                        "endOffset": 31846
                     }
                 }
             },
             {
                 "to": {
-                    "startLine": 493,
+                    "startLine": 495,
                     "startColumn": 4,
-                    "startOffset": 31752,
-                    "endLine": 495,
-                    "endColumn": 12,
-                    "endOffset": 31904
-                },
-                "from": {
-                    "file": "D:\\Projects\\HomeWorryAgent\\easeui\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 493,
-                        "startColumn": 4,
-                        "startOffset": 31752,
-                        "endLine": 495,
-                        "endColumn": 12,
-                        "endOffset": 31904
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 496,
-                    "startColumn": 4,
-                    "startOffset": 31909,
+                    "startOffset": 31851,
                     "endColumn": 66,
-                    "endOffset": 31971
+                    "endOffset": 31913
                 },
                 "from": {
                     "file": "D:\\Projects\\HomeWorryAgent\\easeui\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
                     "position": {
-                        "startLine": 496,
+                        "startLine": 495,
                         "startColumn": 4,
-                        "startOffset": 31909,
+                        "startOffset": 31851,
                         "endColumn": 66,
-                        "endOffset": 31971
+                        "endOffset": 31913
                     }
                 }
             }

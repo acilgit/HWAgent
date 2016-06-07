@@ -84,16 +84,18 @@ public class ConfirmGiroActivity extends BaseActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_giro);
         ButterKnife.bind(this);
+        toolbar.setTitle(R.string.title_capital_administration);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mUIHandler = new Handler();
         mSMSHelper = new SmsHelper(this, getVolleyRequestQueue());
 
         if (savedInstanceState != null) {
             etCode.setText("");
         } else {
-            tvAgentPhone.setText(getIntent().getStringExtra("agentPhone"));
-            rbPartyA.setText(getIntent().getStringExtra("partyA"));
-            rbPartyB.setText(getIntent().getStringExtra("partyB"));
+            tvAgentPhone.setText(getIntent().getStringExtra(getString(R.string.extra_agent_phone)));
+            rbPartyA.setText(getIntent().getStringExtra(getString(R.string.extra_party_a)));
+            rbPartyB.setText(getIntent().getStringExtra(getString(R.string.extra_party_b)));
         }
         llGiro.setVisibility(View.GONE);
         initView();
@@ -112,6 +114,7 @@ public class ConfirmGiroActivity extends BaseActivity implements View.OnClickLis
         btnCancel.setOnClickListener(this);
         btnConfirm.setOnClickListener(this);
         tvAgreement.setOnClickListener(this);
+        rgParty.setOnCheckedChangeListener(this);
 
         mSMSHelper.setListener(new SmsHelper.SmsListener() {
 

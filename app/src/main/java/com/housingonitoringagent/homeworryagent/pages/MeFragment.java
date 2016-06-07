@@ -90,8 +90,8 @@ public class MeFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.rlOrderList:
-                getThis().start(OutletActivity.class);
-//                getThis().start(OrderListActivity.class);
+//                getThis().start(OutletActivity.class);
+                getThis().start(OrderListActivity.class);
                 break;
             case R.id.rlSecurityCenter:
                 getThis().start(SecurityActivity.class);

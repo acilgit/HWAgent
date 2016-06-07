@@ -7,43 +7,149 @@
     android:fitsSystemWindows="true"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    tools:context="com.housingonitoringagent.homeworryagent.activity.ShowingActivity">
+    tools:context=".activity.ShowingActivity">
 
-    <include layout="@layout/app_bar" />
-
-    <android.support.v4.widget.NestedScrollView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="none">
+        android:background="@color/white"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <include layout="@layout/app_bar" />
+
+        <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="24dp"
-            android:orientation="vertical">
+            android:scrollbars="none">
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp">
+                android:layout_height="match_parent"
+                android:paddingBottom="16dp"
+                android:paddingTop="16dp"
+                android:orientation="vertical">
 
-                <com.facebook.drawee.view.SimpleDraweeView
-                    android:id="@+id/sivHead"
-                    android:layout_width="@dimen/item_agent_head_width"
-                    android:layout_height="@dimen/item_agent_head_height"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="8dp"
-                    fresco:placeholderImage="@color/btn_blue_normal"
-                    fresco:placeholderImageScaleType="centerCrop" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp">
+
+                    <com.facebook.drawee.view.SimpleDraweeView
+                        android:id="@+id/sivHead"
+                        android:layout_width="@dimen/item_agent_head_width"
+                        android:layout_height="@dimen/item_agent_head_height"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="8dp"
+                        fresco:placeholderImage="@color/btn_blue_normal"
+                        fresco:placeholderImageScaleType="centerCrop" />
+
+                    <TableLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginTop="0dp"
+                        android:layout_toRightOf="@+id/sivHead">
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingBottom="8dp"
+                            android:paddingTop="8dp">
+
+                            <TextView
+                                android:layout_width="76dp"
+                                android:layout_height="wrap_content"
+                                android:gravity="fill"
+                                android:lines="1"
+                                android:text="@string/agent_company"
+                                android:textColor="@color/text_gray"
+                                android:textSize="@dimen/text_size_item_big" />
+
+                            <TextView
+                                android:id="@+id/tvCompany"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:lines="1"
+                                android:text="链家网"
+                                android:textColor="@color/text_gray_dark"
+                                android:textSize="@dimen/text_size_item_big" />
+
+                        </TableRow>
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingBottom="8dp"
+                            android:paddingTop="8dp">
+
+                            <TextView
+                                android:layout_width="76dp"
+                                android:layout_height="wrap_content"
+                                android:gravity="fill"
+                                android:lines="1"
+                                android:text="@string/agent_outlet"
+                                android:textColor="@color/text_gray"
+                                android:textSize="@dimen/text_size_item_big" />
+
+                            <TextView
+                                android:id="@+id/tvOutlet"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="链家宝超级无知超级无知欢乐喜剧人独家冠名链家网"
+                                android:textColor="@color/text_gray_dark"
+                                android:textSize="@dimen/text_size_item_big" />
+
+                        </TableRow>
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingBottom="8dp"
+                            android:paddingTop="8dp">
+
+                            <TextView
+                                android:layout_width="76dp"
+                                android:layout_height="wrap_content"
+                                android:background="@color/white"
+                                android:gravity="fill"
+                                android:lines="1"
+                                android:text="@string/agent_name"
+                                android:textColor="@color/text_gray"
+                                android:textSize="@dimen/text_size_item_big" />
+
+                            <TextView
+                                android:id="@+id/tvName"
+                                android:layout_width="72dp"
+                                android:layout_height="wrap_content"
+                                android:background="@color/white"
+                                android:lines="1"
+                                android:text="岳云鹏"
+                                android:textColor="@color/text_gray_dark"
+                                android:textSize="@dimen/text_size_item_big" />
+
+                        </TableRow>
+
+                    </TableLayout>
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/line_1px"
+                    android:layout_marginBottom="0dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@color/gray"
+                    android:gravity="right" />
 
                 <TableLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
+                    android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    android:layout_marginTop="0dp"
-                    android:layout_toRightOf="@+id/sivHead">
+                    android:layout_marginTop="16dp">
 
                     <TableRow
                         android:layout_width="match_parent"
@@ -52,20 +158,38 @@
                         android:paddingTop="8dp">
 
                         <TextView
-                            android:layout_width="76dp"
-                            android:layout_height="wrap_content"
-                            android:gravity="fill"
-                            android:lines="1"
-                            android:text="@string/agent_company"
-                            android:textColor="@color/text_gray"
-                            android:textSize="@dimen/text_size_item_big" />
-
-                        <TextView
-                            android:id="@+id/tvCompany"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:lines="1"
-                            android:text="链家网"
+                            android:text="@string/house_detail"
+                            android:textColor="@color/text_gray"
+                            android:textSize="@dimen/text_size_item_normal" />
+
+
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="4dp"
+                        android:paddingTop="4dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:lines="1"
+                            android:text="@string/title_village"
+                            android:textColor="@color/text_gray"
+                            android:textSize="@dimen/text_size_item_big" />
+
+                        <TextView
+                            android:id="@+id/tvVillage"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:lines="1"
+                            android:text="香树利舍"
                             android:textColor="@color/text_gray_dark"
                             android:textSize="@dimen/text_size_item_big" />
 
@@ -74,52 +198,26 @@
                     <TableRow
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingBottom="8dp"
-                        android:paddingTop="8dp">
+                        android:paddingBottom="4dp"
+                        android:paddingTop="4dp">
 
                         <TextView
-                            android:layout_width="76dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="fill"
+                            android:background="@color/white"
+                            android:gravity="center"
                             android:lines="1"
-                            android:text="@string/agent_outlet"
+                            android:text="@string/title_building_no"
                             android:textColor="@color/text_gray"
                             android:textSize="@dimen/text_size_item_big" />
 
                         <TextView
-                            android:id="@+id/tvOutlet"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="链家宝超级无知超级无知欢乐喜剧人独家冠名链家网"
-                            android:textColor="@color/text_gray_dark"
-                            android:textSize="@dimen/text_size_item_big" />
-
-                    </TableRow>
-
-                    <TableRow
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingBottom="8dp"
-                        android:paddingTop="8dp">
-
-                        <TextView
-                            android:layout_width="76dp"
-                            android:layout_height="wrap_content"
-                            android:background="@color/white"
-                            android:gravity="fill"
-                            android:lines="1"
-                            android:text="@string/agent_name"
-                            android:textColor="@color/text_gray"
-                            android:textSize="@dimen/text_size_item_big" />
-
-                        <TextView
-                            android:id="@+id/tvName"
-                            android:layout_width="72dp"
+                            android:id="@+id/tvBuildingNo"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@color/white"
                             android:lines="1"
-                            android:text="岳云鹏"
+                            android:text="2栋-1928"
                             android:textColor="@color/text_gray_dark"
                             android:textSize="@dimen/text_size_item_big" />
 
@@ -127,251 +225,156 @@
 
                 </TableLayout>
 
-            </RelativeLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/line_1px"
+                    android:layout_marginBottom="0dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@color/gray" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/line_1px"
-                android:layout_marginBottom="0dp"
-                android:layout_marginTop="16dp"
-                android:background="@color/gray"
-                android:gravity="right" />
-
-            <TableLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginTop="16dp">
-
-                <TableRow
+                <TableLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="8dp"
-                    android:paddingTop="8dp">
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="16dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <TableRow
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:lines="1"
-                        android:text="@string/house_detail"
-                        android:textColor="@color/text_gray"
-                        android:textSize="@dimen/text_size_item_normal" />
+                        android:paddingBottom="8dp"
+                        android:paddingTop="8dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:lines="1"
+                            android:text="@string/showing_count"
+                            android:textColor="@color/text_gray"
+                            android:textSize="@dimen/text_size_item_normal" />
 
 
-                </TableRow>
+                    </TableRow>
 
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="4dp"
-                    android:paddingTop="4dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <TableRow
+                        android:id="@+id/trShowingOut1"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/white"
-                        android:lines="1"
-                        android:text="@string/title_village"
-                        android:textColor="@color/text_gray"
-                        android:textSize="@dimen/text_size_item_big" />
+                        android:paddingBottom="4dp"
+                        android:paddingTop="4dp">
 
-                    <TextView
-                        android:id="@+id/tvVillage"
-                        android:layout_width="wrap_content"
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:lines="1"
+                            android:text="带看人数："
+                            android:textColor="@color/text_gray"
+                            android:textSize="@dimen/text_size_item_big" />
+
+                        <TextView
+                            android:id="@+id/tvShowingCountIn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:lines="1"
+                            android:text="2人"
+                            android:textColor="@color/text_gray_dark"
+                            android:textSize="@dimen/text_size_item_big" />
+
+                    </TableRow>
+
+                    <TableRow
+                        android:id="@+id/trShowingOut2"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/white"
-                        android:lines="1"
-                        android:text="香树利舍"
-                        android:textColor="@color/text_gray_dark"
-                        android:textSize="@dimen/text_size_item_big" />
+                        android:paddingBottom="4dp"
+                        android:paddingTop="4dp">
 
-                </TableRow>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:gravity="fill"
+                            android:lines="1"
+                            android:text="离开人数："
+                            android:textColor="@color/text_gray"
+                            android:textSize="@dimen/text_size_item_big" />
 
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="4dp"
-                    android:paddingTop="4dp">
+                        <EditText
+                            android:id="@+id/etShowingCountOut"
+                            android:layout_width="120dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:inputType="number"
+                            android:lines="1"
+                            android:maxLength="3"
+                            android:text=""
+                            android:textColor="@color/text_gray_dark"
+                            android:textSize="@dimen/text_size_item_big" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:gravity="center"
+                            android:lines="1"
+                            android:text="人"
+                            android:textColor="@color/text_gray"
+                            android:textSize="@dimen/text_size_item_big" />
+                    </TableRow>
+
+                    <TableRow
+                        android:id="@+id/trShowingIn"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/white"
-                        android:gravity="center"
-                        android:lines="1"
-                        android:text="@string/title_building_no"
-                        android:textColor="@color/text_gray"
-                        android:textSize="@dimen/text_size_item_big" />
+                        android:paddingBottom="4dp"
+                        android:paddingTop="4dp">
 
-                    <TextView
-                        android:id="@+id/tvBuildingNo"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@color/white"
-                        android:lines="1"
-                        android:text="2栋-1928"
-                        android:textColor="@color/text_gray_dark"
-                        android:textSize="@dimen/text_size_item_big" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:gravity="fill"
+                            android:lines="1"
+                            android:text="带看人数："
+                            android:textColor="@color/text_gray"
+                            android:textSize="@dimen/text_size_item_big" />
 
-                </TableRow>
+                        <EditText
+                            android:id="@+id/etShowingCountIn"
+                            android:layout_width="120dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:inputType="number"
+                            android:lines="1"
+                            android:maxLength="3"
+                            android:text=""
+                            android:textColor="@color/text_gray_dark"
+                            android:textSize="@dimen/text_size_item_big" />
 
-            </TableLayout>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:gravity="center"
+                            android:lines="1"
+                            android:text="人"
+                            android:textColor="@color/text_gray"
+                            android:textSize="@dimen/text_size_item_big" />
+                    </TableRow>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/line_1px"
-                android:layout_marginBottom="0dp"
-                android:layout_marginTop="16dp"
-                android:background="@color/gray" />
+                </TableLayout>
 
-            <TableLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginTop="16dp">
+                <Button
+                    android:id="@+id/btnLogin"
+                    style="@style/btn_commit"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/showing_in" />
 
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="8dp"
-                    android:paddingTop="8dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:lines="1"
-                        android:text="@string/showing_count"
-                        android:textColor="@color/text_gray"
-                        android:textSize="@dimen/text_size_item_normal" />
-
-
-                </TableRow>
-
-                <TableRow
-                    android:id="@+id/trShowingOut1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="4dp"
-                    android:paddingTop="4dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@color/white"
-                        android:lines="1"
-                        android:text="带看人数："
-                        android:textColor="@color/text_gray"
-                        android:textSize="@dimen/text_size_item_big" />
-
-                    <TextView
-                        android:id="@+id/tvShowingCountIn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@color/white"
-                        android:lines="1"
-                        android:text="2人"
-                        android:textColor="@color/text_gray_dark"
-                        android:textSize="@dimen/text_size_item_big" />
-
-                </TableRow>
-
-                <TableRow
-                    android:id="@+id/trShowingOut2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="4dp"
-                    android:paddingTop="4dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@color/white"
-                        android:gravity="fill"
-                        android:lines="1"
-                        android:text="离开人数："
-                        android:textColor="@color/text_gray"
-                        android:textSize="@dimen/text_size_item_big" />
-
-                    <EditText
-                        android:id="@+id/etShowingCountOut"
-                        android:layout_width="120dp"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:inputType="number"
-                        android:lines="1"
-                        android:maxLength="3"
-                        android:text=""
-                        android:textColor="@color/text_gray_dark"
-                        android:textSize="@dimen/text_size_item_big" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@color/white"
-                        android:gravity="center"
-                        android:lines="1"
-                        android:text="人"
-                        android:textColor="@color/text_gray"
-                        android:textSize="@dimen/text_size_item_big" />
-                </TableRow>
-
-                <TableRow
-                    android:id="@+id/trShowingIn"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="4dp"
-                    android:paddingTop="4dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@color/white"
-                        android:gravity="fill"
-                        android:lines="1"
-                        android:text="带看人数："
-                        android:textColor="@color/text_gray"
-                        android:textSize="@dimen/text_size_item_big" />
-
-                    <EditText
-                        android:id="@+id/etShowingCountIn"
-                        android:layout_width="120dp"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:inputType="number"
-                        android:lines="1"
-                        android:maxLength="3"
-                        android:text=""
-                        android:textColor="@color/text_gray_dark"
-                        android:textSize="@dimen/text_size_item_big" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@color/white"
-                        android:gravity="center"
-                        android:lines="1"
-                        android:text="人"
-                        android:textColor="@color/text_gray"
-                        android:textSize="@dimen/text_size_item_big" />
-                </TableRow>
-
-            </TableLayout>
-
-            <Button
-                android:id="@+id/btnLogin"
-                android:layout_width="match_parent"
-                android:layout_height="36dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginTop="20dp"
-                android:background="#2c9dd5"
-                android:text="@string/showing_in"
-                android:textColor="@color/white"
-                android:textSize="18dp" />
-
-        </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
+            </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
+    </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>
