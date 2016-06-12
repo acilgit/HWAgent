@@ -15,6 +15,7 @@ import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.ui.EaseChatFragment;
 import com.hyphenate.easeui.widget.chatrow.EaseChatRow;
 import com.hyphenate.easeui.widget.chatrow.EaseCustomChatRowProvider;
+import com.hyphenate.exceptions.HyphenateException;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,8 +33,21 @@ public class ChatActivity  extends BaseActivity {
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
 
-//    @Bind(R.id.toolbar)
-//    Toolbar toolbar;
+    //避免和基类定义的常量可能发生的冲突，常量从11开始定义
+    private static final int ITEM_VIDEO = 11;
+    private static final int ITEM_FILE = 12;
+    private static final int ITEM_VOICE_CALL = 13;
+    private static final int ITEM_VIDEO_CALL = 14;
+
+    private static final int REQUEST_CODE_SELECT_VIDEO = 11;
+    private static final int REQUEST_CODE_SELECT_FILE = 12;
+    private static final int REQUEST_CODE_GROUP_DETAIL = 13;
+    private static final int REQUEST_CODE_CONTEXT_MENU = 14;
+
+    private static final int MESSAGE_TYPE_SENT_VOICE_CALL = 1;
+    private static final int MESSAGE_TYPE_RECV_VOICE_CALL = 2;
+    private static final int MESSAGE_TYPE_SENT_VIDEO_CALL = 3;
+    private static final int MESSAGE_TYPE_RECV_VIDEO_CALL = 4;
 
     private EaseChatFragment chatFragment;
 
@@ -67,11 +81,18 @@ public class ChatActivity  extends BaseActivity {
                 JSONObject json = new JSONObject();
                 try {
                     json.put("avatar", User.getHeadUrl());
-                    json.put("nick", User.getNickname());
+                    json.put("nickname", User.getNickname());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
                 message.setAttribute("user", json.toString());
+
+                // 下面是监听接收消息
+                try {
+                    getSharedPreferences("", MODE_PRIVATE).edit().putString(message.getFrom(), message.getStringAttribute("user")).apply();
+                } catch (HyphenateException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override

@@ -37,7 +37,7 @@
             android:id="@+id/bubble"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.9"
+            android:layout_weight="0.8"
             android:background="@drawable/ease_chatfrom_bg"
              >
             <include layout="@layout/em_custom_item"

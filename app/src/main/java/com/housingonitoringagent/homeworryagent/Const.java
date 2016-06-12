@@ -41,6 +41,15 @@ public class Const {
         /*获取小区项目经理人详情*/
         String PROJECTMANAGERINFO = SERVER + "/append/village/projectmanagerinfo";
 
+        /*看房记录*/
+        String VISIT_PERMISSSION = SERVER + "/append/apply_visit_permit_agent/list";
+
+
+
+
+
+
+
         /*获取邻居列表*/
         String NEIGHBOR_LIST = SERVER + "/append/neighbour/info";
         /*获取邻居列表*/

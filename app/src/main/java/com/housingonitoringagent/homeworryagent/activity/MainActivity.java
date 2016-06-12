@@ -48,7 +48,7 @@ public class MainActivity extends BaseActivity {
     Toolbar toolbar;
 
     private MainPagerAdapter mainPagerAdapter;
-    private EaseConversationListFragment conversationFragment;
+    private ConversationListFragment conversationFragment;
     private ShowingRecordFragment recordFragment;
     private MeFragment meFragment;
     private List<Fragment> fragments;

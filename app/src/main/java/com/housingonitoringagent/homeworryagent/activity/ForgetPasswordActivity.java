@@ -10,7 +10,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
@@ -40,21 +39,23 @@ import butterknife.ButterKnife;
  * HomeWorry
  * Created by Administrator on 2016/2/24 0024.
  */
-public class ForgetPasswordActivity extends BaseActivity {
-    @Bind(R.id.phone)
-    EditText mPhoneView;
-    @Bind(R.id.get_code)
-    Button mGetCodeBtn;
-    @Bind(R.id.confirm_code)
-    EditText mConfirmCodeView;
-    @Bind(R.id.password_1)
-    EditText mPssswordView;
-    @Bind(R.id.password_2)
-    EditText mConfirmPasswordView;
-    @Bind(R.id.register_btn)
-    Button mResgisterBtn;
+public class ForgetPasswordActivity extends BaseActivity implements View.OnClickListener {
+    @Bind(R.id.etPhone)
+    EditText etPhone;
+    @Bind(R.id.btnCode)
+    Button btnCode;
+    @Bind(R.id.etCode)
+    EditText etCode;
+    @Bind(R.id.etPassword)
+    EditText etPassword;
+    @Bind(R.id.etConfirmPassword)
+    EditText etConfirmPassword;
+    @Bind(R.id.btnCommit)
+    Button btnCommit;
     @Bind(R.id.toolbar)
-    Toolbar mToolBar;
+    Toolbar toolbar;
+    @Bind(R.id.tvAgreement)
+    TextView tvAgreement;
 //    @Bind(R.id.gps)
 //    ImageView mGps;
 //    @Bind(R.id.place_name)
@@ -65,8 +66,6 @@ public class ForgetPasswordActivity extends BaseActivity {
 //    ImageView mCmmunication;
 //    @Bind(R.id.back)
 //    ImageView mBack;
-//    @Bind(R.id.title_tv)
-//    TextView mTitle;
 
 
     // 验证码获取时间最小间隔
@@ -78,18 +77,14 @@ public class ForgetPasswordActivity extends BaseActivity {
     Handler mUIHandler;
     SmsHelper mSMSHelper;
 
-    public static void start(Activity callingActivity) {
-        Intent intent = new Intent();
-        intent.setClass(callingActivity, ForgetPasswordActivity.class);
-        callingActivity.startActivity(intent);
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forget_password);
         ButterKnife.bind(this);
-        setSupportActionBar(mToolBar);
+        toolbar.setTitle(R.string.label_forget_password);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mUIHandler = new Handler();
         mSMSHelper = new SmsHelper(this, getVolleyRequestQueue());
         initview();
@@ -104,15 +99,9 @@ public class ForgetPasswordActivity extends BaseActivity {
     }
 
     private void setListener() {
-        View.OnClickListener onClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ForgetPasswordActivity.this.onClick(v);
-            }
-        };
-
-        mGetCodeBtn.setOnClickListener(onClickListener);
-        mResgisterBtn.setOnClickListener(onClickListener);
+        btnCode.setOnClickListener(this);
+        btnCommit.setOnClickListener(this);
+        tvAgreement.setOnClickListener(this);
 
         mSMSHelper.setListener(new SmsHelper.SmsListener() {
 
@@ -142,32 +131,42 @@ public class ForgetPasswordActivity extends BaseActivity {
     }
 
     private void onVerificationCodeReceived(String verificationCode) {
-        mConfirmCodeView.setText(verificationCode);
+        etCode.setText(verificationCode);
     }
 
-    private void onClick(View v) {
+    @Override
+    public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.get_code:
-                String phone = mPhoneView.getText().toString();
+            case R.id.btnCode:
+                String phone = etPhone.getText().toString();
                 if (TextUtils.isEmpty(phone)) {
                     QBLToast.show(R.string.text_hint_edit_phone);
                     return;
                 }
-                showProgressDialog(getString(R.string.wait_a_few_times));
-                mSMSHelper.beginListenSms();
+//                showProgressDialog(getString(R.string.wait_a_few_times));
+//                mSMSHelper.beginListenSms();
                 mSMSHelper.getVerificationCode(phone.toString().trim());
                 break;
-            case R.id.register_btn:
-                register();
+            case R.id.btnCommit:
+                resetPassword();
+                break;
+            case R.id.tvAgreement:
+                start(WebViewActivity.class, new BaseIntent() {
+                    @Override
+                    public void setIntent(Intent intent) {
+                        intent.putExtra(getString(R.string.extra_title), getString(R.string.user_agreement));
+                        intent.putExtra(getString(R.string.extra_url), Const.serviceMethod.USERREGISTERDEAL);
+                    }
+                });
                 break;
         }
     }
 
-    private void register() {
-        final String phone = mPhoneView.getText().toString();
-        final String password = mPssswordView.getText().toString();
-        final String confirmPassword = mConfirmPasswordView.getText().toString();
-        final String verificationCode = mConfirmCodeView.getText().toString();
+    private void resetPassword() {
+        final String phone = etPhone.getText().toString();
+        final String password = etPassword.getText().toString();
+        final String confirmPassword = etConfirmPassword.getText().toString();
+        final String verificationCode = etCode.getText().toString();
         boolean inputValid = checkInputValid(phone, password, confirmPassword, verificationCode);
         if (!inputValid) {
             return;
@@ -226,10 +225,10 @@ public class ForgetPasswordActivity extends BaseActivity {
     }
 
     private void initview() {
-        mToolBar.getBackground().setAlpha(0);
+        toolbar.getBackground().setAlpha(0);
         getSupportActionBar().setElevation(1);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            mToolBar.setElevation(1);
+            toolbar.setElevation(1);
         }
     }
 
@@ -279,11 +278,11 @@ public class ForgetPasswordActivity extends BaseActivity {
     public void onVerifyCodeTimerTick() {
         if (mVerifyCodeTime > 0) {
             mVerifyCodeTime -= 1;
-            mGetCodeBtn.setText(mVerifyCodeTime + getString(R.string.second));
-            mGetCodeBtn.setEnabled(false);
+            btnCode.setText(mVerifyCodeTime + getString(R.string.second));
+            btnCode.setEnabled(false);
         } else {
-            mGetCodeBtn.setText(R.string.get_verification_code);
-            mGetCodeBtn.setEnabled(true);
+            btnCode.setText(R.string.get_verification_code);
+            btnCode.setEnabled(true);
         }
     }
 

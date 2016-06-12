@@ -6,6 +6,8 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+//import android.support.multidex.MultiDex;
+//import android.support.multidex.MultiDex;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.webkit.CookieManager;
@@ -18,6 +20,7 @@ import com.housingonitoringagent.homeworryagent.extents.BaseActivity;
 import com.housingonitoringagent.homeworryagent.utils.FileUtil;
 import com.housingonitoringagent.homeworryagent.utils.LogUtils;
 import com.housingonitoringagent.homeworryagent.utils.ThreadPool;
+import com.housingonitoringagent.homeworryagent.utils.easeui.EaseHelper;
 import com.housingonitoringagent.homeworryagent.utils.net.FrescoFactory;
 import com.housingonitoringagent.homeworryagent.utils.net.VolleyManager;
 import com.housingonitoringagent.homeworryagent.utils.uikit.QBLToast;
@@ -28,12 +31,11 @@ import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMOptions;
 import com.hyphenate.easeui.controller.EaseUI;
 import com.hyphenate.easeui.domain.EaseUser;
-import com.hyphenate.util.NetUtils;
+//import com.hyphenate.util.NetUtils;
 //import com.hyphenate.chat.EMClient;
 //import com.hyphenate.chat.EMOptions;
 //import com.hyphenate.easeui.controller.EaseUI;
 //import com.hyphenate.util.PathUtil;
-//import android.support.multidex.MultiDex;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -59,14 +61,20 @@ public class App extends Application {
         instance = this;
 
         // 初始化环信SDK
-        initEasemob();
+        initEaseMob();
         Log.e("ZJ", " create App " + 48);
     }
+
+  /*  @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
+    }*/
 
     /**
      *
      */
-    private void initEasemob() {
+    private void initEaseMob() {
         // 获取当前进程 id 并取得进程名
         int pid = android.os.Process.myPid();
         String processAppName = getAppName(pid);
@@ -90,8 +98,10 @@ public class App extends Application {
          */
 //        Fresco.initialize(this);
         Fresco.initialize(this, FrescoFactory.getImagePipelineConfig(this));
-//        MultiDex.install(this);
-        EMOptions options = new EMOptions();
+
+
+        EaseHelper.getInstance().init(this);
+      /*  EMOptions options = new EMOptions();
         // 设置Appkey，如果配置文件已经配置，这里可以不用设置
         // options.setAppKey("lzan13#hxsdkdemo");
         // 设置自动登录
@@ -117,7 +127,7 @@ public class App extends Application {
 
         // 调用初始化方法初始化sdk
 //        EMClient.getInstance().init(instance, options);
-        EaseUI.getInstance().init(instance, options);
+        EaseUI.getInstance().init(instance, options);*/
 
         EMClient.getInstance().addConnectionListener(new EMConnectionListener() {
             @Override
@@ -143,27 +153,27 @@ public class App extends Application {
         EaseUI.getInstance().setUserProfileProvider(new EaseUI.EaseUserProfileProvider() {
             @Override
             public EaseUser getUser(String username) {
-                EaseUser user = new EaseUser("");
+                EaseUser user = new EaseUser(username);
                 if (username.equals(EMClient.getInstance().getCurrentUser())) {
                     user.setAvatar(User.getHeadUrl());
                     user.setNick(User.getNickname());
                 } else {
+                    JSONObject json ;
+                    String imUser = User.getIMUser(username);
                     try {
-//                        getSharedPreferences("", MODE_PRIVATE).getString(username))
-                        JSONObject json = new JSONObject(username);
-                        user.setAvatar(json.getString("avatar"));
-                        user.setNick(json.getString("nick"));
+                        if (null != imUser) {
+                            json = new JSONObject(imUser);
+                            user.setAvatar(json.getString("avatar"));
+                            user.setNick(json.getString("nickname"));
+                        }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+
                 }
                 return user;
             }
         });
-
-
-//        getSharedPreferences("", MODE_PRIVATE).edit().putString(msg.getFrom, json)
-
 
         // 设置开启debug模式
 //        EMClient.getInstance().setDebugMode(true);
@@ -313,10 +323,10 @@ public class App extends Application {
         }
     }
 
-    @Override
-    protected void attachBaseContext(Context base) {
-        super.attachBaseContext(base);
-    }
+//    @Override
+//    protected void attachBaseContext(Context base) {
+//        super.attachBaseContext(base);
+//    }
 
     private static class MyEMCallBack implements EMCallBack {
         @Override

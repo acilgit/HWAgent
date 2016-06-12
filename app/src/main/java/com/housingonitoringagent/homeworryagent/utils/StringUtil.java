@@ -1,5 +1,8 @@
 package com.housingonitoringagent.homeworryagent.utils;
 
+import android.graphics.Paint;
+import android.widget.TextView;
+
 import java.util.ArrayList;
 
 /**
@@ -167,4 +170,5 @@ public class StringUtil {
         // 子字符串在原字符串的结束位置
         public int end;
     }
+
 }

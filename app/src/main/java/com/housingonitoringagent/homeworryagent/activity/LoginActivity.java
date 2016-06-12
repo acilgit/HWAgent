@@ -33,6 +33,8 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
+import static com.housingonitoringagent.homeworryagent.utils.UIUtils.underLine;
+
 
 /**登录
  * HomeWorry
@@ -78,8 +80,7 @@ public class LoginActivity extends BaseActivity {
         setContentView(R.layout.activity_login);
 //        setSwipeBackEnable(false);
         ButterKnife.bind(this);
-        tvRetrieve.getPaint().setFlags(Paint. UNDERLINE_TEXT_FLAG ); //下划线
-        tvRetrieve.getPaint().setAntiAlias(true);//抗锯齿
+        underLine(tvRetrieve);
         setListener();
         etAccount.setText(account);
         etPassword.setText(password);
@@ -107,7 +108,7 @@ public class LoginActivity extends BaseActivity {
 //            case R.id.agreement_tv:
 //                break;
             case R.id.tvRetrieve:
-//                ForgetPasswordActivity.start(this);
+                start(ForgetPasswordActivity.class);
                 break;
         }
     }

@@ -230,6 +230,13 @@ public class User {
         storage.put(PreferencesKey.User.SESSIONID, memberId);
     }
 
+    public static void setIMUser(String IMFrom, String user){
+        storage.put(IMFrom,user);
+    }
+
+    public static String getIMUser(String IMFrom){
+        return storage.getString(IMFrom, null);
+    }
     public static void setType(int type) {
         storage.put(PreferencesKey.User.TYPE, type);
     }

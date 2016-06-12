@@ -38,8 +38,9 @@ public class ChangePasswordActivity extends BaseActivity implements View.OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_password);
         ButterKnife.bind(this);
+        toolbar.setTitle(R.string.modify_password);
         setSupportActionBar(toolbar);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setListeners();
     }
 
@@ -62,11 +63,4 @@ public class ChangePasswordActivity extends BaseActivity implements View.OnClick
         }
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (android.R.id.home == item.getItemId()){
-            onBackPressed();
-        }
-        return super.onOptionsItemSelected(item);
-    }
 }

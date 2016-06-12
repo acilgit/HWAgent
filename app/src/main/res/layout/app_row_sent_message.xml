@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:paddingTop="13dp">
+    android:paddingTop="13dp" >
 
     <TextView
         android:id="@+id/timestamp"
@@ -15,7 +15,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_chat_activity">
+        android:layout_marginTop="@dimen/margin_chat_activity" >
 
         <ImageView
             android:id="@+id/iv_userhead"
@@ -26,20 +26,19 @@
             android:layout_marginRight="@dimen/margin_chat_activity"
             android:background="@drawable/ease_default_avatar"
             android:scaleType="fitXY" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_userid"
             android:layout_toLeftOf="@id/iv_userhead"
+            android:layout_below="@+id/tv_userid"
             android:orientation="horizontal">
-
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
                 android:layout_toLeftOf="@id/bubble"
-                android:layout_weight="0.1">
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.1"
+                >
 
                 <ImageView
                     android:id="@+id/msg_status"
@@ -73,27 +72,26 @@
                     android:layout_height="25dp"
                     android:visibility="visible" />
             </LinearLayout>
-
-            <RelativeLayout
-                android:id="@+id/bubble"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/margin_chat_activity"
-                android:layout_weight="0.9"
-                android:background="@drawable/ease_chatto_bg">
-
-                <include layout="@layout/em_custom_item" />
-            </RelativeLayout>
-
-            <!--  <TextView
-                 android:id="@+id/tv_userid"
-                 android:visibility="gone"
-                 style="@style/chat_text_name_style"
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-                 android:layout_marginRight="15dp"
-                 android:layout_toLeftOf="@id/iv_userhead"
-                 android:text="xxx" /> -->
+        <RelativeLayout
+            android:id="@+id/bubble"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.8"
+            android:layout_marginRight="@dimen/margin_chat_activity"
+             android:background="@drawable/ease_chatto_bg"
+            >
+            <include layout="@layout/em_custom_item"/>
+        </RelativeLayout>
+        
+       <!--  <TextView
+            android:id="@+id/tv_userid"
+            android:visibility="gone"
+            style="@style/chat_text_name_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            android:layout_toLeftOf="@id/iv_userhead"
+            android:text="xxx" /> -->
 
         </LinearLayout>
     </RelativeLayout>

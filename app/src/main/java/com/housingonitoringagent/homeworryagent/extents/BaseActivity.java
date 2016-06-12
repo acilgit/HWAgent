@@ -1,20 +1,14 @@
 package com.housingonitoringagent.homeworryagent.extents;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v4.widget.ViewDragHelper;
 import android.support.v7.app.AppCompatActivity;
-import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -22,6 +16,7 @@ import android.view.inputmethod.InputMethodManager;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.housingonitoringagent.homeworryagent.App;
 
 /**
  * Created by Administrator on 2016/1/11 0011.
@@ -40,14 +35,14 @@ public class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         thisActivity = this;
         registerFinishReceiver();
-//        App.getInstance().addActivity(this);
+        App.getInstance().addActivity(this);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         dismissProgressDialog();
-//        App.getInstance().removeActivity(this);
+        App.getInstance().removeActivity(this);
         cancelVolleyRequestQueue();
     }
 

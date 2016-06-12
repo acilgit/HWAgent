@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -195,5 +196,11 @@ public class UIUtils {
     public static int getWindowWidth(Activity activity){
         WindowManager wm = activity.getWindowManager();
         return wm.getDefaultDisplay().getWidth();
+    }
+
+
+    public static void underLine(TextView textView) {
+        textView.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG ); //下划线
+        textView.getPaint().setAntiAlias(true);//抗锯齿
     }
 }

@@ -5,6 +5,7 @@ android {
     buildToolsVersion "23.0.3"
 
     defaultConfig {
+        multiDexEnabled true
         applicationId "com.housingonitoringagent.homeworryagent"
         minSdkVersion 19
         targetSdkVersion 23

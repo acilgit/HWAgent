@@ -1,5 +1,6 @@
 package com.housingonitoringagent.homeworryagent.activity;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -164,7 +165,13 @@ public class ConfirmGiroActivity extends BaseActivity implements View.OnClickLis
                 confirmGiro();
                 break;
             case R.id.tvAgreement:
-
+                start(WebViewActivity.class, new BaseIntent() {
+                    @Override
+                    public void setIntent(Intent intent) {
+                        intent.putExtra(getString(R.string.extra_title), getString(R.string.title_capital_administration));
+                        intent.putExtra(getString(R.string.extra_url), Const.serviceMethod.USERREGISTERDEAL);
+                    }
+                });
                 break;
         }
     }
