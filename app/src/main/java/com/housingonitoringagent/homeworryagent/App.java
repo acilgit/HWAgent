@@ -62,7 +62,7 @@ public class App extends Application {
 
         // 初始化环信SDK
         initEaseMob();
-        Log.e("ZJ", " create App " + 48);
+        Log.e("ZJ", " create App " + 51);
     }
 
   /*  @Override
@@ -150,30 +150,7 @@ public class App extends Application {
                 }
             }
         });
-        EaseUI.getInstance().setUserProfileProvider(new EaseUI.EaseUserProfileProvider() {
-            @Override
-            public EaseUser getUser(String username) {
-                EaseUser user = new EaseUser(username);
-                if (username.equals(EMClient.getInstance().getCurrentUser())) {
-                    user.setAvatar(User.getHeadUrl());
-                    user.setNick(User.getNickname());
-                } else {
-                    JSONObject json ;
-                    String imUser = User.getIMUser(username);
-                    try {
-                        if (null != imUser) {
-                            json = new JSONObject(imUser);
-                            user.setAvatar(json.getString("avatar"));
-                            user.setNick(json.getString("nickname"));
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
 
-                }
-                return user;
-            }
-        });
 
         // 设置开启debug模式
 //        EMClient.getInstance().setDebugMode(true);
@@ -261,7 +238,6 @@ public class App extends Application {
 //        Fresco.shutDown();
     }
 
-
     public SharedPreferences getPreferences(String name) {
         return getSharedPreferences(name, Context.MODE_PRIVATE);
     }
@@ -278,6 +254,14 @@ public class App extends Application {
         LogUtils.e("当前存在" + activities.size() + "个Activity");
     }
 
+    public MainActivity getMainActivity() {
+        for (Activity activity : activities) {
+            if (activity instanceof MainActivity) {
+                return (MainActivity) activity;
+            }
+        }
+        return null;
+    }
     /**
      * 清除应用缓存
      */
@@ -285,8 +269,8 @@ public class App extends Application {
 //        // 清除ImageLoader缓存的图片
 //        ImageLoader.getInstance().clearDiskCache();
         // 删除Cache目录
-        FileUtil.deleteFilesByDirectory(getCacheDir());
-        FileUtil.deleteFilesByDirectory(getExternalCacheDir());
+//        FileUtil.deleteFilesByDirectory(getCacheDir());
+//        FileUtil.deleteFilesByDirectory(getExternalCacheDir());
     }
 
     /**
@@ -296,8 +280,8 @@ public class App extends Application {
         // 清除所有用户数据
         clearUserData();
         // 删除目录
-        FileUtil.deleteFilesByDirectory(getFilesDir());
-        FileUtil.deleteFilesByDirectory(getExternalFilesDir(null));
+//        FileUtil.deleteFilesByDirectory(getFilesDir());
+//        FileUtil.deleteFilesByDirectory(getExternalFilesDir(null));
     }
 
     /**

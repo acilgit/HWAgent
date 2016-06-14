@@ -136,6 +136,14 @@ public abstract class XAdapter<T> extends RecyclerView.Adapter {
         notifyDataSetChanged();
     }
 
+    public void DataList(List<T> dataList) {
+        if (this.dataList != null) {
+//            this.dataList.clear();
+        }
+        this.dataList = dataList;
+        notifyDataSetChanged();
+    }
+
     public void removeItem( int pos) {
         dataList.remove(pos);
         notifyItemRemoved(pos);

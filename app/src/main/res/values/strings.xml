@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">置家无忧经纪人</string>
+    <string name="app_name">智家无忧经纪人</string>
     <string name="loading">loading...</string>
     <string name="no_data">暂无数据</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -146,8 +146,8 @@
     <string name="text_send_code">发送验证码</string>
     <string name="text_confirm">确认</string>
     <string name="text_register_soon">立即注册</string>
-    <string name="text_agree_protocol">注册即表示同意置家无忧房产网相关</string>
-    <string name="text_app_protocol">《置家无忧用户协议》</string>
+    <string name="text_agree_protocol">注册即表示同意智家无忧房产网相关</string>
+    <string name="text_app_protocol">《智家无忧用户协议》</string>
     <string name="please_input_vaild_phone">请输入一个有效的手机号码</string>
     <string name="article_comment_format_hint">"评论不能为空,也不能超过255个字符"</string>
     <!--manifest label-->
@@ -420,6 +420,7 @@
     <string name="em_user_remove">此用户已被移除</string>
     <string name="delete_conversation_messages">删除会话和消息</string>
     <string name="delete_conversation">删除会话</string>
+    <string name="extra_user_id">userId</string>
 
 </resources>
 

@@ -307,11 +307,7 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
                     return message.direct() == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_VIDEO_CALL : MESSAGE_TYPE_SENT_VIDEO_CALL;
                 } else {
                     int type = message.getIntAttribute("msgType", 0);
-                    if (type == 5) {
-                        return 5;
-                    } else if (type == 6) {
-                        return 6;
-                    }
+                   return type;
                 }
             }
             return 0;

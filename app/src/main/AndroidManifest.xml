@@ -35,7 +35,7 @@
     <application
         android:name=".App"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/launch_icon"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
@@ -43,7 +43,6 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -52,6 +51,7 @@
         <activity
             android:name=".activity.LoginActivity"
             android:screenOrientation="portrait"
+            android:launchMode="singleTop"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
 
@@ -64,6 +64,7 @@
         <activity
             android:name=".activity.MainActivity"
             android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustNothing"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
@@ -103,6 +104,20 @@
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
+            android:name=".activity.VoiceCallActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".activity.VideoCallActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.ImageGridActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
             android:name=".activity.ForgetPasswordActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize"
@@ -122,8 +137,7 @@
 
         <!-- 设置环信应用的 appkey 换成自己的 -->
         <meta-data
-            android:name="EASEMOB_APPKEY"
-            android:value="308704471#zhijia51" />
+            android:name="EASEMOB_APPKEY" android:value="308704471#zhijia51" />
             <!--android:value="dongruan520#zhijia51" />-->
         <!-- 声明sdk所需的service SDK核心功能 -->
         <service
@@ -148,7 +162,7 @@
         <activity
             android:name="com.hyphenate.easeui.ui.EaseBaiduMapActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide" />
+            android:theme="@style/AppTheme.NoActionBar" />
         <!-- 新的朋友邀请消息页面 -->
         <!-- 转发消息用户列表页面 -->
         <!-- 自定义的contextmenu -->
@@ -156,12 +170,16 @@
         <activity
             android:name="com.hyphenate.easeui.ui.EaseShowBigImageActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide" />
+            android:theme="@style/AppTheme.NoActionBar" />
         <!-- 下载文件 -->
         <activity
             android:name="com.hyphenate.easeui.ui.EaseShowNormalFileActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide" />
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.hyphenate.easeui.ui.EaseShowVideoActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

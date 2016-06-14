@@ -5,6 +5,7 @@
     android:paddingTop="7dp"
     android:paddingBottom="7dp"
     android:background="#ededed"
+    android:id="@+id/em_search_bar"
     android:paddingLeft="@dimen/padding_search_bar"
     android:paddingRight="@dimen/padding_search_bar">
 

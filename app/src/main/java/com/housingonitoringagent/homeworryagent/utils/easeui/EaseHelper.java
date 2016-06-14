@@ -37,6 +37,9 @@ import com.hyphenate.easeui.utils.EaseUserUtils;
 import com.hyphenate.exceptions.HyphenateException;
 import com.hyphenate.util.EMLog;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -111,7 +114,6 @@ public class EaseHelper {
             easeUI = EaseUI.getInstance();
             //调用easeui的api设置providers
             setEaseUIProviders();
-
             //设置全局监听
             setGlobalListeners();
         }
@@ -147,6 +149,30 @@ public class EaseHelper {
 
     protected void setEaseUIProviders() {
 
+        easeUI.setUserProfileProvider(new EaseUI.EaseUserProfileProvider() {
+            @Override
+            public EaseUser getUser(String username) {
+                EaseUser user = new EaseUser(username);
+                if (username.equals(EMClient.getInstance().getCurrentUser())) {
+                    user.setAvatar(User.getHeadUrl());
+                    user.setNick(User.getNickname());
+                } else {
+                    JSONObject json ;
+                    String imUser = User.getIMUser(username);
+                    try {
+                        if (null != imUser) {
+                            json = new JSONObject(imUser);
+                            user.setAvatar(json.getString("avatar"));
+                            user.setNick(json.getString("nickname"));
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+                return user;
+            }
+        });
         //需要easeui库显示用户头像和昵称设置此provider
 //        easeUI.setUserProfileProvider(new EaseUI.EaseUserProfileProvider() {
 //
@@ -264,8 +290,11 @@ public class EaseHelper {
             public Intent getLaunchIntent(EMMessage message) {
                 //设置点击通知栏跳转事件
                 Intent intent = new Intent(appContext, ChatActivity.class);
+                intent.putExtra("userId", message.getFrom());
+                intent.putExtra("chatType", Constant.CHATTYPE_SINGLE);
+
                 //有电话时优先跳转到通话页面
-                if(isVideoCalling){
+                /*if(isVideoCalling){
                     intent = new Intent(appContext, VideoCallActivity.class);
                 }else if(isVoiceCalling){
                     intent = new Intent(appContext, VoiceCallActivity.class);
@@ -284,7 +313,7 @@ public class EaseHelper {
                         }
 
                     }
-                }
+                }*/
                 return intent;
             }
         });
@@ -403,10 +432,21 @@ public class EaseHelper {
             @Override
             public void onMessageReceived(List<EMMessage> messages) {
                 for (EMMessage message : messages) {
+                    try {
+
+                        String user = message.getStringAttribute("user");
+                        if (!user.equals("{}")) {
+                            User.setIMUser(message.getFrom(), user);
+                        }
+                    } catch (HyphenateException e) {
+                        e.printStackTrace();
+                    }
                     EMLog.d(TAG, "onMessageReceived id : " + message.getMsgId());
                     //应用在后台，不需要刷新UI,通知栏提示新消息
-                    if(!easeUI.hasForegroundActivies()){
+                    if (!easeUI.hasForegroundActivies()) {
                         getNotifier().onNewMsg(message);
+                    } else {
+
                     }
                 }
             }
@@ -457,7 +497,6 @@ public class EaseHelper {
 
             @Override
             public void onMessageChanged(EMMessage message, Object change) {
-
             }
         };
 

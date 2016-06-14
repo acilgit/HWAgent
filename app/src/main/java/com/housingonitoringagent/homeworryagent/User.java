@@ -13,6 +13,7 @@ import com.housingonitoringagent.homeworryagent.cache.SecurityStorage;
 public class User {
     // 安全存储对象
     public static SecurityStorage storage = new SecurityStorage(App.getInstance(), PreferencesKey.User.NAME);
+    public static SecurityStorage publicStorage = new SecurityStorage(App.getInstance(), "publicStorage");
 
     public static void clear() {
         storage.clear();
@@ -231,12 +232,13 @@ public class User {
     }
 
     public static void setIMUser(String IMFrom, String user){
-        storage.put(IMFrom,user);
+        publicStorage.put(IMFrom,user);
     }
 
     public static String getIMUser(String IMFrom){
-        return storage.getString(IMFrom, null);
+        return publicStorage.getString(IMFrom, null);
     }
+
     public static void setType(int type) {
         storage.put(PreferencesKey.User.TYPE, type);
     }
@@ -299,6 +301,7 @@ public class User {
     public static String getUserId() {
         return storage.getString(PreferencesKey.User.ID, null);
     }
+
     public static String getNickname() {
         return storage.getString(PreferencesKey.User.NICKNAME, null);
     }

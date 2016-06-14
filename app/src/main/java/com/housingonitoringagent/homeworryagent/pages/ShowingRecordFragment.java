@@ -1,7 +1,7 @@
 package com.housingonitoringagent.homeworryagent.pages;
 
 import android.content.Intent;
-import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,24 +10,28 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.alibaba.fastjson.JSON;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.housingonitoringagent.homeworryagent.Const;
 import com.housingonitoringagent.homeworryagent.R;
 import com.housingonitoringagent.homeworryagent.activity.ShowingActivity;
-import com.housingonitoringagent.homeworryagent.beans.ShowHouseBean;
+import com.housingonitoringagent.homeworryagent.beans.ShowHouseBean.ContentBean;
 import com.housingonitoringagent.homeworryagent.extents.BaseActivity;
+import com.housingonitoringagent.homeworryagent.utils.DateUtil;
 import com.housingonitoringagent.homeworryagent.utils.net.VolleyResponseListener;
 import com.housingonitoringagent.homeworryagent.utils.net.VolleyStringRequest;
 import com.housingonitoringagent.homeworryagent.utils.uikit.BGARefreshLayoutBuilder;
 import com.housingonitoringagent.homeworryagent.utils.uikit.QBLToast;
 import com.housingonitoringagent.homeworryagent.utils.uikit.recyclerview.HorizontalDividerItemDecoration;
-import com.housingonitoringagent.homeworryagent.utils.uikit.recyclerview.VerticalDividerItemDecoration;
 import com.housingonitoringagent.homeworryagent.views.XAdapter;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -39,21 +43,19 @@ import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
  * Created by Administrator on 2014/9/30.
  */
 
-public class ShowingRecordFragment extends Fragment implements BGARefreshLayout.BGARefreshLayoutDelegate{
+public class ShowingRecordFragment extends Fragment implements BGARefreshLayout.BGARefreshLayoutDelegate {
 
-//    @Bind(R.id.toolbar)
+    //    @Bind(R.id.toolbar)
 //    Toolbar toolbar;
     @Bind(R.id.rvMain)
     RecyclerView rvMain;
     @Bind(R.id.refreshView)
     BGARefreshLayout refreshView;
 
-    private XAdapter<ShowHouseBean.ContentBean> neighborAdapter;
-    //    private XAdapter<String> neighborAdapter;
-//    private XAdapter neighborAdapter;
+    private XAdapter<ContentBean.Content> adapter;
     private boolean lastPage;
     private int pageIndex;
-    private int selectedVillageIndex = -1;
+    private int pageSize = 10;
     private List<String> villages;
 
     private static final int REQUEST_CODE_NEW_COMMENT = 0;
@@ -102,14 +104,31 @@ public class ShowingRecordFragment extends Fragment implements BGARefreshLayout.
                 .marginResId(R.dimen.item_margin_icon, R.dimen.item_margin_icon).build()
         );
 
-        List<String> list = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
-            list.add("看房 第" + i);
-        }
-        XAdapter adapter = new XAdapter<String>(getThis(), list, R.layout.item_showing) {
+        XAdapter adapter = new XAdapter<ContentBean.Content>(getThis(), new ArrayList<ContentBean.Content>(), R.layout.item_showing) {
+            @Override
+            public void creatingHolder(CustomHolder holder, List<ContentBean.Content> dataList, int adapterPos, int viewType) {
+
+            }
 
             @Override
-            protected void handleItemViewClick(CustomHolder holder, String item) {
+            public void bindingHolder(CustomHolder holder, List<ContentBean.Content> dataList, int pos) {
+                ContentBean.Content bean = dataList.get(pos);
+                holder.setText(R.id.tvState, bean.getPermitStateString())
+                        .setText(R.id.tvOrderNoTitle, bean.getPermitTypeString())
+                        .setText(R.id.tvName, bean.getApplyUserName())
+                        .setText(R.id.tvPhone, bean.getApplyUserMobilephone())
+                        .setText(R.id.tvHouseName, bean.getVillage_name())
+//                        .setText(R.id.tvHouseDetail, bean.get())
+//                        .setText(R.id.tvHousePrice, bean.get())
+//                        .setText(R.id.tvAppointmentTime, bean.get())
+//                        .setText(R.id.tvStartTime, DateUtil.formatDateToString(bean.getStartTime()))
+                        .setText(R.id.tvStartTime, DateUtil.formatDateToString(bean.getStartTime()));
+                ((SimpleDraweeView) holder.getView(R.id.sivHead)).setImageURI(Uri.parse(bean.getAvatar()));
+                ((SimpleDraweeView) holder.getView(R.id.sivHouse)).setImageURI(Uri.parse(bean.get()));
+            }
+
+            @Override
+            protected void handleItemViewClick(CustomHolder holder, ContentBean.Content item) {
                 super.handleItemViewClick(holder, item);
                 getThis().start(ShowingActivity.class, new BaseActivity.BaseIntent() {
                     @Override
@@ -119,14 +138,6 @@ public class ShowingRecordFragment extends Fragment implements BGARefreshLayout.
                 });
             }
 
-            @Override
-            public void creatingHolder(CustomHolder holder, List<String> dataList, int adapterPos, int viewType) {
-            }
-
-            @Override
-            public void bindingHolder(CustomHolder holder, List<String> dataList, int pos) {
-                holder.setText(R.id.tvHouseName, dataList.get(pos));
-            }
         };
         rvMain.setAdapter(adapter);
 
@@ -353,47 +364,61 @@ public class ShowingRecordFragment extends Fragment implements BGARefreshLayout.
 
     /**
      * 获取小区
-
+     *
      * @param page        页码
      * @param villageName 小区id
      * @param refreshType 状态
      */
-    private void getDataByRefresh(final int page, final int pageSize, final String villageName, final int refreshType) {
-        VolleyStringRequest request = new VolleyStringRequest(Request.Method.POST, Const.serviceMethod.NEIGHBOR_LIST, new VolleyResponseListener() {
+    private void getDataByRefresh(final int page, final int pageSize, final int refreshType) {
+        VolleyStringRequest request = new VolleyStringRequest(Request.Method.POST, Const.serviceMethod.VISIT_PERMISSSION_LIST, new VolleyResponseListener() {
             @Override
             public void handleJson(com.alibaba.fastjson.JSONObject json) {
                 super.handleJson(json);
                 int resultCode = json.getIntValue("resultCode");
                 String message = json.getString("message");
                 if (resultCode == 1) {
-                 /*   NeighbourListBean bean = JSON.parseObject(json.toString(), NeighbourListBean.class);
-                    lastPage = bean.getNeighbourMessages().isLastPage();
-                    villages = bean.getVillageNames();
-                    User.setNeighbours(json.toString());
+                    ContentBean bean = JSON.parseObject(json.toString(), ContentBean.class);
+                    lastPage = bean.isLastPage();
                     switch (refreshType) {
                         case Const.RefreshType.REFRESH:
-//                            refreshView.endRefreshing();
-//                            neighborAdapter.clearData();
-                            if (bean.getNeighbourMessages().getContent().size() > 0) {
-                                neighborAdapter.setDataList(bean.getNeighbourMessages().getContent());
-                            }
+                            refreshView.endRefreshing();
                             break;
                         case Const.RefreshType.LOAD:
-//                            refreshView.endLoadingMore();
+                            refreshView.endLoadingMore();
                             pageIndex++;
-                            if (bean.getNeighbourMessages().getContent().size() > 0) {
-//                                neighborAdapter.addAdapterData(bean.getNeighbourMessages().getContent());
-                            }
                             break;
-                    }*/
+                    }
+
+                    if (bean.getContent().size() > 0) {
+                        List<ContentBean.Content> list = adapter.getDataList();
+                        for (ContentBean.Content item : bean.getContent()) {
+                            boolean add = false;
+                            for (ContentBean.Content listItem : list) {
+                                if (item.getId().equals(listItem.getId())) {
+                                    add = true;
+                                    break;
+                                }
+                            }
+                            if (!add) {
+                                list.add(item);
+                            }
+                        }
+                        Collections.sort(bean.getContent(), new Comparator<ContentBean.Content>() {
+                            public int compare(ContentBean.Content arg0, ContentBean.Content arg1) {
+                                return arg0.getCreateTimeCompare().compareTo(arg1.getCreateTimeCompare());
+                            }
+                        });
+                        adapter.notifyDataSetChanged();
+                    }
+//                    adapter.setDataList(list);
                 } else {
                     QBLToast.show(message);
                     switch (refreshType) {
                         case Const.RefreshType.REFRESH:
-//                            refreshView.endRefreshing();
+                            refreshView.endRefreshing();
                             break;
                         case Const.RefreshType.LOAD:
-//                            refreshView.endLoadingMore();
+                            refreshView.endLoadingMore();
                             break;
                     }
                 }
@@ -404,10 +429,10 @@ public class ShowingRecordFragment extends Fragment implements BGARefreshLayout.
                 QBLToast.show(R.string.network_exception);
                 switch (refreshType) {
                     case Const.RefreshType.REFRESH:
-//                        refreshView.endRefreshing();
+                        refreshView.endRefreshing();
                         break;
                     case Const.RefreshType.LOAD:
-//                        refreshView.endLoadingMore();
+                        refreshView.endLoadingMore();
                         break;
                 }
             }
@@ -415,10 +440,8 @@ public class ShowingRecordFragment extends Fragment implements BGARefreshLayout.
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = super.getParams();
-                params.put("page", String.valueOf(page));
-                if (!villageName.isEmpty()) {
-                    params.put("villageName", villageName);
-                }
+                params.put("page", refreshType==Const.RefreshType.REFRESH ? "0" : String.valueOf(page));
+                params.put("permitType", "0");
                 params.put("pageSize", String.valueOf(pageSize));
                 return params;
             }
@@ -429,18 +452,18 @@ public class ShowingRecordFragment extends Fragment implements BGARefreshLayout.
     @Override
     public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
 //        getDataByRefresh(++pageIndex, 10, villages.get(selectedVillageIndex), Const.RefreshType.REFRESH);
-//        if (neighborAdapter.getItemCount() > 0) {
-//            getDataByRefresh(pageIndex, neighborAdapter.get.get(mBuildSelectIndex).getId(), villageName, Const.RefreshType.REFRESH);
-//        } else {
-//            refreshView.endRefreshing();
-//            QBLToast.show(R.string.text_no_data);
-//        }
+        if (adapter.getItemCount() > 0) {
+            getDataByRefresh(pageIndex, pageSize, Const.RefreshType.REFRESH);
+        } else {
+            refreshView.endRefreshing();
+            QBLToast.show(R.string.text_no_data);
+        }
     }
 
     @Override
     public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
         if (!lastPage) {
-            getDataByRefresh(++pageIndex, 10, villages.get(selectedVillageIndex), Const.RefreshType.LOAD);
+            getDataByRefresh(pageIndex+1, pageSize, Const.RefreshType.LOAD);
         }
       /*  if (mVillages.size() > 0) {
             if (!lastPage) {

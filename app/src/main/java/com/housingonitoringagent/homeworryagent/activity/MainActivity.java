@@ -17,13 +17,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.housingonitoringagent.homeworryagent.R;
+import com.housingonitoringagent.homeworryagent.User;
 import com.housingonitoringagent.homeworryagent.extents.BaseActivity;
 import com.housingonitoringagent.homeworryagent.pages.ConversationListFragment;
 import com.housingonitoringagent.homeworryagent.pages.MeFragment;
 import com.housingonitoringagent.homeworryagent.pages.ShowingRecordFragment;
+import com.housingonitoringagent.homeworryagent.utils.easeui.EaseHelper;
+import com.hyphenate.EMConversationListener;
+import com.hyphenate.EMMessageListener;
+import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
+import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.EaseConstant;
 import com.hyphenate.easeui.ui.EaseConversationListFragment;
+import com.hyphenate.exceptions.HyphenateException;
 
 import java.util.List;
 
@@ -71,12 +78,54 @@ public class MainActivity extends BaseActivity {
 
     private int currentPage = 0;
 
+    private EMMessageListener messageListener = new EMMessageListener() {
+        @Override
+        public void onMessageReceived(List<EMMessage> messages) {
+//            runOnUiThread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    updateUnreadLabel();
+//                }
+//            });
+            conversationFragment.refresh();
+        }
+
+        @Override
+        public void onCmdMessageReceived(List<EMMessage> messages) {
+        }
+
+        @Override
+        public void onMessageReadAckReceived(List<EMMessage> messages) {
+        }
+
+        @Override
+        public void onMessageDeliveryAckReceived(List<EMMessage> message) {
+        }
+
+        @Override
+        public void onMessageChanged(EMMessage message, Object change) {}
+    };
+
+    EMConversationListener conversationListener = new EMConversationListener() {
+        @Override
+        public void onCoversationUpdate() {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    updateUnreadLabel();
+                }
+            });
+        }
+    };
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        setToolbar(0);
         setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -147,6 +196,7 @@ public class MainActivity extends BaseActivity {
         for (int i = 0; i < 3; i++) {
             View view = LayoutInflater.from(this).inflate(R.layout.item_tab, null);
             TextView tvTab = (TextView) view.findViewById(R.id.tvTab);
+            TextView tvUnread = (TextView) view.findViewById(R.id.tvUnread);
             ImageView ivTab = (ImageView) view.findViewById(R.id.ivTab);
             tvTab.setText(titles[i]);
             tvTab.setTextColor(getResources().getColor(i==currentPage ? R.color.colorPrimary :R.color.text_gray));
@@ -156,11 +206,34 @@ public class MainActivity extends BaseActivity {
         }
     }
 
+    public void updateUnreadLabel() {
+        int count = getUnreadMsgCountTotal();
+        boolean show = count > 0;
+        tabMain.getTabAt(0).getCustomView().findViewById(R.id.tvUnread).setVisibility(show ? View.VISIBLE : View.INVISIBLE);
+    }
+
+    /**
+     * 获取未读消息数
+     *
+     * @return
+     */
+    public int getUnreadMsgCountTotal() {
+        int unreadMsgCountTotal = 0;
+        int chatRoomUnreadMsgCount = 0;
+        unreadMsgCountTotal = EMClient.getInstance().chatManager().getUnreadMsgsCount();
+        for(EMConversation conversation:EMClient.getInstance().chatManager().getAllConversations().values()){
+            if(conversation.getType() == EMConversation.EMConversationType.ChatRoom)
+                chatRoomUnreadMsgCount=chatRoomUnreadMsgCount+conversation.getUnreadMsgCount();
+        }
+        return unreadMsgCountTotal-chatRoomUnreadMsgCount;
+    }
 
     private void init() {
 
         //聊天人或群id
 //        toChatUsername = getIntent().getExtras().getString("userId");
+
+
 
     }
 
@@ -271,5 +344,22 @@ public class MainActivity extends BaseActivity {
 */
             return "";
         }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EaseHelper.getInstance().popActivity(this);
+        EMClient.getInstance().chatManager().removeMessageListener(messageListener);
+        EMClient.getInstance().chatManager().removeConversationListener(conversationListener);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        EaseHelper.getInstance().pushActivity(this);
+        EMClient.getInstance().chatManager().addMessageListener(messageListener);
+        EMClient.getInstance().chatManager().addConversationListener(conversationListener);
+        updateUnreadLabel();
     }
 }

@@ -246,6 +246,7 @@
     <string name="downwaiting">Downloading the file, please try again later</string>
     <string name="dynamic_expression">[Dynamic expression]</string>
     <string name="ease_user_remove">This user has been removed</string>
+    <string name="em_msg_type_house_recommend">[房源推荐]</string>
     <string name="error_send_invalid_content">The message content is not allowed to be sent!</string>
     <string name="error_send_not_in_the_group">You already were not in the group</string>
     <string name="exit_group">Exit</string>

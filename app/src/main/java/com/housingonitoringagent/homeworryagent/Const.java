@@ -42,7 +42,11 @@ public class Const {
         String PROJECTMANAGERINFO = SERVER + "/append/village/projectmanagerinfo";
 
         /*看房记录*/
-        String VISIT_PERMISSSION = SERVER + "/append/apply_visit_permit_agent/list";
+        String VISIT_PERMISSSION_LIST = SERVER + "/append/apply_visit_permit_agent/list";
+        /*看房*/
+        String VISIT_PERMISSSION_UPDATE = SERVER + "/append/apply_visit_permit_agent/update";
+        /*看房*/
+        String VISIT_PERMISSSION_END = SERVER + "/append/apply_visit_permit_agent/permitEnd";
 
 
 

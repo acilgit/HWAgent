@@ -54,16 +54,15 @@ public class OutletActivity extends BaseActivity implements View.OnClickListener
         setContentView(R.layout.activity_outlet);
         ButterKnife.bind(this);
         toolbar.setTitle(R.string.outlet);
-//        toolbar.setTitle("");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+       /* toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
-        });
+        });*/
         initViews();
         initDate();
     }

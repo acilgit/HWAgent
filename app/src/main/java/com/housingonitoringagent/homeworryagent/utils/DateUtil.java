@@ -21,6 +21,12 @@ public class DateUtil {
     public static SimpleDateFormat DATE_FORMAT = new SimpleDateFormat(DATE_TEMPLATE, Locale.CHINA);
     public static SimpleDateFormat DATE_FORMAT_SIMPLE = new SimpleDateFormat(DATE_SIMPLE, Locale.CHINA);
 
+    public static String formatDateToString(long date) {
+        Calendar calendar = Calendar.getInstance(Locale.CHINA);
+        calendar.setTimeInMillis(date);
+        return DATE_FORMAT_SIMPLE.format(calendar.getTime());
+    }
+
     public static String parseTimeStamp(Long timeStamp, int unit) {
         if (timeStamp == null) {
             return "";

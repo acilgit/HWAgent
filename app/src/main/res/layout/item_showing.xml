@@ -7,7 +7,6 @@
     android:orientation="vertical"
     android:fitsSystemWindows="true">
 
-
     <RelativeLayout
         android:layout_marginTop="16dp"
         android:layout_width="match_parent"
@@ -204,7 +203,7 @@
                 android:layout_height="wrap_content" />
 
             <TextView
-                android:id="@+id/tvPartyAgent"
+                android:id="@+id/tvStartTime"
                 android:text="待定"
                 android:textSize="@dimen/text_size_item_table"
                 android:textColor="@color/text_gray"

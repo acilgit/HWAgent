@@ -14,6 +14,7 @@ import com.housingonitoringagent.homeworryagent.utils.uikit.QBLToast;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
 import com.hyphenate.easeui.ui.EaseConversationListFragment;
+import com.hyphenate.easeui.widget.EaseTitleBar;
 import com.hyphenate.util.NetUtils;
 
 /**
@@ -29,6 +30,10 @@ public class ConversationListFragment extends EaseConversationListFragment {
         View errorView = View.inflate(getActivity(), R.layout.em_chat_neterror_item, null);
         errorItemContainer.addView(errorView);
         errorText = (TextView) errorView.findViewById(R.id.tv_connect_errormsg);
+        getView().findViewById(R.id.title_bar).setVisibility(View.GONE);
+        getView().findViewById(R.id.em_search_bar).setVisibility(View.GONE);
+
+
     }
 
     @Override
@@ -54,10 +59,9 @@ public class ConversationListFragment extends EaseConversationListFragment {
                         }else{
                             intent.putExtra(Constant.EXTRA_CHAT_TYPE, Constant.CHATTYPE_GROUP);
                         }
-
                     }
                     // it's single chat
-                    intent.putExtra(Constant.EXTRA_USER_ID, username);
+                    intent.putExtra(getString(R.string.extra_user_id), username);
                     startActivity(intent);
                 }
             }

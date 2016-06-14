@@ -339,7 +339,6 @@
                 android:layout_marginTop="0dp"
                 app:layout_collapseMode="pin"
                 android:gravity="top"
-                app:navigationIcon="@mipmap/icon_left"
                 app:titleMarginTop="15dp"
                 app:theme="@style/AppTheme.Toolbar"
                 app:popupTheme="@style/AppTheme.PopupOverlay"/>

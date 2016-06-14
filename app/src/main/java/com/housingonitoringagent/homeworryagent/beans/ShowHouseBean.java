@@ -1,25 +1,33 @@
 package com.housingonitoringagent.homeworryagent.beans;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by Administrator on 2016/3/30 0030.
  */
 public class ShowHouseBean implements Serializable {
+
     /**
      * resultCode : 1
-     * message : 登录成功
-     * content : {"sessionId":"e3767e8a-5fbb-4b65-aa18-8404f16c2423","user":{"id":"6371ca31-da7a-458a-88a3-98600bff2753","name":"测试1","sex":1,"age":20,"avatar":"/resources/_backend/images/avatar.jpg","address":null,"nickname":"测试1","mobilephone":"18918918910","email":null,"owner":false,"renter":false}}
+     * message : 获取列表成功
+     * content : {"content":[{"creator":null,"createTime":1465176760000,"updater":null,"updateTime":1465176760000,"activate":true,"id":"a5a46db5-b182-4cf4-bbac-21b96a47f2f6","houseId":"86dae364-79c4-45bc-b467-55095fb69f1c","userId":"6371ca31-da7a-458a-88a3-98600bff2753","applyUserName":"章瑱彬","applyUserSex":2,"applyUserMobilephone":"13790545364","storeId":"16a3aec5-63ef-4c65-a99d-ef36802e6e55","storeName":"合富莞城店","agentId":"9b870b8c-1eb2-4599-a1a8-b1faa34ea80d","agentName":null,"avatar":"http://192.168.1.222:9000/upload/image/20160531/1464695499885084970.jpg","startTime":1465176760000,"endTime":1465176760000,"applyVisitNumber":1,"realVisitNumber":null,"permitStatus":0,"permitType":2,"village_name":"霖峰\u2022壹山境","house_number":"076914800441","createor":"陈绍鹏","name":"经纪人","isCommented":true}],"number":0,"size":5,"sort":null,"numberOfElements":2,"totalElements":3,"totalPages":1,"firstPage":true,"lastPage":true}
      */
 
     private int resultCode;
     private String message;
     /**
-     * sessionId : e3767e8a-5fbb-4b65-aa18-8404f16c2423
-     * user : {"id":"6371ca31-da7a-458a-88a3-98600bff2753","name":"测试1","sex":1,"age":20,"avatar":"/resources/_backend/images/avatar.jpg","address":null,"nickname":"测试1","mobilephone":"18918918910","email":null,"owner":false,"renter":false}
+     * content : [{"creator":null,"createTime":1465176760000,"updater":null,"updateTime":1465176760000,"activate":true,"id":"a5a46db5-b182-4cf4-bbac-21b96a47f2f6","houseId":"86dae364-79c4-45bc-b467-55095fb69f1c","userId":"6371ca31-da7a-458a-88a3-98600bff2753","applyUserName":"章瑱彬","applyUserSex":2,"applyUserMobilephone":"13790545364","storeId":"16a3aec5-63ef-4c65-a99d-ef36802e6e55","storeName":"合富莞城店","agentId":"9b870b8c-1eb2-4599-a1a8-b1faa34ea80d","agentName":null,"avatar":"http://192.168.1.222:9000/upload/image/20160531/1464695499885084970.jpg","startTime":1465176760000,"endTime":1465176760000,"applyVisitNumber":1,"realVisitNumber":null,"permitStatus":0,"permitType":2,"village_name":"霖峰\u2022壹山境","house_number":"076914800441","createor":"陈绍鹏","name":"经纪人","isCommented":true}]
+     * number : 0
+     * size : 5
+     * sort : null
+     * numberOfElements : 2
+     * totalElements : 3
+     * totalPages : 1
+     * firstPage : true
+     * lastPage : true
      */
-
-    private ContentBean content;
+    private ContentBean contentBean;
 
     public int getResultCode() {
         return resultCode;
@@ -37,60 +45,222 @@ public class ShowHouseBean implements Serializable {
         this.message = message;
     }
 
-    public ContentBean getContent() {
-        return content;
+    public ContentBean getContentBean() {
+        return contentBean;
     }
 
-    public void setContent(ContentBean content) {
-        this.content = content;
+    public void setContentBean(ContentBean contentBean) {
+        this.contentBean = contentBean;
     }
 
     public static class ContentBean {
-        private String sessionId;
+        private int number;
+        private int size;
+        private Object sort;
+        private int numberOfElements;
+        private int totalElements;
+        private int totalPages;
+        private boolean firstPage;
+        private boolean lastPage;
         /**
-         * id : 6371ca31-da7a-458a-88a3-98600bff2753
-         * name : 测试1
-         * sex : 1
-         * age : 20
-         * avatar : /resources/_backend/images/avatar.jpg
-         * address : null
-         * nickname : 测试1
-         * mobilephone : 18918918910
-         * email : null
-         * owner : false
-         * renter : false
+         * creator : null
+         * createTime : 1465176760000
+         * updater : null
+         * updateTime : 1465176760000
+         * activate : true
+         * id : a5a46db5-b182-4cf4-bbac-21b96a47f2f6
+         * houseId : 86dae364-79c4-45bc-b467-55095fb69f1c
+         * userId : 6371ca31-da7a-458a-88a3-98600bff2753
+         * applyUserName : 章瑱彬
+         * applyUserSex : 2
+         * applyUserMobilephone : 13790545364
+         * storeId : 16a3aec5-63ef-4c65-a99d-ef36802e6e55
+         * storeName : 合富莞城店
+         * agentId : 9b870b8c-1eb2-4599-a1a8-b1faa34ea80d
+         * agentName : null
+         * avatar : http://192.168.1.222:9000/upload/image/20160531/1464695499885084970.jpg
+         * startTime : 1465176760000
+         * endTime : 1465176760000
+         * applyVisitNumber : 1
+         * realVisitNumber : null
+         * permitStatus : 0
+         * permitType : 2
+         * village_name : 霖峰•壹山境
+         * house_number : 076914800441
+         * createor : 陈绍鹏
+         * name : 经纪人
+         * isCommented : true
          */
 
-        private UserInfoBean user;
+        private List<Content> content;
 
-        public String getSessionId() {
-            return sessionId;
+        public int getNumber() {
+            return number;
         }
 
-        public void setSessionId(String sessionId) {
-            this.sessionId = sessionId;
+        public void setNumber(int number) {
+            this.number = number;
         }
 
-        public UserInfoBean getUser() {
-            return user;
+        public int getSize() {
+            return size;
         }
 
-        public void setUser(UserInfoBean user) {
-            this.user = user;
+        public void setSize(int size) {
+            this.size = size;
         }
 
-        public static class UserInfoBean {
+        public Object getSort() {
+            return sort;
+        }
+
+        public void setSort(Object sort) {
+            this.sort = sort;
+        }
+
+        public int getNumberOfElements() {
+            return numberOfElements;
+        }
+
+        public void setNumberOfElements(int numberOfElements) {
+            this.numberOfElements = numberOfElements;
+        }
+
+        public int getTotalElements() {
+            return totalElements;
+        }
+
+        public void setTotalElements(int totalElements) {
+            this.totalElements = totalElements;
+        }
+
+        public int getTotalPages() {
+            return totalPages;
+        }
+
+        public void setTotalPages(int totalPages) {
+            this.totalPages = totalPages;
+        }
+
+        public boolean isFirstPage() {
+            return firstPage;
+        }
+
+        public void setFirstPage(boolean firstPage) {
+            this.firstPage = firstPage;
+        }
+
+        public boolean isLastPage() {
+            return lastPage;
+        }
+
+        public void setLastPage(boolean lastPage) {
+            this.lastPage = lastPage;
+        }
+
+        public List<Content> getContent() {
+            return content;
+        }
+
+        public void setContent(List<Content> content) {
+            this.content = content;
+        }
+
+        public static class Content {
+            private Object creator;
+            private long createTime;
+            private Object updater;
+            private long updateTime;
+            private boolean activate;
             private String id;
-            private String name;
-            private int sex;
-            private int age;
+            private String houseId;
+            private String userId;
+            private String applyUserName;
+            private int applyUserSex;
+            private String applyUserMobilephone;
+            private String storeId;
+            private String storeName;
+            private String agentId;
+            private Object agentName;
             private String avatar;
-            private Object address;
-            private String nickname;
-            private String mobilephone;
-            private Object email;
-            private boolean owner;
-            private boolean renter;
+            private long startTime;
+            private long endTime;
+            private int applyVisitNumber;
+            private Object realVisitNumber;
+            private int permitStatus;
+            private int permitType;
+            private String village_name;
+            private String house_number;
+            private String createor;
+            private String name;
+            private boolean isCommented;
+
+
+            public Long getCreateTimeCompare() {
+                return createTime;
+            }
+            public String getPermitStateString() {
+                switch (permitStatus) {
+                    case 0:
+                        return "未确认";
+                    case 1:
+                        return "已看房";
+                    case 2:
+                        return "未看房";
+                    default:
+                        return "";
+                }
+            }
+            public String getPermitTypeString() {
+                switch (permitType) {
+                    case 0:
+                        return "租房";
+                    case 1:
+                        return "二手房";
+                    default:
+                        return "";
+                }
+            }
+
+            public Object getCreator() {
+                return creator;
+            }
+
+            public void setCreator(Object creator) {
+                this.creator = creator;
+            }
+
+            public long getCreateTime() {
+                return createTime;
+            }
+
+            public void setCreateTime(long createTime) {
+                this.createTime = createTime;
+            }
+
+            public Object getUpdater() {
+                return updater;
+            }
+
+            public void setUpdater(Object updater) {
+                this.updater = updater;
+            }
+
+            public long getUpdateTime() {
+                return updateTime;
+            }
+
+            public void setUpdateTime(long updateTime) {
+                this.updateTime = updateTime;
+            }
+
+            public boolean isActivate() {
+                return activate;
+            }
+
+            public void setActivate(boolean activate) {
+                this.activate = activate;
+            }
 
             public String getId() {
                 return id;
@@ -100,28 +270,76 @@ public class ShowHouseBean implements Serializable {
                 this.id = id;
             }
 
-            public String getName() {
-                return name;
+            public String getHouseId() {
+                return houseId;
             }
 
-            public void setName(String name) {
-                this.name = name;
+            public void setHouseId(String houseId) {
+                this.houseId = houseId;
             }
 
-            public int getSex() {
-                return sex;
+            public String getUserId() {
+                return userId;
             }
 
-            public void setSex(int sex) {
-                this.sex = sex;
+            public void setUserId(String userId) {
+                this.userId = userId;
             }
 
-            public int getAge() {
-                return age;
+            public String getApplyUserName() {
+                return applyUserName;
             }
 
-            public void setAge(int age) {
-                this.age = age;
+            public void setApplyUserName(String applyUserName) {
+                this.applyUserName = applyUserName;
+            }
+
+            public int getApplyUserSex() {
+                return applyUserSex;
+            }
+
+            public void setApplyUserSex(int applyUserSex) {
+                this.applyUserSex = applyUserSex;
+            }
+
+            public String getApplyUserMobilephone() {
+                return applyUserMobilephone;
+            }
+
+            public void setApplyUserMobilephone(String applyUserMobilephone) {
+                this.applyUserMobilephone = applyUserMobilephone;
+            }
+
+            public String getStoreId() {
+                return storeId;
+            }
+
+            public void setStoreId(String storeId) {
+                this.storeId = storeId;
+            }
+
+            public String getStoreName() {
+                return storeName;
+            }
+
+            public void setStoreName(String storeName) {
+                this.storeName = storeName;
+            }
+
+            public String getAgentId() {
+                return agentId;
+            }
+
+            public void setAgentId(String agentId) {
+                this.agentId = agentId;
+            }
+
+            public Object getAgentName() {
+                return agentName;
+            }
+
+            public void setAgentName(Object agentName) {
+                this.agentName = agentName;
             }
 
             public String getAvatar() {
@@ -132,168 +350,93 @@ public class ShowHouseBean implements Serializable {
                 this.avatar = avatar;
             }
 
-            public Object getAddress() {
-                return address;
+            public long getStartTime() {
+                return startTime;
             }
 
-            public void setAddress(Object address) {
-                this.address = address;
+            public void setStartTime(long startTime) {
+                this.startTime = startTime;
             }
 
-            public String getNickname() {
-                return nickname;
+            public long getEndTime() {
+                return endTime;
             }
 
-            public void setNickname(String nickname) {
-                this.nickname = nickname;
+            public void setEndTime(long endTime) {
+                this.endTime = endTime;
             }
 
-            public String getMobilephone() {
-                return mobilephone;
+            public int getApplyVisitNumber() {
+                return applyVisitNumber;
             }
 
-            public void setMobilephone(String mobilephone) {
-                this.mobilephone = mobilephone;
+            public void setApplyVisitNumber(int applyVisitNumber) {
+                this.applyVisitNumber = applyVisitNumber;
             }
 
-            public Object getEmail() {
-                return email;
+            public Object getRealVisitNumber() {
+                return realVisitNumber;
             }
 
-            public void setEmail(Object email) {
-                this.email = email;
+            public void setRealVisitNumber(Object realVisitNumber) {
+                this.realVisitNumber = realVisitNumber;
             }
 
-            public boolean isOwner() {
-                return owner;
+            public int getPermitStatus() {
+                return permitStatus;
             }
 
-            public void setOwner(boolean owner) {
-                this.owner = owner;
+            public void setPermitStatus(int permitStatus) {
+                this.permitStatus = permitStatus;
             }
 
-            public boolean isRenter() {
-                return renter;
+            public int getPermitType() {
+                return permitType;
             }
 
-            public void setRenter(boolean renter) {
-                this.renter = renter;
+            public void setPermitType(int permitType) {
+                this.permitType = permitType;
+            }
+
+            public String getVillage_name() {
+                return village_name;
+            }
+
+            public void setVillage_name(String village_name) {
+                this.village_name = village_name;
+            }
+
+            public String getHouse_number() {
+                return house_number;
+            }
+
+            public void setHouse_number(String house_number) {
+                this.house_number = house_number;
+            }
+
+            public String getCreateor() {
+                return createor;
+            }
+
+            public void setCreateor(String createor) {
+                this.createor = createor;
+            }
+
+            public String getName() {
+                return name;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
+
+            public boolean isIsCommented() {
+                return isCommented;
+            }
+
+            public void setIsCommented(boolean isCommented) {
+                this.isCommented = isCommented;
             }
         }
     }
-
-   /* @JSONField(name = "sessionId")
-    private String sessionId;
-    @JSONField(name = "type")
-    private int type;
-    @JSONField(name = "mobilephone")
-    private String mobilephone;
-    @JSONField(name = "name")
-    private String name;
-    @JSONField(name = "nickname")
-    private String nickname;
-    @JSONField(name = "id")
-    private String id;
-    @JSONField(name = "account")
-    private String account;
-    @JSONField(name = "sex")
-    private String sex;
-    @JSONField(name = "avatar")
-    private String avatar;
-    @JSONField(name = "idCard")
-    private String idCard;
-    @JSONField(name = "yz")
-    private boolean yz;
-
-
-    public String getSessionId() {
-        return sessionId;
-    }
-
-    public void setSessionId(String sessionId) {
-        this.sessionId = sessionId;
-    }
-
-    public int getType() {
-        return type;
-    }
-
-    public void setType(int type) {
-        this.type = type;
-    }
-
-    public String getMobilephone() {
-        return mobilephone;
-    }
-
-    public void setMobilePhone(String mobilephone) {
-        this.mobilephone = mobilephone;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getAccount() {
-        return account;
-    }
-
-    public void setAccount(String account) {
-        this.account = account;
-    }
-
-    public String getSex() {
-        return sex;
-    }
-
-    public void setSex(String sex) {
-        this.sex = sex;
-    }
-
-
-
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
-
-    public String getIdCard() {
-        return idCard;
-    }
-
-    public void setIdCard(String idCard) {
-        this.idCard = idCard;
-    }
-
-    public boolean isYz() {
-        return yz;
-    }
-
-    public void setYz(boolean yz) {
-        this.yz = yz;
-    }*/
-
 }

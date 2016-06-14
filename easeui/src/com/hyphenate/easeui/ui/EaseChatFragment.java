@@ -407,7 +407,6 @@ public class EaseChatFragment extends EaseBaseFragment {
         }
     }
 
-
     EMMessageListener msgListener = new EMMessageListener() {
 		
 		@Override
