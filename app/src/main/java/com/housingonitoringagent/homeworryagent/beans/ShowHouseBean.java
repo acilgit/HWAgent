@@ -181,7 +181,7 @@ public class ShowHouseBean implements Serializable {
             private String storeId;
             private String storeName;
             private String agentId;
-            private Object agentName;
+            private String agentName;
             private String avatar;
             private long startTime;
             private long endTime;
@@ -334,7 +334,7 @@ public class ShowHouseBean implements Serializable {
                 this.agentId = agentId;
             }
 
-            public Object getAgentName() {
+            public String getAgentName() {
                 return agentName;
             }
 

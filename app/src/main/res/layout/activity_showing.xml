@@ -368,7 +368,7 @@
                 </TableLayout>
 
                 <Button
-                    android:id="@+id/btnLogin"
+                    android:id="@+id/btnCommit"
                     style="@style/btn_commit"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"

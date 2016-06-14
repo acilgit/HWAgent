@@ -366,7 +366,6 @@ public class ShowingRecordFragment extends Fragment implements BGARefreshLayout.
      * 获取小区
      *
      * @param page        页码
-     * @param villageName 小区id
      * @param refreshType 状态
      */
     private void getDataByRefresh(final int page, final int pageSize, final int refreshType) {
@@ -379,18 +378,20 @@ public class ShowingRecordFragment extends Fragment implements BGARefreshLayout.
                 if (resultCode == 1) {
                     ContentBean bean = JSON.parseObject(json.toString(), ContentBean.class);
                     lastPage = bean.isLastPage();
+                    List<ContentBean.Content> list;
                     switch (refreshType) {
                         case Const.RefreshType.REFRESH:
+                            list = new ArrayList<>();
                             refreshView.endRefreshing();
                             break;
-                        case Const.RefreshType.LOAD:
+                        default:
+                            list = adapter.getDataList();
                             refreshView.endLoadingMore();
                             pageIndex++;
                             break;
                     }
 
                     if (bean.getContent().size() > 0) {
-                        List<ContentBean.Content> list = adapter.getDataList();
                         for (ContentBean.Content item : bean.getContent()) {
                             boolean add = false;
                             for (ContentBean.Content listItem : list) {

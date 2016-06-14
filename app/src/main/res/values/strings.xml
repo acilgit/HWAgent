@@ -421,6 +421,7 @@
     <string name="delete_conversation_messages">删除会话和消息</string>
     <string name="delete_conversation">删除会话</string>
     <string name="extra_user_id">userId</string>
+    <string name="extra_bean">bean</string>
 
 </resources>
 
