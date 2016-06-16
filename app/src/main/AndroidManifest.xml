@@ -139,6 +139,11 @@
         <meta-data
             android:name="EASEMOB_APPKEY" android:value="308704471#zhijia51" />
             <!--android:value="dongruan520#zhijia51" />-->
+
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="9SDo9Af5h1Cn1oDUlf8ploxX" />
+
         <!-- 声明sdk所需的service SDK核心功能 -->
         <service
             android:name="com.hyphenate.chat.EMChatService"
@@ -163,6 +168,12 @@
             android:name="com.hyphenate.easeui.ui.EaseBaiduMapActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
+
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote" />
+
         <!-- 新的朋友邀请消息页面 -->
         <!-- 转发消息用户列表页面 -->
         <!-- 自定义的contextmenu -->

@@ -64,11 +64,24 @@ public class BaseActivity extends AppCompatActivity {
         this.startActivity(intent);
     }
 
+    public void start(Class<? extends BaseActivity> activityClass, int requestCode) {
+        Intent intent = new Intent();
+        intent.setClass(this, activityClass);
+        this.startActivityForResult(intent, requestCode);
+    }
+
     public void start(Class<? extends BaseActivity> activityClass, BaseIntent baseIntent) {
         Intent intent = new Intent();
         intent.setClass(this, activityClass);
         baseIntent.setIntent(intent);
         this.startActivity(intent);
+    }
+
+    public void start(Class<? extends BaseActivity> activityClass, BaseIntent baseIntent, int requestCode) {
+        Intent intent = new Intent();
+        intent.setClass(this, activityClass);
+        baseIntent.setIntent(intent);
+        this.startActivityForResult(intent, requestCode);
     }
 
     public void cancelVolleyRequestQueue() {

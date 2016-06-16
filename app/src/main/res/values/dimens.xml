@@ -42,4 +42,9 @@
     <dimen name="item_margin_bottom">8dp</dimen>
     <dimen name="item_margin_icon">16dp</dimen>
     <dimen name="item_margin_text_left">72dp</dimen>
+    <dimen name="btn_height_large">44dp</dimen>
+    <dimen name="btn_height_big">36dp</dimen>
+    <dimen name="btn_height_normal">32dp</dimen>
+    <dimen name="btn_height_small">24dp</dimen>
+    <dimen name="padding_table_row">12dp</dimen>
 </resources>

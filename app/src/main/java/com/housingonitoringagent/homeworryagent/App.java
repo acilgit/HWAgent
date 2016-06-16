@@ -6,8 +6,6 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-//import android.support.multidex.MultiDex;
-//import android.support.multidex.MultiDex;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.webkit.CookieManager;
@@ -17,7 +15,6 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import com.housingonitoringagent.homeworryagent.activity.LoginActivity;
 import com.housingonitoringagent.homeworryagent.activity.MainActivity;
 import com.housingonitoringagent.homeworryagent.extents.BaseActivity;
-import com.housingonitoringagent.homeworryagent.utils.FileUtil;
 import com.housingonitoringagent.homeworryagent.utils.LogUtils;
 import com.housingonitoringagent.homeworryagent.utils.ThreadPool;
 import com.housingonitoringagent.homeworryagent.utils.easeui.EaseHelper;
@@ -28,21 +25,18 @@ import com.hyphenate.EMCallBack;
 import com.hyphenate.EMConnectionListener;
 import com.hyphenate.EMError;
 import com.hyphenate.chat.EMClient;
-import com.hyphenate.chat.EMOptions;
-import com.hyphenate.easeui.controller.EaseUI;
-import com.hyphenate.easeui.domain.EaseUser;
+
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+
+//import android.support.multidex.MultiDex;
+//import android.support.multidex.MultiDex;
 //import com.hyphenate.util.NetUtils;
 //import com.hyphenate.chat.EMClient;
 //import com.hyphenate.chat.EMOptions;
 //import com.hyphenate.easeui.controller.EaseUI;
 //import com.hyphenate.util.PathUtil;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * Created by XY on 2016/5/28.
@@ -62,7 +56,7 @@ public class App extends Application {
 
         // 初始化环信SDK
         initEaseMob();
-        Log.e("ZJ", " create App " + 51);
+        Log.e("ZJ", " create App " + 53);
     }
 
   /*  @Override

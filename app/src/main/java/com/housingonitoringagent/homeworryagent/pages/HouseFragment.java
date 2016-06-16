@@ -16,7 +16,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.housingonitoringagent.homeworryagent.Const;
 import com.housingonitoringagent.homeworryagent.R;
-import com.housingonitoringagent.homeworryagent.beans.ShowHouseBean;
 import com.housingonitoringagent.homeworryagent.extents.BaseActivity;
 import com.housingonitoringagent.homeworryagent.utils.net.VolleyResponseListener;
 import com.housingonitoringagent.homeworryagent.utils.net.VolleyStringRequest;
@@ -54,13 +53,10 @@ public class HouseFragment extends Fragment implements BGARefreshLayout.BGARefre
 
     private int fragmentType = 0;
 
-    private XAdapter<ShowHouseBean.ContentBean> houseAdapter;
-    //    private XAdapter<String> houseAdapter;
-//    private XAdapter houseAdapter;
+//    private XAdapter<ShowHouseBean.ContentBean> adapter;
     private boolean lastPage;
     private int pageIndex;
-    private int selectedVillageIndex = -1;
-    private List<String> villages;
+    private int pageDefaultSize = 10;
 
 
 //    public HouseFragment() {
@@ -123,7 +119,7 @@ public class HouseFragment extends Fragment implements BGARefreshLayout.BGARefre
         for (int i = 0; i < 30; i++) {
             list.add("超级大厦 第" + i+ title);
         }
-       XAdapter adapter = new XAdapter<String>(getThis(), list, R.layout.item_house) {
+        XAdapter<String> adapter = new XAdapter<String>(getThis(), list, R.layout.item_house) {
 
            @Override
            protected void handleItemViewClick(CustomHolder holder, String item) {
@@ -133,6 +129,20 @@ public class HouseFragment extends Fragment implements BGARefreshLayout.BGARefre
 
            @Override
             public void creatingHolder(CustomHolder holder, List<String> dataList, int adapterPos, int viewType) {
+               View.OnClickListener clickListener = new View.OnClickListener() {
+                   @Override
+                   public void onClick(View v) {
+                       switch (v.getId()) {
+                           case R.id.btnSendLink:
+                               getThis().setResult(getThis().RESULT_OK);
+                               getThis().finish();
+                               break;
+                           default:
+                               break;
+                       }
+                   }
+               };
+               holder.getView(R.id.btnSendLink).setOnClickListener(clickListener);
             }
 
             @Override
@@ -454,7 +464,7 @@ public class HouseFragment extends Fragment implements BGARefreshLayout.BGARefre
     @Override
     public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
         if (!lastPage) {
-            getDataByRefresh(++pageIndex, 10, villages.get(selectedVillageIndex), Const.RefreshType.LOAD);
+//            getDataByRefresh(++pageIndex, 10, villages.get(selectedVillageIndex), Const.RefreshType.LOAD);
         }
       /*  if (mVillages.size() > 0) {
             if (!lastPage) {

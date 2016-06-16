@@ -106,6 +106,7 @@
 
         <Button
             android:id="@+id/btnSendLink"
+            style="@style/btn"
             android:text="发送连接"
             android:background="@drawable/round_rectangle_bg"
             android:layout_alignTop="@+id/tvHouseAddress"
@@ -114,7 +115,7 @@
             android:layout_marginLeft="4dp"
             android:layout_marginTop="-4dp"
             android:layout_width="72dp"
-            android:layout_height="24dp" />
+            android:layout_height="@dimen/btn_height_small" />
     </RelativeLayout>
 
 

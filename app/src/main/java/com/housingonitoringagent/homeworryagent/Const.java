@@ -5,7 +5,7 @@ package com.housingonitoringagent.homeworryagent;
  */
 public class Const {
      public static  String SERVER ="http://www.zhijia51.com";
-//    public static String SERVER = "http://192.168.1.233:9000/";
+//    public static String SERVER = "http://192.168.1.233:9000";
 
 
     public interface RequestCode {

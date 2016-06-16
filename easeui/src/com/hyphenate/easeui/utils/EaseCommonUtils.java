@@ -118,17 +118,15 @@ public class EaseCommonUtils {
                     digest = getString(context, R.string.video_call) + txtBody.getMessage();
                 } else if (message.getBooleanAttribute(EaseConstant.MESSAGE_ATTR_IS_BIG_EXPRESSION, false)) {
                     if (!TextUtils.isEmpty(txtBody.getMessage())) {
-                        int type = message.getIntAttribute("msgType", 0);
-                        if (type > 0) {
-                            digest = context.getString(R.string.em_msg_type_house_recommend);
-                        } else {
-                            digest = txtBody.getMessage();
-                        }
-                    } else {
                         digest = getString(context, R.string.dynamic_expression);
                     }
                 } else {
-                    digest = txtBody.getMessage();
+                    int type = message.getIntAttribute("msgType", 0);
+                    if (type == 6) {
+                        digest = context.getString(R.string.em_msg_type_house_recommend);
+                    } else {
+                        digest = txtBody.getMessage();
+                    }
                 }
                 break;
             case FILE: //普通文件消息
@@ -164,7 +162,6 @@ public class EaseCommonUtils {
     /**
      * 设置user昵称(没有昵称取username)的首字母属性，方便通讯中对联系人按header分类显示，以及通过右侧ABCD...字母栏快速定位联系人
      *
-     * @param username
      * @param user
      */
     public static void setUserInitialLetter(EaseUser user) {

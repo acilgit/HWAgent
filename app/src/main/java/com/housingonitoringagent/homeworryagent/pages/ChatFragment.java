@@ -10,16 +10,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 
 import com.housingonitoringagent.homeworryagent.R;
+import com.housingonitoringagent.homeworryagent.activity.ChatActivity;
 import com.housingonitoringagent.homeworryagent.activity.ContextMenuActivity;
 import com.housingonitoringagent.homeworryagent.activity.ImageGridActivity;
 import com.housingonitoringagent.homeworryagent.activity.VideoCallActivity;
 import com.housingonitoringagent.homeworryagent.activity.VoiceCallActivity;
-import com.housingonitoringagent.homeworryagent.utils.easeui.ChatRowVoiceCall;
 import com.housingonitoringagent.homeworryagent.utils.easeui.Constant;
-import com.housingonitoringagent.homeworryagent.utils.easeui.EaseChatRowAdvertisement;
 import com.housingonitoringagent.homeworryagent.utils.easeui.EaseHelper;
 import com.housingonitoringagent.homeworryagent.utils.easeui.util.EmojiconExampleGroupData;
 import com.housingonitoringagent.homeworryagent.utils.easeui.util.RobotUser;
@@ -28,11 +26,10 @@ import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMTextMessageBody;
 import com.hyphenate.easeui.ui.EaseChatFragment;
-import com.hyphenate.easeui.widget.chatrow.EaseChatRow;
-import com.hyphenate.easeui.widget.chatrow.EaseCustomChatRowProvider;
 import com.hyphenate.easeui.widget.emojicon.EaseEmojiconMenu;
-import com.hyphenate.util.EasyUtils;
 import com.hyphenate.util.PathUtil;
+
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -41,13 +38,13 @@ import java.util.Map;
 /**
  * Created by Administrator on 2016/5/30 0030.
  */
-public class ChatFragment extends EaseChatFragment implements EaseChatFragment.EaseChatFragmentListener {
+public class ChatFragment extends EaseChatFragment {
 
     //避免和基类定义的常量可能发生的冲突，常量从11开始定义
-    private static final int ITEM_VIDEO = 11;
-    private static final int ITEM_FILE = 12;
-    private static final int ITEM_VOICE_CALL = 13;
-    private static final int ITEM_VIDEO_CALL = 14;
+    public static final int ITEM_VIDEO = 11;
+    public static final int ITEM_FILE = 12;
+    public static final int ITEM_VOICE_CALL = 13;
+    public static final int ITEM_VIDEO_CALL = 14;
 
     private static final int REQUEST_CODE_SELECT_VIDEO = 11;
     private static final int REQUEST_CODE_SELECT_FILE = 12;
@@ -65,6 +62,10 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
      */
     private boolean isRobot;
 
+    public boolean isRobot() {
+        return isRobot;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return super.onCreateView(inflater, container, savedInstanceState);
@@ -72,7 +73,6 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
 
     @Override
     protected void setUpView() {
-        setChatFragmentListener(this);
         if (chatType == Constant.CHATTYPE_SINGLE) {
             Map<String, RobotUser> robotMap = EaseHelper.getInstance().getRobotList();
             if (robotMap != null && robotMap.containsKey(toChatUsername)) {
@@ -81,19 +81,6 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
         }
         super.setUpView();
         titleBar.setVisibility(View.GONE);
-        // 设置标题栏点击事件
-        titleBar.setLeftLayoutClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                if (EasyUtils.isSingleActivity(getActivity())) {
-//                    Intent intent = new Intent(getActivity(), MainActivity.class);
-//                    startActivity(intent);
-                    getActivity().finish();
-                }
-
-            }
-        });
         ((EaseEmojiconMenu) inputMenu.getEmojiconMenu()).addEmojiconGroup(EmojiconExampleGroupData.getData());
     }
 
@@ -104,10 +91,10 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
         //增加扩展item
         inputMenu.registerExtendMenuItem(R.string.attach_video, R.drawable.em_chat_video_selector, ITEM_VIDEO, extendMenuItemClickListener);
         inputMenu.registerExtendMenuItem(R.string.attach_file, R.drawable.em_chat_file_selector, ITEM_FILE, extendMenuItemClickListener);
-        if (chatType == Constant.CHATTYPE_SINGLE) {
-            inputMenu.registerExtendMenuItem(R.string.attach_voice_call, R.drawable.em_chat_voice_call_selector, ITEM_VOICE_CALL, extendMenuItemClickListener);
-            inputMenu.registerExtendMenuItem(R.string.attach_video_call, R.drawable.em_chat_video_call_selector, ITEM_VIDEO_CALL, extendMenuItemClickListener);
-        }
+//        if (chatType == Constant.CHATTYPE_SINGLE) {
+//            inputMenu.registerExtendMenuItem(R.string.attach_voice_call, R.drawable.em_chat_voice_call_selector, ITEM_VOICE_CALL, extendMenuItemClickListener);
+//            inputMenu.registerExtendMenuItem(R.string.attach_video_call, R.drawable.em_chat_video_call_selector, ITEM_VIDEO_CALL, extendMenuItemClickListener);
+//        }
     }
 
     @Override
@@ -160,92 +147,18 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
 
     }
 
-    @Override
-    public void onSetMessageAttributes(EMMessage message) {
-        if (isRobot) {
-            //设置消息扩展属性
-            message.setAttribute("em_robot_message", isRobot);
-        }
-    }
-
-    @Override
-    public EaseCustomChatRowProvider onSetCustomChatRowProvider() {
-        //设置自定义listview item提供者
-        return new CustomChatRowProvider();
-    }
-
-
-    @Override
-    public void onEnterToChatDetails() {
-//        if (chatType == Constant.CHATTYPE_GROUP) {
-//            EMGroup group = EMClient.getInstance().groupManager().getGroup(toChatUsername);
-//            if (group == null) {
-//                QBLToast.show(R.string.gorup_not_found);
-//                return;
-//            }
-//            startActivityForResult(
-//                    (new Intent(getActivity(), GroupDetailsActivity.class).putExtra("groupId", toChatUsername)),
-//                    REQUEST_CODE_GROUP_DETAIL);
-//        }else if(chatType == Constant.CHATTYPE_CHATROOM){
-//            startActivityForResult(new Intent(getActivity(), ChatRoomDetailsActivity.class).putExtra("roomId", toChatUsername), REQUEST_CODE_GROUP_DETAIL);
-//        }
-    }
-
-    @Override
-    public void onAvatarClick(String username) {
-//        //头像点击事件
-//        Intent intent = new Intent(getActivity(), UserProfileActivity.class);
-//        intent.putExtra("username", username);
-//        startActivity(intent);
-    }
-
-    @Override
-    public boolean onMessageBubbleClick(EMMessage message) {
-        if (message.getIntAttribute("msgType", 0) == 5) {
-            return true;
-        } else if (message.getIntAttribute("msgType", 0) == 6) {
-            return true;
-        }
-        return false;
-    }
-
-
-    @Override
-    public void onMessageBubbleLongClick(EMMessage message) {
-        //消息框长按
-        startActivityForResult((new Intent(getActivity(), ContextMenuActivity.class)).putExtra("message", message),
-                REQUEST_CODE_CONTEXT_MENU);
-    }
-
-    @Override
-    public boolean onExtendMenuItemClick(int itemId, View view) {
-        switch (itemId) {
-            case ITEM_VIDEO: //视频
-                Intent intent = new Intent(getActivity(), ImageGridActivity.class);
-                startActivityForResult(intent, REQUEST_CODE_SELECT_VIDEO);
-                break;
-            case ITEM_FILE: //一般文件
-                //demo这里是通过系统api选择文件，实际app中最好是做成qq那种选择发送文件
-                selectFileFromLocal();
-                break;
-            case ITEM_VOICE_CALL: //音频通话
-                startVoiceCall();
-                break;
-            case ITEM_VIDEO_CALL: //视频通话
-                startVideoCall();
-                break;
-
-            default:
-                break;
-        }
-        //不覆盖已有的点击事件
-        return false;
+    /**
+     * 选择视频
+     */
+    public void selectVideoFromLocal() {
+        Intent intent = new Intent(getActivity(), ImageGridActivity.class);
+        startActivityForResult(intent, REQUEST_CODE_SELECT_VIDEO);
     }
 
     /**
      * 选择文件
      */
-    protected void selectFileFromLocal() {
+    public void selectFileFromLocal() {
         Intent intent = null;
         if (Build.VERSION.SDK_INT < 19) { //19以后这个api不可用，demo这里简单处理成图库选择图片
             intent = new Intent(Intent.ACTION_GET_CONTENT);
@@ -261,7 +174,7 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
     /**
      * 拨打语音电话
      */
-    protected void startVoiceCall() {
+    public void startVoiceCall() {
         if (!EMClient.getInstance().isConnected()) {
             QBLToast.show(R.string.not_connect_to_server);
         } else {
@@ -275,7 +188,7 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
     /**
      * 拨打视频电话
      */
-    protected void startVideoCall() {
+    public void startVideoCall() {
         if (!EMClient.getInstance().isConnected())
             QBLToast.show(R.string.not_connect_to_server);
         else {
@@ -285,11 +198,18 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
             inputMenu.hideExtendMenuContainer();
         }
     }
+    //发送消息方法
+    //==========================================================================
+    public void sendCustomerMessage(JSONObject json) {
+        EMMessage message = EMMessage.createTxtSendMessage(json.toString(), toChatUsername);
+        message.setAttribute("msgType", ChatActivity.MESSAGE_TYPE_CUSTOMER);
+        sendMessage(message);
+    }
 
     /**
      * chat row provider
      */
-    private final class CustomChatRowProvider implements EaseCustomChatRowProvider {
+  /*  private final class CustomChatRowProvider implements EaseCustomChatRowProvider {
         @Override
         public int getCustomChatRowTypeCount() {
             //音、视频通话发送、接收共4种
@@ -329,5 +249,5 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
             return null;
         }
 
-    }
+    }*/
 }

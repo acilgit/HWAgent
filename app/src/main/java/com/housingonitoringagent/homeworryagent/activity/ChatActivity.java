@@ -1,8 +1,8 @@
 package com.housingonitoringagent.homeworryagent.activity;
 
 import android.content.Intent;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.os.Bundle;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,6 +12,7 @@ import android.widget.BaseAdapter;
 import com.housingonitoringagent.homeworryagent.R;
 import com.housingonitoringagent.homeworryagent.User;
 import com.housingonitoringagent.homeworryagent.extents.BaseActivity;
+import com.housingonitoringagent.homeworryagent.pages.ChatFragment;
 import com.housingonitoringagent.homeworryagent.utils.easeui.ChatRowVoiceCall;
 import com.housingonitoringagent.homeworryagent.utils.easeui.Constant;
 import com.housingonitoringagent.homeworryagent.utils.easeui.EaseChatRowAdvertisement;
@@ -27,7 +28,7 @@ import org.json.JSONObject;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class ChatActivity  extends BaseActivity {
+public class ChatActivity extends BaseActivity {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -40,11 +41,9 @@ public class ChatActivity  extends BaseActivity {
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
-    //避免和基类定义的常量可能发生的冲突，常量从11开始定义
-    private static final int ITEM_VIDEO = 11;
-    private static final int ITEM_FILE = 12;
-    private static final int ITEM_VOICE_CALL = 13;
-    private static final int ITEM_VIDEO_CALL = 14;
+
+
+    private static final int REQUEST_CODE_SEND_LINK = 101;
 
     private static final int REQUEST_CODE_SELECT_VIDEO = 11;
     private static final int REQUEST_CODE_SELECT_FILE = 12;
@@ -56,7 +55,11 @@ public class ChatActivity  extends BaseActivity {
     private static final int MESSAGE_TYPE_SENT_VIDEO_CALL = 3;
     private static final int MESSAGE_TYPE_RECV_VIDEO_CALL = 4;
 
-    private EaseChatFragment chatFragment;
+    public static final int MESSAGE_TYPE_CUSTOMER = 6;
+    private static final int MESSAGE_TYPE_CUSTOMER_SEND = 5;
+    private static final int MESSAGE_TYPE_CUSTOMER_RECEIVED = 6;
+
+    private ChatFragment chatFragment;
 
     private String toChatUsername;
 
@@ -74,7 +77,7 @@ public class ChatActivity  extends BaseActivity {
         toChatUsername = getIntent().getStringExtra(getString(R.string.extra_user_id));
         String nick = EaseUserUtils.getUserInfo(toChatUsername).getNick();
         //可以直接new EaseChatFratFragment使用
-        chatFragment = new EaseChatFragment();
+        chatFragment = new ChatFragment();
         //传入参数
         chatFragment.setArguments(getIntent().getExtras());
 
@@ -83,7 +86,7 @@ public class ChatActivity  extends BaseActivity {
 
         getSupportFragmentManager().beginTransaction().add(R.id.container, chatFragment).commit();
         init();
-        toolbar.setTitle(nick == null? toChatUsername : nick);
+        toolbar.setTitle(nick == null ? toChatUsername : nick);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
@@ -92,6 +95,11 @@ public class ChatActivity  extends BaseActivity {
         chatFragment.setChatFragmentListener(new EaseChatFragment.EaseChatFragmentListener() {
             @Override
             public void onSetMessageAttributes(EMMessage message) {
+
+                if (chatFragment.isRobot()) {
+                    //设置消息扩展属性
+                    message.setAttribute("em_robot_message", true);
+                }
                 JSONObject json = new JSONObject();
                 try {
                     json.put("avatar", User.getHeadUrl());
@@ -126,11 +134,32 @@ public class ChatActivity  extends BaseActivity {
 
             @Override
             public void onMessageBubbleLongClick(EMMessage message) {
-
+                startActivityForResult((new Intent(getThis(), ContextMenuActivity.class)).putExtra("message", message),
+                        REQUEST_CODE_CONTEXT_MENU);
             }
 
             @Override
             public boolean onExtendMenuItemClick(int itemId, View view) {
+                switch (itemId) {
+                    case ChatFragment.ITEM_VIDEO: //视频
+                        chatFragment.selectVideoFromLocal();
+//                        Intent intent = new Intent(getThis(), ImageGridActivity.class);
+//                        startActivityForResult(intent, REQUEST_CODE_SELECT_VIDEO);
+                        break;
+                    case ChatFragment.ITEM_FILE: //一般文件
+                        //demo这里是通过系统api选择文件，实际app中最好是做成qq那种选择发送文件
+                        chatFragment.selectFileFromLocal();
+                        break;
+//                    case ITEM_VOICE_CALL: //音频通话
+//                        startVoiceCall();
+//                        break;
+//                    case ITEM_VIDEO_CALL: //视频通话
+//                        startVideoCall();
+//                        break;
+                    default:
+                        break;
+                }
+                //不覆盖已有的点击事件
                 return false;
             }
 
@@ -139,7 +168,7 @@ public class ChatActivity  extends BaseActivity {
                 EaseCustomChatRowProvider provider = new EaseCustomChatRowProvider() {
                     @Override
                     public int getCustomChatRowTypeCount() {
-                        return 0;
+                        return 6;
                     }
 
                     @Override
@@ -153,6 +182,13 @@ public class ChatActivity  extends BaseActivity {
                                 return message.direct() == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_VIDEO_CALL : MESSAGE_TYPE_SENT_VIDEO_CALL;
                             } else {
                                 int type = message.getIntAttribute("msgType", 0);
+                                if (type==MESSAGE_TYPE_CUSTOMER) {
+                                    if (message.getFrom().equals(User.getUserId())) {
+                                        return MESSAGE_TYPE_CUSTOMER_SEND;
+                                    } else {
+                                        return MESSAGE_TYPE_CUSTOMER_RECEIVED;
+                                    }
+                                }
                                 return type;
                             }
                         }
@@ -202,7 +238,7 @@ public class ChatActivity  extends BaseActivity {
                     public void setIntent(Intent intent) {
                         intent.putExtra("", "");
                     }
-                });
+                }, REQUEST_CODE_SEND_LINK);
                 break;
             default:
                 break;
@@ -216,7 +252,31 @@ public class ChatActivity  extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void onClickItem() {
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case REQUEST_CODE_SEND_LINK:
+                    JSONObject json = new JSONObject();
+                    try {
+                        json.put("type", "houseSells");
+                        json.put("id", "86dae364-79c4-45bc-b467-55095fb69f1c");
+                        json.put("houseSellPicture", "http://192.168.1.222:9000/upload/image/20160601/1464781717490034364.jpg");
+                        json.put("title", "精装2房");
+                        json.put("houseShape", "二室二厅");
+                        json.put("address", "元美路口");
+                        json.put("price", "150.0");
+                        json.put("storeId", "16a3aec5-63ef-4c65-a99d-ef36802e6e55");
+                        json.put("agentId", "9b870b8c-1eb2-4599-a1a8-b1faa34ea80d");
+                        chatFragment.sendCustomerMessage(json);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }

@@ -1,8 +1,10 @@
 package com.housingonitoringagent.homeworryagent.activity;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.view.MenuItem;
@@ -12,8 +14,18 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.housingonitoringagent.homeworryagent.Const;
 import com.housingonitoringagent.homeworryagent.R;
 import com.housingonitoringagent.homeworryagent.extents.BaseActivity;
+import com.housingonitoringagent.homeworryagent.utils.net.VolleyResponseListener;
+import com.housingonitoringagent.homeworryagent.utils.net.VolleyStringRequest;
+import com.housingonitoringagent.homeworryagent.utils.uikit.QBLToast;
+
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -63,4 +75,32 @@ public class ChangePasswordActivity extends BaseActivity implements View.OnClick
         }
     }
 
+    private void commit() {
+        VolleyStringRequest request = new VolleyStringRequest(Request.Method.POST, "", new VolleyResponseListener() {
+            @Override
+            public void handleJson(com.alibaba.fastjson.JSONObject json) {
+                super.handleJson(json);
+                int resultCode = json.getIntValue("resultCode");
+                String message = json.getString("message");
+                if (resultCode == 1) {
+                } else {
+                }
+                QBLToast.show(message);
+                finish();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                QBLToast.show(R.string.network_exception);
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = super.getParams();
+                params.put("id", String.valueOf(getIntent().getStringExtra(getString(R.string.extra_id))));
+                return params;
+            }
+        };
+        getThis().getVolleyRequestQueue().add(request);
+    }
 }

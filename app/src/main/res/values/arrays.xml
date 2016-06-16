@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="admin_statue">
+        <item >全部</item>
+        <item >已取消</item>
+        <item >待存款</item>
+        <item >监管中</item>
+        <item >待确认</item>
+        <item >打款处理中</item>
+        <item >已打款</item>
+        <item >已完成</item>
+    </string-array>
+</resources>

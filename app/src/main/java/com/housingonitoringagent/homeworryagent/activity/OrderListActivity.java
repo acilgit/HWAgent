@@ -1,9 +1,10 @@
 package com.housingonitoringagent.homeworryagent.activity;
 
-import android.app.Activity;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -18,7 +19,6 @@ import com.housingonitoringagent.homeworryagent.extents.BaseActivity;
 import com.housingonitoringagent.homeworryagent.utils.UIUtils;
 import com.housingonitoringagent.homeworryagent.utils.uikit.BGARefreshLayoutBuilder;
 import com.housingonitoringagent.homeworryagent.utils.uikit.recyclerview.HorizontalDividerItemDecoration;
-import com.housingonitoringagent.homeworryagent.utils.uikit.recyclerview.VerticalDividerItemDecoration;
 import com.housingonitoringagent.homeworryagent.views.XAdapter;
 
 import java.util.ArrayList;
@@ -34,10 +34,8 @@ import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
  */
 public class OrderListActivity extends BaseActivity implements View.OnClickListener, AdapterView.OnItemClickListener, BGARefreshLayout.BGARefreshLayoutDelegate {
 
-    private static final int CONTENT_TYPE_COMMENT = 0;
-    private static final int CONTENT_TYPE_REPLY = 1;
     // 适配器最最评论显示数目
-    private static final int maxContentSize = 4;
+    private static final int pageDefaultSize = 10;
     @Bind(R.id.toolbar)
     Toolbar toolbar;
     @Bind(R.id.rvMain)
@@ -98,6 +96,9 @@ public class OrderListActivity extends BaseActivity implements View.OnClickListe
                     }
                 };
                 holder.getView(R.id.btnDeposit).setOnClickListener(clickListener);
+
+                ColorStateList csl = new ColorStateList(new int[][]{new int[0]}, new int[]{getResources().getColor(R.color.orange)});
+                ((AppCompatButton) holder.getView(R.id.btnDeposit)).setSupportBackgroundTintList(csl);
             }
 
             @Override

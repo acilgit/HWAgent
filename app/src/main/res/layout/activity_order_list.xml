@@ -1,31 +1,68 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--家园 邻居-->
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?><!--家园 邻居-->
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:context=".activity.OrderListActivity">
+
     <LinearLayout
         android:id="@+id/llMain"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-    android:orientation="vertical"
-        android:background="@color/white">
+        android:background="@color/white"
+        android:orientation="vertical">
+
         <include layout="@layout/app_bar" />
         <!--<include layout="@layout/app_bar_neighbor"/>-->
         <!--<include layout="@layout/app_list"/>-->
+        <RelativeLayout
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="4dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/spnMain"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:background="@drawable/gray_border_1dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:entries="@array/admin_statue" />
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/btnApply"
+                style="@style/btn"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_normal"
+                android:backgroundTint="@color/colorPrimary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:paddingLeft="24dp"
+                android:paddingRight="24dp"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:text="@string/apply_admin" />
+
+        </RelativeLayout>
 
         <cn.bingoogolapple.refreshlayout.BGARefreshLayout
             android:id="@+id/refreshView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1">
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rvMain"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent" />
 
         </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
 

@@ -1,6 +1,7 @@
 package com.housingonitoringagent.homeworryagent.activity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
@@ -20,12 +21,15 @@ import com.android.volley.VolleyError;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.housingonitoringagent.homeworryagent.Const;
 import com.housingonitoringagent.homeworryagent.R;
+import com.housingonitoringagent.homeworryagent.User;
 import com.housingonitoringagent.homeworryagent.beans.ShowHouseBean;
 import com.housingonitoringagent.homeworryagent.extents.BaseActivity;
 import com.housingonitoringagent.homeworryagent.utils.net.VolleyResponseListener;
 import com.housingonitoringagent.homeworryagent.utils.net.VolleyStringRequest;
 import com.housingonitoringagent.homeworryagent.utils.uikit.QBLToast;
 
+import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -100,12 +104,12 @@ public class ShowingActivity extends BaseActivity implements View.OnClickListene
                 finish();
                 break;
         }
-        sivHead.setImageURI(Uri.parse(bean.getAvatar()));
-        tvName.setText(bean.getName());
-        tvCompany.setText(bean.getAgentName());
+        sivHead.setImageURI(Uri.parse(User.getHeadUrl()));
+        tvName.setText(User.getNickname());
+        tvCompany.setText(bean.getCompanyName());
         tvOutlet.setText(bean.getStoreName());
-        tvVillage.setText(bean.getVillage_name());
-        tvBuildingNo.setText(bean.getHouse_number());
+        tvVillage.setText(bean.getVillageName());
+        tvBuildingNo.setText(bean.getHouseNumber());
         tvShowingCountIn.setText(bean.getApplyVisitNumber());
     }
 
@@ -121,12 +125,22 @@ public class ShowingActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void commit() {
+        final String inCount = etShowingCountIn.getText().toString();
+        final String outCount = etShowingCountOut.getText().toString();
         String url;
         switch (bean.getPermitStatus()) {
             case PERMIT_STATUS_END: // 待确认
+                if (outCount.isEmpty()) {
+                    QBLToast.show(R.string.err_text_no_people);
+                    return;
+                }
                 url = Const.serviceMethod.VISIT_PERMISSSION_END;
                 break;
             default: // 未看房
+                if (inCount.isEmpty()) {
+                    QBLToast.show(R.string.err_text_no_people);
+                    return;
+                }
                 url = Const.serviceMethod.VISIT_PERMISSSION_UPDATE;
                 break;
         }
@@ -138,10 +152,27 @@ public class ShowingActivity extends BaseActivity implements View.OnClickListene
                 String message = json.getString("message");
                 if (resultCode == 1) {
                     new AlertDialog.Builder(getThis()).setCancelable(false)
-                            .setTitle("message")
+                            .setTitle(message)
                             .setPositiveButton(getString(R.string.confirm), new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
+                                    switch (bean.getPermitStatus()) {
+                                        case ShowHouseBean.PERMIT_STATUE_SHOWING:
+                                            bean.setEndTime(Calendar.getInstance().getTimeInMillis());
+                                            bean.setPermitStatus(ShowHouseBean.PERMIT_STATUE_FINISH);
+                                            bean.setRealVisitNumber(Integer.parseInt(outCount));
+                                            break;
+                                        case ShowHouseBean.PERMIT_STATUE_WAIT:
+                                            bean.setStartTime(Calendar.getInstance().getTimeInMillis());
+                                            bean.setPermitStatus(ShowHouseBean.PERMIT_STATUE_SHOWING);
+                                            bean.setApplyVisitNumber(Integer.parseInt(inCount));
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                    Intent intent = new Intent();
+                                    intent.putExtra(getString(R.string.extra_bean), bean);
+                                    setResult(RESULT_OK, intent);
                                     finish();
                                 }
                             }).show();
@@ -161,10 +192,10 @@ public class ShowingActivity extends BaseActivity implements View.OnClickListene
                 params.put("id", String.valueOf(bean.getId()));
                 switch (bean.getPermitStatus()) {
                     case PERMIT_STATUS_END:
-                        params.put("realVisitNumber", String.valueOf(etShowingCountOut));
+                        params.put("realVisitNumber",outCount);
                         break;
                     case PERMIT_STATUS_START:
-                        params.put("applyVisitNumber", String.valueOf(etShowingCountIn));
+                        params.put("applyVisitNumber", inCount);
                         break;
                 }
                 return params;

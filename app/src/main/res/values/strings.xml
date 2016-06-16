@@ -422,6 +422,10 @@
     <string name="delete_conversation">删除会话</string>
     <string name="extra_user_id">userId</string>
     <string name="extra_bean">bean</string>
+    <string name="extra_id">id</string>
+    <string name="wait_commit">待定</string>
+    <string name="err_text_no_people">请填写人数</string>
+    <string name="apply_admin">申请监管</string>
 
 </resources>
 

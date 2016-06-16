@@ -5,7 +5,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -13,8 +12,6 @@ import com.housingonitoringagent.homeworryagent.App;
 import com.housingonitoringagent.homeworryagent.User;
 import com.housingonitoringagent.homeworryagent.activity.ChatActivity;
 import com.housingonitoringagent.homeworryagent.activity.ConversationListActivity;
-import com.housingonitoringagent.homeworryagent.activity.VideoCallActivity;
-import com.housingonitoringagent.homeworryagent.activity.VoiceCallActivity;
 import com.housingonitoringagent.homeworryagent.utils.easeui.receiver.CallReceiver;
 import com.housingonitoringagent.homeworryagent.utils.easeui.util.EmojiconExampleGroupData;
 import com.housingonitoringagent.homeworryagent.utils.easeui.util.RobotUser;
@@ -22,7 +19,6 @@ import com.hyphenate.EMCallBack;
 import com.hyphenate.EMConnectionListener;
 import com.hyphenate.EMError;
 import com.hyphenate.EMMessageListener;
-import com.hyphenate.EMValueCallBack;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMCmdMessageBody;
 import com.hyphenate.chat.EMMessage;
@@ -41,7 +37,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
@@ -336,9 +331,17 @@ public class EaseHelper {
             @Override
             public void onDisconnected(int error) {
                 if (error == EMError.USER_REMOVED) {
-                    onCurrentAccountRemoved();
+                    User.logOut();
+                    EMClient.getInstance().logout(true);
+                    if (easeUI.hasForegroundActivies()) {
+//                        onCurrentAccountRemoved();
+                    }
                 }else if (error == EMError.USER_LOGIN_ANOTHER_DEVICE) {
-                    onConnectionConflict();
+                    User.logOut();
+                    EMClient.getInstance().logout(true);
+                    if (easeUI.hasForegroundActivies()) {
+//                        onConnectionConflict();
+                    }
                 }
             }
 
@@ -532,7 +535,6 @@ public class EaseHelper {
                 if (callback != null) {
                     callback.onSuccess();
                 }
-
             }
 
             @Override

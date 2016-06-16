@@ -4,10 +4,30 @@ android {
     compileSdkVersion 23
     buildToolsVersion "23.0.3"
 
+    signingConfigs {
+        置家无忧{
+            keyAlias '旭海'
+            keyPassword 'xuhai123'
+            storeFile file('src/main/HomeWorry.jks')
+            storePassword 'xuhai123'
+        }
+    }
+
+    dexOptions {
+        preDexLibraries = false
+        javaMaxHeapSize "4g"   //这个改大
+    }
+//    lintOptions {
+//        checkReleaseBuilds false
+//        // Or, if you prefer, you can continue to check for errors in release builds,
+//        // but continue the build even when errors are found:
+//        abortOnError false
+//    }
+
     defaultConfig {
         multiDexEnabled true
         applicationId "com.housingonitoringagent.homeworryagent"
-        minSdkVersion 19
+        minSdkVersion 17
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
@@ -16,6 +36,23 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.置家无忧
+        }
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.置家无忧
+        }
+    }
+    android.applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            def outputFile = output.outputFile
+            if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                //这里修改apk文件名
+//                def fileName = "置家无忧${defaultConfig.versionName}-${releaseTime() }.apk"
+                def fileName = "HomeWorry${defaultConfig.versionName}.apk"
+                output.outputFile = new File(outputFile.parent, fileName)
+            }
         }
     }
 }
@@ -23,8 +60,7 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.4.0'
-    compile 'com.android.support:design:23.3.0'
+    compile 'com.android.support:design:23.4.0'
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.facebook.fresco:fresco:0.8.1'
     compile 'com.mcxiaoke.volley:library:1.0.19'

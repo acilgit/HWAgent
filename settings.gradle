@@ -3,3 +3,4 @@ include ':app', ':easeui'
 //project (':CommonLibrary').projectDir = new File('../CommonLibrary/')
 //include ':CommonLibrary:CommonsA'
 //project(':easeui').projectDir = new File(rootProject.projectDir, './easeui')
+project(':easeui').projectDir = new File(rootProject.projectDir, './easeui')

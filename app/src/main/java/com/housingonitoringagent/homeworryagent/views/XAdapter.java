@@ -124,6 +124,13 @@ public abstract class XAdapter<T> extends RecyclerView.Adapter {
         return 0;
     }
 
+    public T getItem(int pos) {
+        if (dataList.size() >pos && pos>0) {
+            return dataList.get(pos);
+        }
+        return null;
+    }
+
     public List<T> getDataList() {
         return dataList;
     }
@@ -152,6 +159,11 @@ public abstract class XAdapter<T> extends RecyclerView.Adapter {
     public void addItem( int pos, T item) {
         dataList.add(pos, item);
         notifyItemInserted(pos);
+    }
+
+    public void updateItem( int pos, T item) {
+        dataList.set(pos, item);
+        notifyItemChanged(pos);
     }
 
     public void addItem(T item) {
