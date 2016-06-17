@@ -35,12 +35,16 @@
                 android:layout_centerVertical="true"
                 android:entries="@array/admin_statue" />
 
-            <android.support.v7.widget.AppCompatButton
+            <com.andexert.library.RippleView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                rv_type="rectangle">
+
+            <Button
                 android:id="@+id/btnApply"
-                style="@style/btn"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_normal"
-                android:backgroundTint="@color/colorPrimary"
+                android:theme="@style/btn_commit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -50,6 +54,7 @@
                 android:paddingTop="12dp"
                 android:paddingBottom="12dp"
                 android:text="@string/apply_admin" />
+            </com.andexert.library.RippleView>
 
         </RelativeLayout>
 

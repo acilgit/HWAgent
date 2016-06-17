@@ -4,8 +4,8 @@ package com.housingonitoringagent.homeworryagent;
  * Created by Administrator on 2016/2/27 0027.
  */
 public class Const {
-     public static  String SERVER ="http://www.zhijia51.com";
-//    public static String SERVER = "http://192.168.1.233:9000";
+//     public static  String SERVER ="http://www.zhijia51.com";
+    public static String SERVER = "http://192.168.1.233:9000";
 
 
     public interface RequestCode {
@@ -47,10 +47,12 @@ public class Const {
         String VISIT_PERMISSSION_UPDATE = SERVER + "/append/apply_visit_permit_agent/update";
         /*看房*/
         String VISIT_PERMISSSION_END = SERVER + "/append/apply_visit_permit_agent/permitEnd";
-
-
-
-
+        /*资金监管列表*/
+        String HOUSE_DEAL_LIST = SERVER + "/append/agent_houseOldDeal/selectPageList";
+        /*选择收款人*/
+        String HOUSE_DEAL_CHOOSE_PARTY = SERVER + "/append/agent_houseOldDeal/update_receptionMoneyObject";
+        /*提交打款申请*/
+        String HOUSE_DEAL_CONFIRM_MONEY = SERVER + "/append/agent_houseOldDeal/confirm_money";
 
 
 

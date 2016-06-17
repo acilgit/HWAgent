@@ -56,7 +56,9 @@ public class App extends Application {
 
         // 初始化环信SDK
         initEaseMob();
-        Log.e("ZJ", " create App " + 53);
+        App.getInstance().getPackageName();
+
+        Log.e("qqq", " create App " + 61);
     }
 
   /*  @Override

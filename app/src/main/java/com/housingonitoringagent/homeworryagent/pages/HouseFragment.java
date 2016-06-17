@@ -128,7 +128,7 @@ public class HouseFragment extends Fragment implements BGARefreshLayout.BGARefre
            }
 
            @Override
-            public void creatingHolder(CustomHolder holder, List<String> dataList, int adapterPos, int viewType) {
+            public void creatingHolder(CustomHolder holder, List<String> dataList, int viewType) {
                View.OnClickListener clickListener = new View.OnClickListener() {
                    @Override
                    public void onClick(View v) {

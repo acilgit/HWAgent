@@ -1,5 +1,6 @@
 package com.housingonitoringagent.homeworryagent.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.housingonitoringagent.homeworryagent.Const;
 import com.housingonitoringagent.homeworryagent.R;
+import com.housingonitoringagent.homeworryagent.beans.HouseDealBean;
 import com.housingonitoringagent.homeworryagent.extents.BaseActivity;
 import com.housingonitoringagent.homeworryagent.utils.StringUtil;
 import com.housingonitoringagent.homeworryagent.utils.net.SmsHelper;
@@ -79,6 +81,7 @@ public class ConfirmGiroActivity extends BaseActivity implements View.OnClickLis
     Timer mSMSTimer;
     Handler mUIHandler;
     SmsHelper mSMSHelper;
+    private HouseDealBean.ContentBean.PsBean.Content bean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,16 +94,15 @@ public class ConfirmGiroActivity extends BaseActivity implements View.OnClickLis
         mUIHandler = new Handler();
         mSMSHelper = new SmsHelper(this, getVolleyRequestQueue());
 
+        bean = (HouseDealBean.ContentBean.PsBean.Content) getIntent().getSerializableExtra(getString(R.string.extra_bean));
+
         if (savedInstanceState != null) {
             etCode.setText("");
-        } else {
-            tvAgentPhone.setText(getIntent().getStringExtra(getString(R.string.extra_agent_phone)));
-            rbPartyA.setText(getIntent().getStringExtra(getString(R.string.extra_party_a)));
-            rbPartyB.setText(getIntent().getStringExtra(getString(R.string.extra_party_b)));
         }
         llGiro.setVisibility(View.GONE);
         initView();
         setListener();
+//        etCode.setKeyListener(null);
     }
 
     @Override
@@ -177,7 +179,7 @@ public class ConfirmGiroActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void confirmGiro() {
-        final String phone = tvAgentPhone.getText().toString();
+        final String phone = bean.getCUserMobilephone();
         final String verificationCode = etCode.getText().toString();
         boolean inputValid = checkInputValid(phone, verificationCode);
         if (!inputValid) {
@@ -185,7 +187,7 @@ public class ConfirmGiroActivity extends BaseActivity implements View.OnClickLis
         }
 
         showProgressDialog(getString(R.string.wait_a_few_times));
-        StringRequest request = new VolleyStringRequest(Request.Method.POST, Const.serviceMethod.SAVEPASSWORD,
+        StringRequest request = new VolleyStringRequest(Request.Method.POST, Const.serviceMethod.HOUSE_DEAL_CONFIRM_MONEY,
                 new VolleyResponseListener() {
                     @Override
                     public void handleJson(JSONObject json) {
@@ -195,12 +197,17 @@ public class ConfirmGiroActivity extends BaseActivity implements View.OnClickLis
                         String msg = json.getString("message");
                         switch (result) {
                             case 1:
-//                                ConfirmGiroActivity.this.finish();
-//                                QBLToast.show("密码找回成功");
                                 new AlertDialog.Builder(getThis()).setTitle(R.string.successful)
-                                        .setMessage("")
+                                        .setTitle(R.string.successful)
+                                        .setMessage(msg)
                                         .setCancelable(false)
-                                        .setPositiveButton(R.string.confirm, null)
+                                        .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                setResult(RESULT_OK);
+                                                finish();
+                                            }
+                                        })
                                         .show();
                                 break;
                             default:
@@ -221,10 +228,57 @@ public class ConfirmGiroActivity extends BaseActivity implements View.OnClickLis
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = super.getParams();
-                params.put("mobilephone", phone);
+                params.put("id", bean.getId());
                 params.put("mobilephone", phone);
                 params.put("captcha", verificationCode);
+                String partyId;
+                if (rbPartyA.isChecked()) {
+                    partyId = bean.getAUserId();
+                } else {
+                    partyId = bean.getBUserId();
 
+                }
+                params.put("collectionUserId", partyId);
+                return params;
+            }
+        };
+        getVolleyRequestQueue().add(request);
+    }
+    private void chooseParty(final String partyId) {
+        showProgressDialog(getString(R.string.wait_a_few_times));
+        StringRequest request = new VolleyStringRequest(Request.Method.POST, Const.serviceMethod.HOUSE_DEAL_CHOOSE_PARTY,
+                new VolleyResponseListener() {
+                    @Override
+                    public void handleJson(JSONObject json) {
+                        super.handleJson(json);
+                        dismissProgressDialog();
+                        int result = json.getIntValue("resultCode");
+                        String msg = json.getString("message");
+                        switch (result) {
+                            case 1:
+                                llGiro.setVisibility(View.VISIBLE);
+                                tvGiroTo.setText(msg);
+                            default:
+                                llGiro.setVisibility(View.GONE);
+                                QBLToast.show(msg);
+                                break;
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        dismissProgressDialog();
+                        llGiro.setVisibility(View.GONE);
+                        QBLToast.show(R.string.network_exception);
+                    }
+                }) {
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = super.getParams();
+                params.put("id", bean.getId());
+                params.put("collectionUserId", partyId);
                 return params;
             }
         };
@@ -247,6 +301,9 @@ public class ConfirmGiroActivity extends BaseActivity implements View.OnClickLis
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             toolbar.setElevation(1);
         }
+        tvAgentPhone.setText(bean.getCUserMobilephone());
+        rbPartyA.setText(getString(R.string.extra_party_a) +"："+ bean.getAUserName()+"，"+ bean.getAUserMobilephone());
+        rbPartyB.setText(getString(R.string.extra_party_b) +"："+ bean.getBUserName()+"，"+ bean.getBUserMobilephone());
     }
 
     /**
@@ -322,15 +379,13 @@ public class ConfirmGiroActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
-        if (llGiro.getVisibility()!=View.VISIBLE) {
-            llGiro.setVisibility(View.VISIBLE);
-        }
-        String title;
+        etCode.setText("");
+        String partyId;
         if (checkedId == R.id.rbPartyA) {
-            title = "您已选择“将钱转给" + getString(R.string.party_a) + "”";
+            partyId = bean.getAUserId();
         } else {
-            title = "您已选择“将钱转给" + getString(R.string.party_b) + "”";
+            partyId = bean.getBUserId();
         }
-        tvGiroTo.setText(title);
+        chooseParty(partyId);
     }
 }

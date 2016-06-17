@@ -76,7 +76,7 @@ public abstract class XAdapter<T> extends RecyclerView.Adapter {
                         }
                     });
                 }
-                 creatingHolder(holder, dataList, getAdapterPosition(), viewType);
+                 creatingHolder(holder, dataList, viewType);
             }
         };
         
@@ -95,7 +95,7 @@ public abstract class XAdapter<T> extends RecyclerView.Adapter {
      * @param dataList
      * @param viewType
      */
-    public abstract void creatingHolder(CustomHolder holder, List<T> dataList,int adapterPos, int viewType);
+    public abstract void creatingHolder(CustomHolder holder, List<T> dataList, int viewType);
 
     /**
      * 在适配器中显示数据集

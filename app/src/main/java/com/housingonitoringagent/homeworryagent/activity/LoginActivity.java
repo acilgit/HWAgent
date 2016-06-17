@@ -1,9 +1,6 @@
 package com.housingonitoringagent.homeworryagent.activity;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -26,7 +23,6 @@ import com.housingonitoringagent.homeworryagent.extents.BaseActivity;
 import com.housingonitoringagent.homeworryagent.utils.net.VolleyResponseListener;
 import com.housingonitoringagent.homeworryagent.utils.net.VolleyStringRequest;
 import com.housingonitoringagent.homeworryagent.utils.uikit.QBLToast;
-import com.hyphenate.chat.EMClient;
 
 import java.util.Map;
 
@@ -63,7 +59,7 @@ public class LoginActivity extends BaseActivity {
         instance = null;
     }
 
-    public static void start(Context activity) {
+   /* public static void start(Context activity) {
         Intent intent = new Intent();
         intent.setClass(activity, LoginActivity.class);
 
@@ -71,7 +67,7 @@ public class LoginActivity extends BaseActivity {
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         activity.startActivity(intent);
-    }
+    }*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

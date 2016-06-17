@@ -1,6 +1,7 @@
 package com.housingonitoringagent.homeworryagent;
 
 import android.app.Activity;
+import android.content.Intent;
 
 import com.housingonitoringagent.homeworryagent.activity.LoginActivity;
 import com.housingonitoringagent.homeworryagent.beans.UserBean;
@@ -27,7 +28,12 @@ public class User {
         if (isLogin()) {
             return true;
         } else {
-            LoginActivity.start(activity);
+            Intent intent = new Intent();
+            intent.setClass(activity, LoginActivity.class);
+            if (!(activity instanceof Activity))
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            activity.startActivity(intent);
+//            LoginActivity.start(activity);
             return false;
         }
     }
@@ -97,7 +103,7 @@ public class User {
     }
 
     public static void setIntermediaryStoreId(String intermediaryStoreId) {
-        storage.put(PreferencesKey.User.SESSIONID, intermediaryStoreId);
+        storage.put("intermediaryStoreName", intermediaryStoreId);
     }
 
     public static String getIntermediaryStoreName() {
@@ -105,7 +111,7 @@ public class User {
     }
 
     public static void setIntermediaryStoreName(String intermediaryStoreName) {
-        storage.put(PreferencesKey.User.SESSIONID, intermediaryStoreName);
+        storage.put("intermediaryStoreName", intermediaryStoreName);
     }
 
     public static String getIntermediaryCompanyId() {
@@ -113,7 +119,7 @@ public class User {
     }
 
     public static void setIntermediaryCompanyId(String intermediaryCompanyId) {
-        storage.put(PreferencesKey.User.SESSIONID, intermediaryCompanyId);
+        storage.put("intermediaryCompanyId", intermediaryCompanyId);
     }
 
     public static String getIntermediaryCompanyName() {
@@ -121,7 +127,7 @@ public class User {
     }
 
     public static void setIntermediaryCompanyName(String intermediaryCompanyName) {
-        storage.put(PreferencesKey.User.SESSIONID, intermediaryCompanyName);
+        storage.put("intermediaryCompanyName", intermediaryCompanyName);
     }
 
     public static String getYearlyInspection() {
@@ -129,7 +135,7 @@ public class User {
     }
 
     public static void setYearlyInspection(String yearlyInspection) {
-        storage.put(PreferencesKey.User.SESSIONID, yearlyInspection);
+        storage.put("yearlyInspection", yearlyInspection);
     }
 
     public static Integer getWorkingLife() {
@@ -137,7 +143,7 @@ public class User {
     }
 
     public static void setWorkingLife(Integer workingLife) {
-        storage.put(PreferencesKey.User.SESSIONID, workingLife);
+        storage.put("workingLife", workingLife);
     }
 
     public static String getCertificatePicture() {
@@ -145,7 +151,7 @@ public class User {
     }
 
     public static void setCertificatePicture(String certificatePicture) {
-        storage.put(PreferencesKey.User.SESSIONID, certificatePicture);
+        storage.put("certificatePicture", certificatePicture);
     }
 
     public static String getCertificateInfo() {
@@ -153,7 +159,7 @@ public class User {
     }
 
     public static void setCertificateInfo(String certificateInfo) {
-        storage.put(PreferencesKey.User.SESSIONID, certificateInfo);
+        storage.put("certificateInfo", certificateInfo);
     }
 
     public static Integer getDuty() {
@@ -161,7 +167,7 @@ public class User {
     }
 
     public static void setDuty(Integer duty) {
-        storage.put(PreferencesKey.User.SESSIONID, duty);
+        storage.put("duty", duty);
     }
 
     public static Integer getAcademicTitle() {
@@ -169,7 +175,7 @@ public class User {
     }
 
     public static void setAcademicTitle(Integer academicTitle) {
-        storage.put(PreferencesKey.User.SESSIONID, academicTitle);
+        storage.put("academicTitle", academicTitle);
     }
 
     public static Integer getComplaintCount() {
@@ -177,7 +183,7 @@ public class User {
     }
 
     public static void setComplaintCount(Integer complaintCount) {
-        storage.put(PreferencesKey.User.SESSIONID, complaintCount);
+        storage.put("complaintCount", complaintCount);
     }
 
     public static Integer getComplaintAgreeCount() {
@@ -185,7 +191,7 @@ public class User {
     }
 
     public static void setComplaintAgreeCount(Integer complaintAgreeCount) {
-        storage.put(PreferencesKey.User.SESSIONID, complaintAgreeCount);
+        storage.put("complaintAgreeCount", complaintAgreeCount);
     }
 
     public static Integer getComplaintCompleteCount() {
@@ -193,7 +199,7 @@ public class User {
     }
 
     public static void setComplaintCompleteCount(Integer complaintCompleteCount) {
-        storage.put(PreferencesKey.User.SESSIONID, complaintCompleteCount);
+        storage.put("complaintCompleteCount", complaintCompleteCount);
     }
 
     public static Integer getHouseEvaluatePraiseAmount() {
@@ -201,7 +207,7 @@ public class User {
     }
 
     public static void setHouseEvaluatePraiseAmount(Integer houseEvaluatePraiseAmount) {
-        storage.put(PreferencesKey.User.SESSIONID, houseEvaluatePraiseAmount);
+        storage.put("houseEvaluatePraiseAmount", houseEvaluatePraiseAmount);
     }
 
     public static Integer getCertStatus() {
@@ -209,7 +215,7 @@ public class User {
     }
 
     public static void setCertStatus(Integer certStatus) {
-        storage.put(PreferencesKey.User.SESSIONID, certStatus);
+        storage.put("certStatus", certStatus);
     }
 
     public static String getIdCard() {
@@ -217,7 +223,7 @@ public class User {
     }
 
     public static void setIdCard(String idCard) {
-        storage.put(PreferencesKey.User.SESSIONID, idCard);
+        storage.put("idCard", idCard);
     }
 
     protected static void setLoginState(boolean loginState) {

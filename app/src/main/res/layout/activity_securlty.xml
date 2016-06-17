@@ -22,16 +22,16 @@
 
             <ProgressBar
                 android:id="@+id/pbSecurity"
+                style="@style/progress_horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="12dp"
-                android:background="@mipmap/security_level"
-                style="@style/progress_horizontal"
-                android:max="100"
-                android:progress="70"
-                android:layout_marginTop="12dp"
                 android:layout_marginBottom="12dp"
                 android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp" />
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="12dp"
+                android:background="@mipmap/security_level"
+                android:max="100"
+                android:progress="70" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -58,93 +58,103 @@
 
         <View style="@style/divider_line" />
 
-            <LinearLayout
+        <com.andexert.library.RippleView
+            rv_type="rectangle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/rlPassword"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:background="@drawable/bg_btn_item"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="@string/text_login_password" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/icon_right" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="16dp"
+                    android:text="@string/text_modify"
+                    android:textColor="@color/text_color_black"
+                    android:textSize="16dp" />
+            </RelativeLayout>
+        </com.andexert.library.RippleView>
+
+        <View style="@style/divider_line" />
+
+        <com.andexert.library.RippleView
+            rv_type="rectangle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/rlSafeModifyPhone"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:background="@drawable/bg_btn_item"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="0dp"
+                    android:gravity="center"
+                    android:text="@string/text_safe_phone" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="0dp"
+                    android:src="@mipmap/icon_right"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/tvSafeModifyPhone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="16dp"
+                    android:text="134****3242"
+                    android:textColor="@color/text_color_black"
+                    android:textSize="16dp" />
+            </RelativeLayout>
+        </com.andexert.library.RippleView>
+
+        <View style="@style/divider_line" />
+
+        <com.andexert.library.RippleView
+            rv_type="rectangle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp">
+
+            <Button
+                android:id="@+id/btnLogout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="0dp"
-                android:layout_marginRight="0dp"
-                android:layout_marginTop="0dp"
-                android:orientation="vertical">
-
-                <RelativeLayout
-                    android:id="@+id/rlPassword"
-                    android:background="@drawable/bg_btn_item"
-                    android:paddingLeft="12dp"
-                    android:paddingRight="12dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="64dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:text="@string/text_login_password" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:src="@mipmap/icon_right" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="16dp"
-                        android:textColor="@color/text_color_black"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="16dp"
-                        android:text="@string/text_modify" />
-                </RelativeLayout>
-            </LinearLayout>
-
-        <View style="@style/divider_line" />
-
-        <RelativeLayout
-            android:id="@+id/rlSafeModifyPhone"
-            android:background="@drawable/bg_btn_item"
-            android:layout_width="match_parent"
-            android:layout_height="64dp"
-            android:layout_marginTop="0dp"
-            android:paddingLeft="12dp"
-            android:paddingRight="12dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="0dp"
-                android:gravity="center"
-                android:text="@string/text_safe_phone" />
-
-            <ImageView
-                android:visibility="gone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="0dp"
-                android:src="@mipmap/icon_right" />
-
-            <TextView
-                android:id="@+id/tvSafeModifyPhone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="16dp"
-                android:textColor="@color/text_color_black"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="16dp"
-                android:text="134****3242" />
-        </RelativeLayout>
-
-        <View style="@style/divider_line" />
-
-        <Button
-            android:id="@+id/btnLogout"
-            android:text="@string/logout"
-            android:layout_margin="16dp"
-            style="@style/btn_commit" />
+                android:text="@string/logout"
+                android:theme="@style/btn_commit" />
+        </com.andexert.library.RippleView>
 
     </LinearLayout>
 

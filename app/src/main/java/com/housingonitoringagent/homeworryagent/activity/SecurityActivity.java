@@ -1,9 +1,11 @@
 package com.housingonitoringagent.homeworryagent.activity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -11,7 +13,6 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.housingonitoringagent.homeworryagent.App;
 import com.housingonitoringagent.homeworryagent.R;
 import com.housingonitoringagent.homeworryagent.User;
 import com.housingonitoringagent.homeworryagent.extents.BaseActivity;
@@ -80,7 +81,12 @@ public class SecurityActivity extends BaseActivity implements View.OnClickListen
                             public void onClick(DialogInterface dialog, int which) {
                                 User.logOut();
                                 EMClient.getInstance().logout(true);
-                                start(LoginActivity.class);
+                                start(LoginActivity.class, new BaseIntent() {
+                                    @Override
+                                    public void setIntent(Intent intent) {
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    }
+                                });
                             }
                         }).setNegativeButton(R.string.cancel, null)
                         .show();
@@ -94,5 +100,11 @@ public class SecurityActivity extends BaseActivity implements View.OnClickListen
     protected void onDestroy() {
         super.onDestroy();
         //App.getRefWatcher(this).watch(this);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        return super.onKeyDown(keyCode, event);
+
     }
 }

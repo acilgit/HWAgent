@@ -40,4 +40,14 @@ public class LogUtils {
     public static void w(Class<?> clazz,String msg) { if(isDebug) Log.w(clazz.getSimpleName(), msg); }
     public static void e(Class<?> clazz,String msg) { if(isDebug) Log.e(clazz.getSimpleName(), msg); }
 
+    public static void le(String longString){
+        int maxLogSize = 1000;
+        for(int i = 0; i <= longString.length() / maxLogSize; i++) {
+            int start = i * maxLogSize;
+            int end = (i+1) * maxLogSize;
+            end = end > longString.length() ? longString.length() : end;
+            Log.e(TAG, longString.substring(start, end));
+        }
+
+    }
 }

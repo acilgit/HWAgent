@@ -1,8 +1,6 @@
 package com.housingonitoringagent.homeworryagent.utils;
 
-import android.graphics.Paint;
-import android.widget.TextView;
-
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
@@ -24,6 +22,17 @@ public class StringUtil {
      * @param codePoint Unicode code point
      * @return 如果不包含 返回false,包含 则返回true
      */
+
+    public static String formatNumber(double d) {
+        return formatNumber(d, "#,##0.00");
+    }
+
+    public static String formatNumber(double d, String format) {
+        DecimalFormat decimalFormat = new DecimalFormat(format);
+        String s = decimalFormat.format(d);
+        return s;
+    }
+
     private static boolean isEmojiCharacter(char codePoint) {
         return !((codePoint == 0x0) || (codePoint == 0x9) || (codePoint == 0xA)
                 || (codePoint == 0xD)

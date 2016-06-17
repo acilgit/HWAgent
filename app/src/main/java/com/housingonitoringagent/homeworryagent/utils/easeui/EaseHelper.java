@@ -375,7 +375,7 @@ public class EaseHelper {
 
         IntentFilter callFilter = new IntentFilter(EMClient.getInstance().callManager().getIncomingCallBroadcastAction());
         if(callReceiver == null){
-            callReceiver = new CallReceiver();
+//            callReceiver = new CallReceiver();
         }
 
         //注册通话广播接收者

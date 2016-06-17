@@ -367,14 +367,20 @@
 
                 </TableLayout>
 
-                <Button
-                    android:id="@+id/btnCommit"
-                    style="@style/btn_commit"
+                <com.andexert.library.RippleView
+                    rv_type="rectangle"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
                     android:layout_marginTop="20dp"
-                    android:text="@string/showing_in" />
-
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                <Button
+                    android:id="@+id/btnCommit"
+                    android:theme="@style/btn_commit"
+                    android:text="@string/showing_in"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+                </com.andexert.library.RippleView>
             </LinearLayout>
         </android.support.v4.widget.NestedScrollView>
     </LinearLayout>

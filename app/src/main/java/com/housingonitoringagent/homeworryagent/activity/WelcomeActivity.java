@@ -3,7 +3,6 @@ package com.housingonitoringagent.homeworryagent.activity;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.widget.ImageView;
 
 import com.alibaba.fastjson.JSONObject;
@@ -38,7 +37,7 @@ public class WelcomeActivity extends BaseActivity {
     ImageView ivSplash;
     RequestQueue mVolleyRequestQueue;
     // 显示时间：3 秒
-    private final int DISPLAY_TIME = 3 * 1000;
+    private final int DISPLAY_TIME = 1 * 1000;
     private boolean cookieOk = false;
 
     @Override

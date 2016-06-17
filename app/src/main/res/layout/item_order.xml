@@ -3,354 +3,373 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
 
     <RelativeLayout
-        android:layout_marginTop="16dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp">
 
         <TextView
             android:id="@+id/tvOrderType"
-            android:text="@string/order_no"
-            android:textSize="@dimen/text_size_item_normal"
-            android:textColor="@color/text_gray"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
             android:gravity="center"
             android:lines="1"
-            android:paddingTop="4dp"
             android:paddingBottom="4dp"
-            android:layout_marginLeft="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:paddingTop="4dp"
+            android:text="@string/order_no"
+            android:textColor="@color/text_gray"
+            android:textSize="@dimen/text_size_item_normal" />
 
         <TextView
             android:id="@+id/tvOrderNo"
-            android:text="201603135115"
-            android:textSize="@dimen/text_size_item_normal"
-            android:textColor="@color/text_gray"
-            android:gravity="left"
-            android:lines="1"
-            android:paddingTop="4dp"
-            android:paddingBottom="4dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_toLeftOf="@+id/tvState"
             android:layout_toRightOf="@+id/tvOrderType"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:gravity="left"
+            android:lines="1"
+            android:paddingBottom="4dp"
+            android:paddingTop="4dp"
+            android:text="201603135115"
+            android:textColor="@color/text_gray"
+            android:textSize="@dimen/text_size_item_normal" />
 
         <TextView
             android:id="@+id/tvState"
-            android:text="待存款"
-            android:textSize="@dimen/text_size_item_normal"
-            android:textColor="@color/orange"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="@dimen/line_table"
             android:gravity="right"
             android:lines="1"
-            android:paddingTop="4dp"
             android:paddingBottom="4dp"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
-            android:layout_marginLeft="@dimen/line_table"
-            android:layout_alignParentRight="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:paddingTop="4dp"
+            android:text="待存款"
+            android:textColor="@color/orange"
+            android:textSize="@dimen/text_size_item_normal" />
 
     </RelativeLayout>
 
     <TableLayout
-        android:layout_marginTop="2dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:background="@color/gray"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_marginTop="2dp"
+        android:background="@color/gray">
 
         <TableRow
-            android:layout_marginTop="@dimen/line_table"
-            android:layout_marginRight="@dimen/line_table"
-            android:layout_marginLeft="@dimen/line_table"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView android:text="@string/party_a"
-                android:textSize="@dimen/text_size_item_table"
-                android:textColor="@color/text_gray"
-                android:gravity="center"
-                android:background="@color/white"
-                android:lines="1"
-                android:layout_weight="4"
-                android:paddingTop="@dimen/padding_table_row"
-                android:paddingBottom="@dimen/padding_table_row"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/line_table"
+            android:layout_marginRight="@dimen/line_table"
+            android:layout_marginTop="@dimen/line_table">
 
             <TextView
-                android:id="@+id/tvAppointmentTime"
-                android:text="黄子华"
-                android:textSize="@dimen/text_size_item_table"
-                android:textColor="@color/text_gray_dark"
-                android:gravity="center"
-                android:background="@color/white"
-                android:lines="1"
-                android:paddingTop="@dimen/padding_table_row"
-                android:paddingBottom="@dimen/padding_table_row"
-                android:layout_marginLeft="@dimen/line_table"
                 android:layout_width="0dp"
-                android:layout_weight="5"
-                android:layout_height="wrap_content" />
-
-            <TextView android:text="@string/party_b"
-                android:textSize="@dimen/text_size_item_table"
-                android:textColor="@color/text_gray"
-                android:gravity="center"
-                android:background="@color/white"
-                android:layout_marginLeft="@dimen/line_table"
-                android:layout_width="0dp"
-                android:paddingTop="@dimen/padding_table_row"
-                android:paddingBottom="@dimen/padding_table_row"
+                android:layout_height="wrap_content"
                 android:layout_weight="4"
+                android:background="@color/white"
+                android:gravity="center"
                 android:lines="1"
-                android:layout_height="wrap_content" />
+                android:paddingBottom="@dimen/padding_table_row"
+                android:paddingTop="@dimen/padding_table_row"
+                android:text="@string/party_a"
+                android:textColor="@color/text_gray"
+                android:textSize="@dimen/text_size_item_table" />
+
+            <TextView
+                android:id="@+id/tvPartyA"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/line_table"
+                android:layout_weight="5"
+                android:background="@color/white"
+                android:gravity="center"
+                android:lines="1"
+                android:paddingBottom="@dimen/padding_table_row"
+                android:paddingTop="@dimen/padding_table_row"
+                android:text="黄子华"
+                android:textColor="@color/text_gray_dark"
+                android:textSize="@dimen/text_size_item_table" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/line_table"
+                android:layout_weight="4"
+                android:background="@color/white"
+                android:gravity="center"
+                android:lines="1"
+                android:paddingBottom="@dimen/padding_table_row"
+                android:paddingTop="@dimen/padding_table_row"
+                android:text="@string/party_b"
+                android:textColor="@color/text_gray"
+                android:textSize="@dimen/text_size_item_table" />
 
             <TextView
                 android:id="@+id/tvPartyB"
-                android:text="黄华强"
-                android:textSize="@dimen/text_size_item_table"
-                android:textColor="@color/text_gray_dark"
-                android:gravity="center"
-                android:background="@color/white"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/line_table"
-                android:layout_width="0dp"
-                android:paddingTop="@dimen/padding_table_row"
-                android:paddingBottom="@dimen/padding_table_row"
                 android:layout_weight="5"
-                android:lines="1"
-                android:layout_height="wrap_content" />
-        </TableRow>
-        <TableRow
-            android:layout_marginTop="@dimen/line_table"
-            android:layout_marginRight="@dimen/line_table"
-            android:layout_marginLeft="@dimen/line_table"
-            
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView android:text="@string/party_agent"
-                android:textSize="@dimen/text_size_item_table"
-                android:textColor="@color/text_gray"
-                android:gravity="center"
                 android:background="@color/white"
+                android:gravity="center"
                 android:lines="1"
-                android:layout_weight="4"
-                android:paddingTop="@dimen/padding_table_row"
                 android:paddingBottom="@dimen/padding_table_row"
+                android:paddingTop="@dimen/padding_table_row"
+                android:text="黄华强"
+                android:textColor="@color/text_gray_dark"
+                android:textSize="@dimen/text_size_item_table" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/line_table"
+
+            android:layout_marginRight="@dimen/line_table"
+            android:layout_marginTop="@dimen/line_table">
+
+            <TextView
                 android:layout_width="0dp"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:background="@color/white"
+                android:gravity="center"
+                android:lines="1"
+                android:paddingBottom="@dimen/padding_table_row"
+                android:paddingTop="@dimen/padding_table_row"
+                android:text="@string/party_agent"
+                android:textColor="@color/text_gray"
+                android:textSize="@dimen/text_size_item_table" />
 
             <TextView
                 android:id="@+id/tvPartyAgent"
-                android:text="东方小强"
-                android:textSize="@dimen/text_size_item_table"
-                android:textColor="@color/text_gray_dark"
-                android:gravity="center"
-                android:background="@color/white"
-                android:lines="1"
-                android:paddingTop="@dimen/padding_table_row"
-                android:paddingBottom="@dimen/padding_table_row"
-                android:layout_marginLeft="@dimen/line_table"
                 android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/line_table"
                 android:layout_weight="5"
-                android:layout_height="wrap_content" />
-
-            <TextView android:text="@string/party_b_id"
-                android:textSize="@dimen/text_size_item_table"
-                android:textColor="@color/text_gray"
-                android:gravity="center"
                 android:background="@color/white"
-                android:layout_marginLeft="@dimen/line_table"
-                android:layout_width="0dp"
-                android:paddingTop="@dimen/padding_table_row"
-                android:paddingBottom="@dimen/padding_table_row"
-                android:layout_weight="4"
+                android:gravity="center"
                 android:lines="1"
-                android:layout_height="wrap_content" />
+                android:paddingBottom="@dimen/padding_table_row"
+                android:paddingTop="@dimen/padding_table_row"
+                android:text="东方小强"
+                android:textColor="@color/text_gray_dark"
+                android:textSize="@dimen/text_size_item_table" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/line_table"
+                android:layout_weight="4"
+                android:background="@color/white"
+                android:gravity="center"
+                android:lines="1"
+                android:paddingBottom="@dimen/padding_table_row"
+                android:paddingTop="@dimen/padding_table_row"
+                android:text="@string/party_b_id"
+                android:textColor="@color/text_gray"
+                android:textSize="@dimen/text_size_item_table" />
 
             <TextView
                 android:id="@+id/tvPartyBId"
-                android:text="442******544"
-                android:textSize="@dimen/text_size_item_table"
-                android:textColor="@color/text_gray_dark"
-                android:gravity="center"
-                android:background="@color/white"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/line_table"
-                android:layout_width="0dp"
-                android:paddingTop="@dimen/padding_table_row"
-                android:paddingBottom="@dimen/padding_table_row"
                 android:layout_weight="5"
-                android:lines="1"
-                android:layout_height="wrap_content" />
-        </TableRow>
-        <TableRow
-            android:layout_marginTop="@dimen/line_table"
-            android:layout_marginRight="@dimen/line_table"
-            android:layout_marginLeft="@dimen/line_table"
-            
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView android:text="@string/party_agent_phone"
-                android:textSize="@dimen/text_size_item_table"
-                android:textColor="@color/text_gray"
-                android:gravity="center"
                 android:background="@color/white"
+                android:gravity="center"
                 android:lines="1"
-                android:layout_weight="4"
-                android:paddingTop="@dimen/padding_table_row"
                 android:paddingBottom="@dimen/padding_table_row"
+                android:paddingTop="@dimen/padding_table_row"
+                android:text="442******544"
+                android:textColor="@color/text_gray_dark"
+                android:textSize="@dimen/text_size_item_table" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/line_table"
+
+            android:layout_marginRight="@dimen/line_table"
+            android:layout_marginTop="@dimen/line_table">
+
+            <TextView
                 android:layout_width="0dp"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:background="@color/white"
+                android:gravity="center"
+                android:lines="1"
+                android:paddingBottom="@dimen/padding_table_row"
+                android:paddingTop="@dimen/padding_table_row"
+                android:text="@string/party_agent_phone"
+                android:textColor="@color/text_gray"
+                android:textSize="@dimen/text_size_item_table" />
 
             <TextView
                 android:id="@+id/tvPartyAgentPhone"
-                android:text="13302333033   "
-                android:textSize="@dimen/text_size_item_table"
-                android:textColor="@color/text_gray_dark"
-                android:gravity="center"
-                android:background="@color/white"
-                android:lines="1"
-                android:paddingTop="@dimen/padding_table_row"
-                android:paddingBottom="@dimen/padding_table_row"
-                android:layout_marginLeft="@dimen/line_table"
                 android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/line_table"
                 android:layout_weight="5"
-                android:layout_height="wrap_content" />
-
-            <TextView android:text="@string/party_b_bank_account"
-                android:textSize="@dimen/text_size_item_table"
-                android:textColor="@color/text_gray"
-                android:gravity="center"
                 android:background="@color/white"
-                android:layout_marginLeft="@dimen/line_table"
-                android:layout_width="0dp"
-                android:paddingTop="@dimen/padding_table_row"
-                android:paddingBottom="@dimen/padding_table_row"
-                android:layout_weight="4"
+                android:gravity="center"
                 android:lines="1"
-                android:layout_height="wrap_content" />
+                android:paddingBottom="@dimen/padding_table_row"
+                android:paddingTop="@dimen/padding_table_row"
+                android:text="13302333033   "
+                android:textColor="@color/text_gray_dark"
+                android:textSize="@dimen/text_size_item_table" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/line_table"
+                android:layout_weight="4"
+                android:background="@color/white"
+                android:gravity="center"
+                android:lines="1"
+                android:paddingBottom="@dimen/padding_table_row"
+                android:paddingTop="@dimen/padding_table_row"
+                android:text="@string/party_b_bank_account"
+                android:textColor="@color/text_gray"
+                android:textSize="@dimen/text_size_item_table" />
 
             <TextView
                 android:id="@+id/tvPartyBBankAccount"
-                android:text="6225*****718"
-                android:textSize="@dimen/text_size_item_table"
-                android:textColor="@color/text_gray_dark"
-                android:gravity="center"
-                android:background="@color/white"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/line_table"
-                android:layout_width="0dp"
-                android:paddingTop="@dimen/padding_table_row"
-                android:paddingBottom="@dimen/padding_table_row"
                 android:layout_weight="5"
-                android:lines="1"
-                android:layout_height="wrap_content" />
-        </TableRow>
-        
-        <TableRow
-            android:layout_marginTop="@dimen/line_table"
-            android:layout_marginBottom="@dimen/line_table"
-            android:layout_marginRight="@dimen/line_table"
-            android:layout_marginLeft="@dimen/line_table"
-            
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView android:text="@string/amount_supervision"
-                android:textSize="@dimen/text_size_item_table"
-                android:textColor="@color/text_gray"
-                android:gravity="center"
                 android:background="@color/white"
+                android:gravity="center"
                 android:lines="1"
-                android:layout_weight="4"
-                android:paddingTop="@dimen/padding_table_row"
                 android:paddingBottom="@dimen/padding_table_row"
+                android:paddingTop="@dimen/padding_table_row"
+                android:text="6225*****718"
+                android:textColor="@color/text_gray_dark"
+                android:textSize="@dimen/text_size_item_table" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/line_table"
+            android:layout_marginLeft="@dimen/line_table"
+
+            android:layout_marginRight="@dimen/line_table"
+            android:layout_marginTop="@dimen/line_table">
+
+            <TextView
                 android:layout_width="0dp"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:background="@color/white"
+                android:gravity="center"
+                android:lines="1"
+                android:paddingBottom="@dimen/padding_table_row"
+                android:paddingTop="@dimen/padding_table_row"
+                android:text="@string/amount_supervision"
+                android:textColor="@color/text_gray"
+                android:textSize="@dimen/text_size_item_table" />
 
             <TextView
                 android:id="@+id/tvAmountSupervision"
-                android:text="12220.00"
-                android:textSize="@dimen/text_size_item_table"
-                android:textColor="@color/text_gray_dark"
-                android:gravity="center"
-                android:background="@color/white"
-                android:lines="1"
-                android:paddingTop="@dimen/padding_table_row"
-                android:paddingBottom="@dimen/padding_table_row"
-                android:layout_marginLeft="@dimen/line_table"
                 android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/line_table"
                 android:layout_weight="5"
-                android:layout_height="wrap_content" />
-
-            <TextView android:text="@string/text_bank"
-                android:textSize="@dimen/text_size_item_table"
-                android:textColor="@color/text_gray"
-                android:gravity="center"
                 android:background="@color/white"
-                android:layout_marginLeft="@dimen/line_table"
-                android:layout_width="0dp"
-                android:paddingTop="@dimen/padding_table_row"
-                android:paddingBottom="@dimen/padding_table_row"
-                android:layout_weight="4"
+                android:gravity="center"
                 android:lines="1"
-                android:layout_height="wrap_content" />
+                android:paddingBottom="@dimen/padding_table_row"
+                android:paddingTop="@dimen/padding_table_row"
+                android:text="12220.00"
+                android:textColor="@color/text_gray_dark"
+                android:textSize="@dimen/text_size_item_table" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/line_table"
+                android:layout_weight="4"
+                android:background="@color/white"
+                android:gravity="center"
+                android:lines="1"
+                android:paddingBottom="@dimen/padding_table_row"
+                android:paddingTop="@dimen/padding_table_row"
+                android:text="@string/text_bank"
+                android:textColor="@color/text_gray"
+                android:textSize="@dimen/text_size_item_table" />
 
             <TextView
                 android:id="@+id/tvBank"
-                android:text="泰国银行"
-                android:textSize="@dimen/text_size_item_table"
-                android:textColor="@color/text_gray_dark"
-                android:gravity="center"
-                android:background="@color/white"
-                android:layout_marginLeft="@dimen/line_table"
                 android:layout_width="0dp"
-                android:paddingTop="@dimen/padding_table_row"
-                android:paddingBottom="@dimen/padding_table_row"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/line_table"
                 android:layout_weight="5"
+                android:background="@color/white"
+                android:gravity="center"
                 android:lines="1"
-                android:layout_height="wrap_content" />
+                android:paddingBottom="@dimen/padding_table_row"
+                android:paddingTop="@dimen/padding_table_row"
+                android:text="泰国银行"
+                android:textColor="@color/text_gray_dark"
+                android:textSize="@dimen/text_size_item_table" />
         </TableRow>
 
     </TableLayout>
 
     <LinearLayout
-        android:gravity="right"
-        android:layout_marginTop="8dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="8dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="8dp"
+        android:gravity="right">
 
-        <Button
-            android:id="@+id/btnDetail"
-            android:text="@string/check_detail"
-            style="@style/btn"
-            android:textColor="@color/btn_blue_normal"
-            android:backgroundTint="@android:color/white"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
+        <com.andexert.library.RippleView
+            rv_type="rectangle"
             android:layout_marginRight="8dp"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/btn_height_big" />
+            android:layout_height="wrap_content">
 
-        <android.support.v7.widget.AppCompatButton
-            android:id="@+id/btnDeposit"
-            style="@style/btn"
-            android:text="@string/apply_deposit"
-            android:textColor="@color/white"
-            android:backgroundTint="@color/orange"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
+            <Button
+                android:id="@+id/btnDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/btn_height_big"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:theme="@style/btn_white"
+                android:text="@string/check_detail"
+                android:textColor="@color/btn_blue_normal" />
+        </com.andexert.library.RippleView>
+
+        <com.andexert.library.RippleView
+            rv_type="rectangle"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/btn_height_big" />
+            android:layout_height="wrap_content">
 
+            <Button
+                android:id="@+id/btnDeposit"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/btn_height_big"
+                android:paddingRight="20dp"
+                android:paddingLeft="20dp"
+                android:text="@string/apply_deposit"
+                android:textColor="@color/white"
+                android:theme="@style/btn_orange" />
+        </com.andexert.library.RippleView>
     </LinearLayout>
 
 </LinearLayout>

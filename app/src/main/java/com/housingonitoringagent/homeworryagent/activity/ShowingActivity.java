@@ -13,7 +13,6 @@ import android.widget.EditText;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSON;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -28,11 +27,7 @@ import com.housingonitoringagent.homeworryagent.utils.net.VolleyResponseListener
 import com.housingonitoringagent.homeworryagent.utils.net.VolleyStringRequest;
 import com.housingonitoringagent.homeworryagent.utils.uikit.QBLToast;
 
-import java.io.Serializable;
 import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
 import java.util.Map;
 
 import butterknife.Bind;
@@ -110,7 +105,7 @@ public class ShowingActivity extends BaseActivity implements View.OnClickListene
         tvOutlet.setText(bean.getStoreName());
         tvVillage.setText(bean.getVillageName());
         tvBuildingNo.setText(bean.getHouseNumber());
-        tvShowingCountIn.setText(bean.getApplyVisitNumber());
+        tvShowingCountIn.setText(bean.getApplyVisitNumber()+"人");
     }
 
     @Override

@@ -27,7 +27,6 @@ import com.housingonitoringagent.homeworryagent.utils.net.VolleyResponseListener
 import com.housingonitoringagent.homeworryagent.utils.net.VolleyStringRequest;
 import com.housingonitoringagent.homeworryagent.utils.uikit.BGARefreshLayoutBuilder;
 import com.housingonitoringagent.homeworryagent.utils.uikit.QBLToast;
-import com.housingonitoringagent.homeworryagent.utils.uikit.recyclerview.HorizontalDividerItemDecoration;
 import com.housingonitoringagent.homeworryagent.views.XAdapter;
 
 import java.util.ArrayList;
@@ -54,7 +53,6 @@ public class ShowingRecordFragment extends Fragment implements BGARefreshLayout.
     private XAdapter<ContentBean.Content> adapter;
     private boolean lastPage;
     private int pageIndex = 0;
-//    private int pageSize = 10;
     private int pageDefaultSize = 10;
 
     private static final int REQUEST_CODE_SHOWING = 100;
@@ -94,15 +92,16 @@ public class ShowingRecordFragment extends Fragment implements BGARefreshLayout.
     private void initViews() {
         rvMain.setLayoutManager(new LinearLayoutManager(getActivity()));
         BGARefreshLayoutBuilder.init(getActivity(), refreshView, true);
+        refreshView.setDelegate(this);
 
-        rvMain.addItemDecoration(new HorizontalDividerItemDecoration.Builder(getThis())
+        /*rvMain.addItemDecoration(new HorizontalDividerItemDecoration.Builder(getThis())
                 .colorResId(R.color.divider_line).sizeResId(R.dimen.line_1px)
                 .marginResId(R.dimen.item_margin_icon, R.dimen.item_margin_icon).build()
-        );
+        );*/
 
         adapter = new XAdapter<ContentBean.Content>(getThis(), new ArrayList<ContentBean.Content>(), R.layout.item_showing) {
             @Override
-            public void creatingHolder(CustomHolder holder, List<ContentBean.Content> dataList, int adapterPos, int viewType) {
+            public void creatingHolder(CustomHolder holder, List<ContentBean.Content> dataList, int viewType) {
 
             }
 
@@ -169,14 +168,15 @@ public class ShowingRecordFragment extends Fragment implements BGARefreshLayout.
                 int resultCode = json.getIntValue("resultCode");
                 String message = json.getString("message");
                 if (resultCode == 1) {
-                    ContentBean bean = JSON.parseObject(json.toString(), ContentBean.class);
+                    ShowHouseBean mainBean = JSON.parseObject(json.toString(), ShowHouseBean.class);
+                    ContentBean bean = mainBean.getContent();
                     lastPage = bean.isLastPage();
                     List<ContentBean.Content> list;
                     switch (refreshType) {
                         case Const.RefreshType.REFRESH:
                             list = new ArrayList<>();
                             refreshView.endRefreshing();
-                            pageIndex = 0;
+//                            pageIndex = 0;
                             break;
                         default:
                             list = adapter.getDataList();
@@ -203,7 +203,14 @@ public class ShowingRecordFragment extends Fragment implements BGARefreshLayout.
                                 return arg0.getCreateTimeCompare().compareTo(arg1.getCreateTimeCompare());
                             }
                         });
+//                        final List<ContentBean.Content> newList = list;
+//                        getThis().runOnUiThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                adapter.setDataList(newList);
                         adapter.notifyDataSetChanged();
+//                            }
+//                        });
                     }
 //                    adapter.setDataList(list);
                 } else {

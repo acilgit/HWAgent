@@ -18,6 +18,9 @@ import com.housingonitoringagent.homeworryagent.extents.BaseActivity;
 import com.housingonitoringagent.homeworryagent.pages.HouseFragment;
 import com.housingonitoringagent.homeworryagent.views.XAdapter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
@@ -483,6 +486,10 @@ public class OutletActivity extends BaseActivity implements View.OnClickListener
         @Override
         public Fragment getItem(int position) {
 //            setupTabIcons();
+            List<Fragment> list = new ArrayList<>();
+            for (int i = 0; i < 7; i++) {
+                list.add(new HouseFragment(i));
+            }
             switch (position) {
                 case 0:
                     if (fragmentBuy == null) {
@@ -492,7 +499,6 @@ public class OutletActivity extends BaseActivity implements View.OnClickListener
                 case 1:
                     if (fragmentRent == null) {
                         fragmentRent = new HouseFragment(HouseFragment.TYPE_RENT);
-//                        fragmentRent.setType(HouseFragment.TYPE_RENT);
                     }
                     return fragmentRent;
                 default:
