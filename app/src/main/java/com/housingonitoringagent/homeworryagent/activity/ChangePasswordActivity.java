@@ -1,13 +1,8 @@
 package com.housingonitoringagent.homeworryagent.activity;
 
-import android.app.Activity;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -36,14 +31,16 @@ import butterknife.ButterKnife;
 public class ChangePasswordActivity extends BaseActivity implements View.OnClickListener,CompoundButton.OnCheckedChangeListener{
     @Bind(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.etCurrentPassword)
-    EditText etCurrentPassword;
+    @Bind(R.id.etCurrentPhone)
+    EditText etCurrentPhone;
     @Bind(R.id.etNewPassword)
     EditText etNewPassword;
     @Bind(R.id.cbShowPassword)
     CheckBox cbShowPassword;
     @Bind(R.id.btnCommit)
     Button btnCommit;
+    @Bind(R.id.btnCode)
+    Button btnCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +60,16 @@ public class ChangePasswordActivity extends BaseActivity implements View.OnClick
 
     @Override
     public void onClick(View v) {
-
+        switch (v.getId()) {
+            case R.id.btnCommit:
+                commit();
+                break;
+            case R.id.btnCode:
+                getCode();
+                break;
+            default:
+                break;
+        }
     }
 
     @Override
@@ -75,15 +81,50 @@ public class ChangePasswordActivity extends BaseActivity implements View.OnClick
         }
     }
 
-    private void commit() {
-        VolleyStringRequest request = new VolleyStringRequest(Request.Method.POST, "", new VolleyResponseListener() {
+    private void getCode() {
+        VolleyStringRequest request = new VolleyStringRequest(Request.Method.POST, Const.serviceMethod.GET_PHONE, new VolleyResponseListener() {
             @Override
             public void handleJson(com.alibaba.fastjson.JSONObject json) {
                 super.handleJson(json);
                 int resultCode = json.getIntValue("resultCode");
                 String message = json.getString("message");
                 if (resultCode == 1) {
+                   String phone = json.getJSONObject("content").getString("mobilephone");
+                    if (phone != null) {
+                        etCurrentPhone.setText(phone);
+                    }
                 } else {
+
+                }
+                QBLToast.show(message);
+                finish();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                QBLToast.show(R.string.network_exception);
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = super.getParams();
+                return params;
+            }
+        };
+        getThis().getVolleyRequestQueue().add(request);
+    }
+
+    private void commit() {
+        VolleyStringRequest request = new VolleyStringRequest(Request.Method.POST, Const.serviceMethod.CHANGE_PASSWORD, new VolleyResponseListener() {
+            @Override
+            public void handleJson(com.alibaba.fastjson.JSONObject json) {
+                super.handleJson(json);
+                int resultCode = json.getIntValue("resultCode");
+                String message = json.getString("message");
+                if (resultCode == 1) {
+
+                } else {
+
                 }
                 QBLToast.show(message);
                 finish();

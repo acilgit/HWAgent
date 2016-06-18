@@ -1,23 +1,20 @@
 package com.housingonitoringagent.homeworryagent.activity;
 
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.housingonitoringagent.homeworryagent.R;
-import com.housingonitoringagent.homeworryagent.User;
 import com.housingonitoringagent.homeworryagent.extents.BaseActivity;
 import com.housingonitoringagent.homeworryagent.pages.ConversationListFragment;
 import com.housingonitoringagent.homeworryagent.pages.MeFragment;
@@ -30,7 +27,6 @@ import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.EaseConstant;
 import com.hyphenate.easeui.ui.EaseConversationListFragment;
-import com.hyphenate.exceptions.HyphenateException;
 
 import java.util.List;
 
@@ -71,7 +67,7 @@ public class MainActivity extends BaseActivity {
     };
     private String[] titles = {
             "消息",
-            "看房",
+            "预约看房",
             "我的",
             "通讯录"
     };

@@ -1,4 +1,8 @@
-package com.housingonitoringagent.homeworryagent.utils.uikit;
+package com.housingonitoringagent.homeworryagent.utils;
+
+/**
+ * Created by XY on 2016/6/18.
+ */
 
 import android.support.annotation.NonNull;
 
@@ -12,6 +16,8 @@ import com.housingonitoringagent.homeworryagent.extents.BaseActivity;
 import com.housingonitoringagent.homeworryagent.utils.net.VolleyParams;
 import com.housingonitoringagent.homeworryagent.utils.net.VolleyResponseListener;
 import com.housingonitoringagent.homeworryagent.utils.net.VolleyStringRequest;
+import com.housingonitoringagent.homeworryagent.utils.uikit.BGARefreshLayoutBuilder;
+import com.housingonitoringagent.homeworryagent.utils.uikit.QBLToast;
 import com.housingonitoringagent.homeworryagent.views.XAdapter;
 
 import java.io.Serializable;
@@ -27,7 +33,7 @@ import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
  */
 public class RefreshListUtil<T> implements BGARefreshLayout.BGARefreshLayoutDelegate {
 
-//    private static List<RefreshListUtil> refreshListUtils = new ArrayList<>();
+    //    private static List<RefreshListUtil> refreshListUtils = new ArrayList<>();
 
     private final BGARefreshLayout refreshView;
     private static final int REFRESH = 1;
@@ -47,12 +53,12 @@ public class RefreshListUtil<T> implements BGARefreshLayout.BGARefreshLayoutDele
         this.refreshView = refreshView;
     }
 
-    public RefreshListUtil(BaseActivity activity, BGARefreshLayout refreshView, boolean loadMore, XAdapter<T> adapter, @NonNull IRefreshRequest iRefreshRequest ) {
+    public RefreshListUtil(BaseActivity activity, BGARefreshLayout refreshView, boolean loadMore, XAdapter<T> adapter, @NonNull IRefreshRequest iRefreshRequest) {
         BGARefreshLayoutBuilder.init(activity, refreshView, loadMore);
         refreshView.setDelegate(this);
         this.activity = activity;
         this.refreshView = refreshView;
-        this.adapter=adapter;
+        this.adapter = adapter;
         this.iRefreshRequest = iRefreshRequest;
         this.state = new RefreshState(10);
     }
@@ -62,25 +68,25 @@ public class RefreshListUtil<T> implements BGARefreshLayout.BGARefreshLayoutDele
         refreshView.setDelegate(this);
         this.activity = activity;
         this.refreshView = refreshView;
-        this.adapter=adapter;
+        this.adapter = adapter;
         this.iRefreshRequest = iRefreshRequest;
         this.state = new RefreshState(refreshPageSize);
     }
 
-    private static RefreshListUtil getBGARefresher(RefreshListUtil refreshListUtil, IRefreshRequest iRefreshRequest) {
+   /* private static RefreshListUtil getBGARefresher(RefreshListUtil refreshListUtil, IRefreshRequest iRefreshRequest) {
         getBGARefresher(refreshListUtil, iRefreshRequest, 10);
         return refreshListUtil;
     }
 
     private static RefreshListUtil getBGARefresher(RefreshListUtil refreshListUtil, IRefreshRequest iRefreshRequest, int refreshPageSize) {
-//        if (!refreshListUtils.contains(refreshListUtil)) {
-//            refreshListUtils.add(refreshListUtil);
-            refreshListUtil.iRefreshRequest = iRefreshRequest;
-            refreshListUtil.state = new RefreshState(refreshPageSize);
-            return refreshListUtil;
-//        }
-//        return null;
-    }
+        //        if (!refreshListUtils.contains(refreshListUtil)) {
+        //            refreshListUtils.add(refreshListUtil);
+        refreshListUtil.iRefreshRequest = iRefreshRequest;
+        refreshListUtil.state = new RefreshState(refreshPageSize);
+        return refreshListUtil;
+        //        }
+        //        return null;
+    }*/
 
     /**
      * 获取小区
@@ -100,21 +106,21 @@ public class RefreshListUtil<T> implements BGARefreshLayout.BGARefreshLayoutDele
         VolleyStringRequest request = new VolleyStringRequest(Request.Method.POST, url, new VolleyResponseListener() {
             @Override
             public void handleJson(com.alibaba.fastjson.JSONObject json) {
+                activity.dismissProgressDialog();
                 super.handleJson(json);
                 int resultCode = json.getIntValue("resultCode");
                 String message = json.getString("message");
                 if (resultCode == 1) {
-//                    LogUtils.le(json.toString());
-//                    T mainBean = JSON.parseObject(json.toString(), T);
-//                    bean = mainBean.getContent().getPs();
-                    refreshView.endLoadingMore();
-                    final List<T> newList = iRefreshRequest.handleJson(json, state.lastPage);
-                    List<T> list = adapter.getDataList();
+                    List<T> newList = iRefreshRequest.handleJson(json, state);
+                    final List<T> list = adapter.getDataList();
                     switch (refreshType) {
                         case REFRESH:
+                            refreshView.endRefreshing();
+                            if (state.pageIndex == 0) state.pageIndex++;
                             list.clear();
                             break;
                         default:
+                            refreshView.endLoadingMore();
                             state.pageIndex++;
                             break;
                     }
@@ -134,20 +140,17 @@ public class RefreshListUtil<T> implements BGARefreshLayout.BGARefreshLayoutDele
                         Collections.sort(list, new Comparator<T>() {
                             public int compare(T arg0, T arg1) {
                                 return iRefreshRequest.compareTo(arg0, arg1);
-//                                return arg0.getCreateTimeCompare().compareTo(arg1.getCreateTimeCompare());
                             }
                         });
                         activity.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                adapter.setDataList(newList);
-                                if (state.lastPage) {
-                                    QBLToast.show(R.string.text_no_data);
-                                }
+                                adapter.setDataList(list);
                             }
                         });
                     }
                 } else {
+                    activity.dismissProgressDialog();
                     QBLToast.show(message);
                     switch (refreshType) {
                         case REFRESH:
@@ -162,6 +165,7 @@ public class RefreshListUtil<T> implements BGARefreshLayout.BGARefreshLayoutDele
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                activity.dismissProgressDialog();
                 QBLToast.show(R.string.network_exception);
                 switch (refreshType) {
                     case REFRESH:
@@ -185,10 +189,14 @@ public class RefreshListUtil<T> implements BGARefreshLayout.BGARefreshLayoutDele
         activity.getVolleyRequestQueue().add(request);
     }
 
+    /**
+     * 刷新列表
+     */
     public void refreshList() {
         if (adapter.getItemCount() > 0) {
             getDataByRefresh(adapter.getItemCount());
         } else {
+            activity.showProgressDialog(activity.getString(R.string.wait_a_few_times));
             getDataByRefresh(state.pageDefaultSize);
             refreshView.endRefreshing();
         }
@@ -206,24 +214,57 @@ public class RefreshListUtil<T> implements BGARefreshLayout.BGARefreshLayoutDele
             getDataByRefresh(state.pageIndex + 1, state.pageDefaultSize);
             return true;
         }
+        QBLToast.show(R.string.text_no_more_data);
         return false;
     }
 
     protected Map<String, String> setParamsForUrl() {
         Map<String, String> params = new VolleyParams();
-        this.url =  iRefreshRequest.setVolleyParamsReturnUrl(params);
+        this.url = iRefreshRequest.setVolleyParamsReturnUrl(params);
         return params;
     }
 
     public interface IRefreshRequest<T> {
+        /**
+         * 把对应要返回的url要设置的params设置好，Return url;
+         * @param params
+         * @return
+         */
         String setVolleyParamsReturnUrl(Map<String, String> params);
-        List<T> handleJson(JSONObject json, boolean setIsLastPage);
+
+        /**
+         * 处理Json 把JSON中的lastPage通过state.setLastPage() 传进去，
+         * 最后把JSON中的List return
+         * @param json
+         * @param stateForSetLastPage
+         * @return
+         */
+        List<T> handleJson(JSONObject json, RefreshState stateForSetLastPage);
+
+        /**
+         * 去重，可以通过 return newItem.getId().equals(listItem.getId()); 返回结果，
+         * 如果不去重就直接返回false;
+         * @param newItem
+         * @param listItem
+         * @return
+         */
         boolean ignoreSameItem(T newItem, T listItem);
+
+        /**
+         * 排列表中的数据，返回值：
+         * -1 从大到小
+         *  1 从小到大
+         *  0 相同
+         *  也可以通过： 如 long 的实例   Long.compareTo()来比较，item0:item1的话，默认从小到大
+         * @param item0
+         * @param item1
+         * @return
+         */
         int compareTo(T item0, T item1);
     }
 
 
-    static class RefreshState implements Serializable {
+    public static class RefreshState implements Serializable {
         boolean lastPage = false;
         int pageIndex = 0;
         int pageDefaultSize = 10;
@@ -231,6 +272,9 @@ public class RefreshListUtil<T> implements BGARefreshLayout.BGARefreshLayoutDele
         public RefreshState(int pageDefaultSize) {
             this.pageDefaultSize = pageDefaultSize;
         }
-    }
 
+        public void setLastPage(boolean lastPage) {
+            this.lastPage = lastPage;
+        }
+    }
 }

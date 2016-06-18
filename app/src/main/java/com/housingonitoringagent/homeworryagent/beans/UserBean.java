@@ -94,6 +94,7 @@ public class UserBean implements Serializable {
         private int certStatus;
         private int sex;
         private String sessionId;
+        private String huanName;
         private String name;
         private String avatar;
         private String phone;
@@ -147,6 +148,14 @@ public class UserBean implements Serializable {
 
         public void setId(String id) {
             this.id = id;
+        }
+
+        public String getHuanName() {
+            return huanName;
+        }
+
+        public void setHuanName(String huanName) {
+            this.huanName = huanName;
         }
 
         public String getIntermediaryStoreId() {

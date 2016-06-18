@@ -87,7 +87,7 @@
     <string name="text_delete">删除</string>
     <string name="text_colon">:</string>
     <string name="text_no_village_tip">您没有相应的小区</string>
-    <string name="text_no_data">没有更多数据</string>
+    <string name="text_no_more_data">没有更多数据</string>
     <string name="text_company_name">公司名称:</string>
     <string name="text_phone">联系电话:</string>
     <string name="text_contacts">联系人:</string>
@@ -369,7 +369,7 @@
     <string name="successful">成功</string>
     <string name="outlet">门店店铺</string>
     <string name="title_messages">消息</string>
-    <string name="title_showing">看房</string>
+    <string name="title_showing">看房许可</string>
     <string name="title_capital_administration">资金管理</string>
     <string name="logout">退出登录</string>
     <string name="show_password">显示密码</string>
@@ -426,6 +426,9 @@
     <string name="wait_commit">待定</string>
     <string name="err_text_no_people">请填写人数</string>
     <string name="apply_admin">申请监管</string>
+    <string name="mobile_phone_">手机号：</string>
+    <string name="err_text_zero">人数不能为 0</string>
+    <string name="err_text_out_bigger_in">带出人数不能大于带入看房人数</string>
 
 </resources>
 

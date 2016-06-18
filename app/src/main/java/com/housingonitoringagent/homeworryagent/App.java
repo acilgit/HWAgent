@@ -58,7 +58,7 @@ public class App extends Application {
         initEaseMob();
         App.getInstance().getPackageName();
 
-        Log.e("qqq", " create App " + 68);
+        Log.e("qqq", " create App " +        16       );
     }
 
   /*  @Override
@@ -67,9 +67,6 @@ public class App extends Application {
         MultiDex.install(this);
     }*/
 
-    /**
-     *
-     */
     private void initEaseMob() {
         // 获取当前进程 id 并取得进程名
         int pid = android.os.Process.myPid();

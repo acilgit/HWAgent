@@ -17,6 +17,8 @@
         android:layout_height="wrap_content">
 
         <LinearLayout
+            android:id="@+id/llMain"
+            android:background="@drawable/bg_btn_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -24,7 +26,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp">
+                android:layout_marginTop="8dp">
 
                 <TextView
                     android:id="@+id/tvOrderType"
@@ -119,7 +121,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp">
+                android:layout_marginTop="4dp">
 
                 <com.facebook.drawee.view.SimpleDraweeView
                     android:id="@+id/sivHouse"
@@ -137,7 +139,7 @@
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/sivHouse"
                     android:padding="2dp"
-                    android:text="奥格瑞玛 智慧谷"
+                    android:text="奥格瑞玛 智慧谷地"
                     android:textColor="@color/text_black_lite"
                     android:textSize="@dimen/text_size_item_normal" />
 
@@ -167,13 +169,17 @@
 
             </RelativeLayout>
 
+            <View
+                android:layout_marginTop="8dp"
+                style="@style/divider_line" />
+
             <TableLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="8dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:layout_marginTop="16dp">
+                android:layout_marginTop="8dp">
 
                 <TableRow
                     android:layout_width="match_parent"
@@ -184,7 +190,6 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@color/white"
                         android:gravity="center"
                         android:lines="1"
                         android:text="@string/appointment_time"
@@ -195,7 +200,6 @@
                         android:id="@+id/tvAppointmentTime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@color/white"
                         android:lines="1"
                         android:text="2016年06月32日 25:61:61"
                         android:textColor="@color/text_gray"
@@ -212,7 +216,6 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@color/white"
                         android:gravity="center"
                         android:lines="1"
                         android:text="@string/showing_time"
@@ -223,7 +226,6 @@
                         android:id="@+id/tvStartTime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@color/white"
                         android:lines="1"
                         android:text="待定"
                         android:textColor="@color/text_gray"

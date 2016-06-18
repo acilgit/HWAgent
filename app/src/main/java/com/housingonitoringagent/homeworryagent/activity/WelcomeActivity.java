@@ -98,7 +98,7 @@ public class WelcomeActivity extends BaseActivity {
                 return params;
             }
         };
-        getVolleyRequestQueue().add(request);
+//        getVolleyRequestQueue().add(request);
     }
 
     private void nextStep() {

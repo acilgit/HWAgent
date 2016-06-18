@@ -19,7 +19,7 @@ public class CustomerMsgBean implements Serializable{
      * agentId : 9b870b8c-1eb2-4599-a1a8-b1faa34ea80d
      */
 
-    private String type;
+    private String permitType;
     private String id;
     private String houseSellPicture;
     private String title;
@@ -30,11 +30,11 @@ public class CustomerMsgBean implements Serializable{
     private String agentId;
 
     public String getType() {
-        return type;
+        return permitType;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setType(String permitType) {
+        this.permitType = permitType;
     }
 
     public String getId() {

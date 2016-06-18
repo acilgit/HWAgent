@@ -209,9 +209,9 @@ public class ShowHouseBean implements Serializable {
             }
             public String getPermitTypeString() {
                 switch (permitType) {
-                    case 0:
-                        return "租房";
                     case 1:
+                        return "租房";
+                    case 2:
                         return "二手房";
                     default:
                         return "";

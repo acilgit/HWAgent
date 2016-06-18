@@ -2,7 +2,7 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_pressed="true" >
         <shape>
-            <solid android:color="@color/grey_divider_thin"/>
+            <solid android:color="@color/item_bg_lite"/>
         </shape>
     </item>
     <!--<item android:state_selected="true" >-->

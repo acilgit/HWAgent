@@ -49,7 +49,6 @@ public class LoginActivity extends BaseActivity {
     public static Activity instance;
 
     private final String account = "18918918909";
-    private final String easeAccount ="fc_18918918909";
     private final String password = "123456";
 
     public static void finishInstance() {
@@ -137,7 +136,7 @@ public class LoginActivity extends BaseActivity {
                                 userInfo.getContent().setMobilephone(username);
 //                                userInfo.setSessionId(userInfo.getSessionId("sessionId"));
                                 onLogin(userInfo);
-                                App.getInstance().EaseLogIn(easeAccount, easeAccount);
+                                App.getInstance().EaseLogIn(User.getEaseModId(), User.getEaseModId());
                                 break;
                             default:
                                 QBLToast.show(msg);

@@ -1,6 +1,5 @@
 package com.housingonitoringagent.homeworryagent.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -143,8 +142,6 @@ public class ForgetPasswordActivity extends BaseActivity implements View.OnClick
                     QBLToast.show(R.string.text_hint_edit_phone);
                     return;
                 }
-//                showProgressDialog(getString(R.string.wait_a_few_times));
-//                mSMSHelper.beginListenSms();
                 mSMSHelper.getVerificationCode(phone.toString().trim());
                 break;
             case R.id.btnCommit:
@@ -207,11 +204,18 @@ public class ForgetPasswordActivity extends BaseActivity implements View.OnClick
                 params.put("mobilephone", phone);
                 params.put("password", password);
                 params.put("captcha", verificationCode);
-
                 return params;
             }
         };
         getVolleyRequestQueue().add(request);
+    }
+
+    private void initview() {
+        toolbar.getBackground().setAlpha(0);
+        getSupportActionBar().setElevation(1);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            toolbar.setElevation(1);
+        }
     }
 
     private void onGetVerificationCode(boolean successful, String reason) {
@@ -221,14 +225,6 @@ public class ForgetPasswordActivity extends BaseActivity implements View.OnClick
         } else {
             startVerificationCodeTimer();
             QBLToast.show(reason);
-        }
-    }
-
-    private void initview() {
-        toolbar.getBackground().setAlpha(0);
-        getSupportActionBar().setElevation(1);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            toolbar.setElevation(1);
         }
     }
 

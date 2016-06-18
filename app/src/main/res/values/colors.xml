@@ -22,6 +22,7 @@
     <color name="white_transparent">#c8ffffff</color><!-- 透明的白色 -->
     <color name="grey_400">#78909C</color>
     <color name="green_400">#2BAF2B</color>
+    <color name="item_bg_lite">#EFEFEF</color>
     <color name="background_gray">#DDD</color>
     <color name="background_gray_lite">#EEE</color>
     <color name="background_gray_dark">#CCC</color>

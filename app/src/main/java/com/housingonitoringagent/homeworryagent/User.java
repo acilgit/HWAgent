@@ -52,6 +52,7 @@ public class User {
         setUsername(loginResp.getContent().getName());
         setNickname(loginResp.getContent().getName());
         setUserId(loginResp.getContent().getId());
+        setEaseModId(loginResp.getContent().getHuanName());
         setAccount(loginResp.getContent().getMobilephone());
         setMobilePhone(loginResp.getContent().getMobilephone());
         setUserSex(loginResp.getContent().getSex());
@@ -276,6 +277,9 @@ public class User {
     public static void setUsername(String username) {
         storage.put(PreferencesKey.User.NAMES, username);
     }
+    public static void setEaseModId(String huanName) {
+        storage.put("huanName", huanName);
+    }
 
     public static void setUserYZ(boolean YZ) {
         storage.put(PreferencesKey.User.YZ, YZ);
@@ -310,6 +314,10 @@ public class User {
 
     public static String getNickname() {
         return storage.getString(PreferencesKey.User.NICKNAME, null);
+    }
+
+    public static String getEaseModId() {
+        return storage.getString("huanName", null);
     }
 
     public static int getUserSex() {

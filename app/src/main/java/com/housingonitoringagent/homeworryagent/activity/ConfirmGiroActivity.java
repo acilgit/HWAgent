@@ -258,6 +258,7 @@ public class ConfirmGiroActivity extends BaseActivity implements View.OnClickLis
                             case 1:
                                 llGiro.setVisibility(View.VISIBLE);
                                 tvGiroTo.setText(msg);
+                                break;
                             default:
                                 llGiro.setVisibility(View.GONE);
                                 QBLToast.show(msg);
@@ -302,8 +303,8 @@ public class ConfirmGiroActivity extends BaseActivity implements View.OnClickLis
             toolbar.setElevation(1);
         }
         tvAgentPhone.setText(bean.getCUserMobilephone());
-        rbPartyA.setText(getString(R.string.extra_party_a) +"："+ bean.getAUserName()+"，"+ bean.getAUserMobilephone());
-        rbPartyB.setText(getString(R.string.extra_party_b) +"："+ bean.getBUserName()+"，"+ bean.getBUserMobilephone());
+        rbPartyA.setText(getString(R.string.party_a) +"："+ bean.getAUserName()+"，"+ bean.getAUserMobilephone());
+        rbPartyB.setText(getString(R.string.party_b) +"："+ bean.getBUserName()+"，"+ bean.getBUserMobilephone());
     }
 
     /**

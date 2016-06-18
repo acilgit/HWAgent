@@ -1,7 +1,6 @@
 package com.housingonitoringagent.homeworryagent.activity;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
@@ -27,7 +26,6 @@ import com.housingonitoringagent.homeworryagent.utils.net.VolleyResponseListener
 import com.housingonitoringagent.homeworryagent.utils.net.VolleyStringRequest;
 import com.housingonitoringagent.homeworryagent.utils.uikit.QBLToast;
 
-import java.util.Calendar;
 import java.util.Map;
 
 import butterknife.Bind;
@@ -80,17 +78,21 @@ public class ShowingActivity extends BaseActivity implements View.OnClickListene
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         bean = (ShowHouseBean.ContentBean.Content) getIntent().getSerializableExtra(getString(R.string.extra_bean));
+        btnCommit.setOnClickListener(this);
         init();
     }
 
     private void init() {
         switch (bean.getPermitStatus()) {
             case PERMIT_STATUS_END: // 待确认
+                btnCommit.setText("看房离开");
                 trShowingIn.setVisibility(View.GONE);
                 trShowingOut1.setVisibility(View.VISIBLE);
                 trShowingOut2.setVisibility(View.VISIBLE);
+                etShowingCountIn.setText(bean.getApplyVisitNumber() + "");
                 break;
             case PERMIT_STATUS_START: // 未看房
+                btnCommit.setText("进入看房");
                 trShowingIn.setVisibility(View.VISIBLE);
                 trShowingOut1.setVisibility(View.GONE);
                 trShowingOut2.setVisibility(View.GONE);
@@ -128,12 +130,21 @@ public class ShowingActivity extends BaseActivity implements View.OnClickListene
                 if (outCount.isEmpty()) {
                     QBLToast.show(R.string.err_text_no_people);
                     return;
+                } else if(Integer.parseInt(outCount)<1){
+                    QBLToast.show(getString(R.string.err_text_zero));
+                    return;
+                }else if(Integer.parseInt(outCount)>Integer.parseInt(tvShowingCountIn.getText().toString())){
+                    QBLToast.show(getString(R.string.err_text_out_bigger_in));
+                    return;
                 }
                 url = Const.serviceMethod.VISIT_PERMISSSION_END;
                 break;
             default: // 未看房
                 if (inCount.isEmpty()) {
                     QBLToast.show(R.string.err_text_no_people);
+                    return;
+                } else if(Integer.parseInt(inCount)<1){
+                    QBLToast.show(R.string.err_text_zero);
                     return;
                 }
                 url = Const.serviceMethod.VISIT_PERMISSSION_UPDATE;
@@ -146,28 +157,12 @@ public class ShowingActivity extends BaseActivity implements View.OnClickListene
                 int resultCode = json.getIntValue("resultCode");
                 String message = json.getString("message");
                 if (resultCode == 1) {
+                    setResult(RESULT_OK);
                     new AlertDialog.Builder(getThis()).setCancelable(false)
                             .setTitle(message)
                             .setPositiveButton(getString(R.string.confirm), new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    switch (bean.getPermitStatus()) {
-                                        case ShowHouseBean.PERMIT_STATUE_SHOWING:
-                                            bean.setEndTime(Calendar.getInstance().getTimeInMillis());
-                                            bean.setPermitStatus(ShowHouseBean.PERMIT_STATUE_FINISH);
-                                            bean.setRealVisitNumber(Integer.parseInt(outCount));
-                                            break;
-                                        case ShowHouseBean.PERMIT_STATUE_WAIT:
-                                            bean.setStartTime(Calendar.getInstance().getTimeInMillis());
-                                            bean.setPermitStatus(ShowHouseBean.PERMIT_STATUE_SHOWING);
-                                            bean.setApplyVisitNumber(Integer.parseInt(inCount));
-                                            break;
-                                        default:
-                                            break;
-                                    }
-                                    Intent intent = new Intent();
-                                    intent.putExtra(getString(R.string.extra_bean), bean);
-                                    setResult(RESULT_OK, intent);
                                     finish();
                                 }
                             }).show();
