@@ -55,7 +55,7 @@ public class Const {
         /*获取邻居列表*/
         String NEIGHBOR_LIST = SERVER + "/append/neighbour/info";
         /*检查sessionId是否过期*/
-        String CHECKSESSIONID = SERVER + "/append/common/checksessionid";
+        String CHECKSESSIONID = SERVER + "/agent_app/checksessionid";
         /*用户协议*/
         String USERREGISTERDEAL = SERVER + "/frontend/userRegisterDeal";
 

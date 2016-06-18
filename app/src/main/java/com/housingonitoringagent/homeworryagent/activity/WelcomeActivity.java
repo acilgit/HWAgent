@@ -3,6 +3,7 @@ package com.housingonitoringagent.homeworryagent.activity;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.widget.ImageView;
 
 import com.alibaba.fastjson.JSONObject;
@@ -39,6 +40,7 @@ public class WelcomeActivity extends BaseActivity {
     // 显示时间：3 秒
     private final int DISPLAY_TIME = 1 * 1000;
     private boolean cookieOk = false;
+    private long startTime = SystemClock.currentThreadTimeMillis();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,10 +100,12 @@ public class WelcomeActivity extends BaseActivity {
                 return params;
             }
         };
-//        getVolleyRequestQueue().add(request);
+        getVolleyRequestQueue().add(request);
     }
 
     private void nextStep() {
+        long nowTime = SystemClock.currentThreadTimeMillis();
+        long time = DISPLAY_TIME - (nowTime - startTime);
         ivSplash.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -115,7 +119,7 @@ public class WelcomeActivity extends BaseActivity {
                 finishInstance();
             }
 
-        }, DISPLAY_TIME);
+        }, time <= 0 ? 0 : time);
     }
 
     public static void finishInstance() {

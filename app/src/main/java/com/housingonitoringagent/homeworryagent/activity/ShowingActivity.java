@@ -33,8 +33,8 @@ import butterknife.ButterKnife;
 
 public class ShowingActivity extends BaseActivity implements View.OnClickListener {
 
-    public final static int PERMIT_STATUS_END = 0;
-    public final static int PERMIT_STATUS_START = 2;
+//    public final static int PERMIT_STATUS_END = 0;
+//    public final static int PERMIT_STATUS_START = 2;
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
@@ -84,14 +84,14 @@ public class ShowingActivity extends BaseActivity implements View.OnClickListene
 
     private void init() {
         switch (bean.getPermitStatus()) {
-            case PERMIT_STATUS_END: // 待确认
+            case ShowHouseBean.PERMIT_STATUE_SHOWING: // 待确认
                 btnCommit.setText("看房离开");
                 trShowingIn.setVisibility(View.GONE);
                 trShowingOut1.setVisibility(View.VISIBLE);
                 trShowingOut2.setVisibility(View.VISIBLE);
                 etShowingCountIn.setText(bean.getApplyVisitNumber() + "");
                 break;
-            case PERMIT_STATUS_START: // 未看房
+            case ShowHouseBean.PERMIT_STATUE_WAIT: // 未看房
                 btnCommit.setText("进入看房");
                 trShowingIn.setVisibility(View.VISIBLE);
                 trShowingOut1.setVisibility(View.GONE);
@@ -126,14 +126,14 @@ public class ShowingActivity extends BaseActivity implements View.OnClickListene
         final String outCount = etShowingCountOut.getText().toString();
         String url;
         switch (bean.getPermitStatus()) {
-            case PERMIT_STATUS_END: // 待确认
+            case ShowHouseBean.PERMIT_STATUE_SHOWING: // 待确认
                 if (outCount.isEmpty()) {
                     QBLToast.show(R.string.err_text_no_people);
                     return;
                 } else if(Integer.parseInt(outCount)<1){
                     QBLToast.show(getString(R.string.err_text_zero));
-                    return;
-                }else if(Integer.parseInt(outCount)>Integer.parseInt(tvShowingCountIn.getText().toString())){
+//                    return;
+                }else if(Integer.parseInt(outCount)>Integer.parseInt(inCount)){
                     QBLToast.show(getString(R.string.err_text_out_bigger_in));
                     return;
                 }
@@ -181,10 +181,10 @@ public class ShowingActivity extends BaseActivity implements View.OnClickListene
                 Map<String, String> params = super.getParams();
                 params.put("id", String.valueOf(bean.getId()));
                 switch (bean.getPermitStatus()) {
-                    case PERMIT_STATUS_END:
+                    case ShowHouseBean.PERMIT_STATUE_SHOWING:
                         params.put("realVisitNumber",outCount);
                         break;
-                    case PERMIT_STATUS_START:
+                    case ShowHouseBean.PERMIT_STATUE_WAIT:
                         params.put("applyVisitNumber", inCount);
                         break;
                 }

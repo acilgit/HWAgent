@@ -23,6 +23,8 @@ import com.housingonitoringagent.homeworryagent.App;
  */
 public class BaseActivity extends AppCompatActivity {
 
+    public static final int REQUEST_CODE_GOT_RESULT = 100;
+
     ProgressDialog mProgressDialog;
     RequestQueue mVolleyRequestQueue;
     BroadcastReceiver mFinishReceiver;

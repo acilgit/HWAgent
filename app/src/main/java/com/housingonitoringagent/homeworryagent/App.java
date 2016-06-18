@@ -58,7 +58,7 @@ public class App extends Application {
         initEaseMob();
         App.getInstance().getPackageName();
 
-        Log.e("qqq", " create App " +        16       );
+        Log.e("qqq", " create App " +        22       );
     }
 
   /*  @Override

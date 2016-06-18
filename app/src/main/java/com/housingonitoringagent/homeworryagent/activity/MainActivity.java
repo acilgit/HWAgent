@@ -1,5 +1,6 @@
 package com.housingonitoringagent.homeworryagent.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -357,5 +358,18 @@ public class MainActivity extends BaseActivity {
         EMClient.getInstance().chatManager().addMessageListener(messageListener);
         EMClient.getInstance().chatManager().addConversationListener(conversationListener);
         updateUnreadLabel();
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case REQUEST_CODE_GOT_RESULT:
+                if (resultCode == RESULT_OK) {
+                    recordFragment.initDate();
+                }
+                break;
+            default:
+                break;
+        }
     }
 }

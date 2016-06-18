@@ -61,6 +61,7 @@ public class RefreshListUtil<T> implements BGARefreshLayout.BGARefreshLayoutDele
         this.adapter = adapter;
         this.iRefreshRequest = iRefreshRequest;
         this.state = new RefreshState(10);
+//        this.refreshView.setRefreshViewHolder();
     }
 
     public RefreshListUtil(BaseActivity activity, BGARefreshLayout refreshView, boolean loadMore, XAdapter<T> adapter, @NonNull IRefreshRequest iRefreshRequest, int refreshPageSize) {

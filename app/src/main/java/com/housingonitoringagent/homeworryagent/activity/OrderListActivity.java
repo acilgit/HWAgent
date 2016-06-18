@@ -107,6 +107,7 @@ public class OrderListActivity extends BaseActivity implements View.OnClickListe
             }
         };
         rvMain.setAdapter(adapter);
+
         refresher = new RefreshListUtil<>(getThis(), refreshView, true, adapter, new RefreshListUtil.IRefreshRequest<Content>() {
             @Override
             public String setVolleyParamsReturnUrl(Map<String, String> params) {

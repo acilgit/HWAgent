@@ -44,7 +44,6 @@ public class ShowingRecordFragment extends Fragment {
 
     private XAdapter<Content> adapter;
 
-    private static final int REQUEST_CODE_GOT_RESULT = 100;
     private RefreshListUtil<Content> refresher;
 
     public ShowingRecordFragment() {
@@ -90,7 +89,7 @@ public class ShowingRecordFragment extends Fragment {
         adapter = new XAdapter<Content>(getThis(), new ArrayList<Content>(), R.layout.item_showing) {
             @Override
             public void creatingHolder(final CustomHolder holder, final List<Content> dataList, int viewType) {
-                View.OnClickListener clickListener = new View.OnClickListener() {
+                /*View.OnClickListener clickListener = new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         switch (v.getId()) {
@@ -102,7 +101,7 @@ public class ShowingRecordFragment extends Fragment {
                                         public void setIntent(Intent intent) {
                                             intent.putExtra(getThis().getString(R.string.extra_bean), item);
                                         }
-                                    }, REQUEST_CODE_GOT_RESULT);
+                                    }, BaseActivity.REQUEST_CODE_GOT_RESULT);
                                 }
                                 break;
                             default:
@@ -110,7 +109,7 @@ public class ShowingRecordFragment extends Fragment {
                         }
                     }
                 };
-                holder.getView(R.id.llMain).setOnClickListener(clickListener);
+                holder.getView(R.id.llMain).setOnClickListener(clickListener);*/
             }
 
             @Override
@@ -130,6 +129,19 @@ public class ShowingRecordFragment extends Fragment {
                         .setText(R.id.tvStartTime, startTime == 0 ? getThis().getString(R.string.wait_commit) : DateUtil.formatDateToString(startTime));
                 ((SimpleDraweeView) holder.getView(R.id.sivHead)).setImageURI(Uri.parse(bean.getAvatar()));
                 ((SimpleDraweeView) holder.getView(R.id.sivHouse)).setImageURI(Uri.parse(bean.getHouseCoverPicture()));
+            }
+
+            @Override
+            protected void handleItemViewClick(CustomHolder holder, final Content item) {
+                super.handleItemViewClick(holder, item);
+                if (item.getPermitType() == ShowHouseBean.PERMIT_STATUE_SHOWING || item.getPermitType() == ShowHouseBean.PERMIT_STATUE_WAIT) {
+                    getThis().start(ShowingActivity.class, new BaseActivity.BaseIntent() {
+                        @Override
+                        public void setIntent(Intent intent) {
+                            intent.putExtra(getThis().getString(R.string.extra_bean), item);
+                        }
+                    }, BaseActivity.REQUEST_CODE_GOT_RESULT);
+                }
             }
         };
         rvMain.setAdapter(adapter);
@@ -160,22 +172,8 @@ public class ShowingRecordFragment extends Fragment {
         });
     }
 
-    private void initDate() {
+    public void initDate() {
         refresher.refreshList();
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode) {
-            case REQUEST_CODE_GOT_RESULT:
-                if (resultCode == getActivity().RESULT_OK) {
-                    refresher.refreshList();
-                }
-                break;
-            default:
-                break;
-        }
     }
 
 }
