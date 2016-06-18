@@ -90,7 +90,7 @@ public abstract class XAdapter<T> extends RecyclerView.Adapter {
     }
 
     /**
-     * 创建Holer时绑定控件
+     * 创建Holder时绑定控件
      * @param holder
      * @param dataList
      * @param viewType

@@ -6,7 +6,6 @@ import android.util.Log;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.android.volley.Response;
-import com.housingonitoringagent.homeworryagent.App;
 import com.housingonitoringagent.homeworryagent.User;
 import com.housingonitoringagent.homeworryagent.utils.uikit.QBLToast;
 
@@ -38,7 +37,7 @@ public abstract class VolleyResponseListener implements Response.Listener<String
                 // 退出用户登录
                 User.logOut();
                 // 重启应用
-                App.getInstance().restart();
+//                App.getInstance().restart();
                 return;
             }
             Log.d(VolleyResponseListener.class.getName(), "message : " + respModel.getMessage());

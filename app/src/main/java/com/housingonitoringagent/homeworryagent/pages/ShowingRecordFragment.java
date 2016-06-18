@@ -20,7 +20,7 @@ import com.housingonitoringagent.homeworryagent.Const;
 import com.housingonitoringagent.homeworryagent.R;
 import com.housingonitoringagent.homeworryagent.activity.ShowingActivity;
 import com.housingonitoringagent.homeworryagent.beans.ShowHouseBean;
-import com.housingonitoringagent.homeworryagent.beans.ShowHouseBean.ContentBean;
+import com.housingonitoringagent.homeworryagent.beans.ShowHouseBean.ContentBean.Content;
 import com.housingonitoringagent.homeworryagent.extents.BaseActivity;
 import com.housingonitoringagent.homeworryagent.utils.DateUtil;
 import com.housingonitoringagent.homeworryagent.utils.net.VolleyResponseListener;
@@ -50,12 +50,16 @@ public class ShowingRecordFragment extends Fragment implements BGARefreshLayout.
     @Bind(R.id.refreshView)
     BGARefreshLayout refreshView;
 
-    private XAdapter<ContentBean.Content> adapter;
+    private XAdapter<Content> adapter;
     private boolean lastPage;
     private int pageIndex = 0;
     private int pageDefaultSize = 10;
 
-    private static final int REQUEST_CODE_SHOWING = 100;
+//    private SaveState state = new SaveState();
+//    class SaveState implements Serializable {
+//    }
+
+    private static final int REQUEST_CODE_GOT_RESULT = 100;
 
     public ShowingRecordFragment() {
 
@@ -69,11 +73,19 @@ public class ShowingRecordFragment extends Fragment implements BGARefreshLayout.
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View currentView = inflater.inflate(R.layout.layout_refresh_list, container, false);
         ButterKnife.bind(this, currentView);
+        if (savedInstanceState != null) {
+//            state = (SaveState) savedInstanceState.getSerializable("state");
+        }
         initViews();
         initDate();
         return currentView;
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+//        outState.putSerializable("state", state);
+    }
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -99,15 +111,15 @@ public class ShowingRecordFragment extends Fragment implements BGARefreshLayout.
                 .marginResId(R.dimen.item_margin_icon, R.dimen.item_margin_icon).build()
         );*/
 
-        adapter = new XAdapter<ContentBean.Content>(getThis(), new ArrayList<ContentBean.Content>(), R.layout.item_showing) {
+        adapter = new XAdapter<Content>(getThis(), new ArrayList<Content>(), R.layout.item_showing) {
             @Override
-            public void creatingHolder(CustomHolder holder, List<ContentBean.Content> dataList, int viewType) {
+            public void creatingHolder(CustomHolder holder, List<Content> dataList, int viewType) {
 
             }
 
             @Override
-            public void bindingHolder(CustomHolder holder, List<ContentBean.Content> dataList, int pos) {
-                ContentBean.Content bean = dataList.get(pos);
+            public void bindingHolder(CustomHolder holder, List<Content> dataList, int pos) {
+                Content bean = dataList.get(pos);
                 long appointmentTime = bean.getCreateTime();
                 long startTime = bean.getStartTime();
                 String unit = bean.getPermitType() == 0 ? "元" : "万";
@@ -126,7 +138,7 @@ public class ShowingRecordFragment extends Fragment implements BGARefreshLayout.
             }
 
             @Override
-            protected void handleItemViewClick(CustomHolder holder, final ContentBean.Content item) {
+            protected void handleItemViewClick(CustomHolder holder, final Content item) {
                 super.handleItemViewClick(holder, item);
                 if (item.getPermitType() == ShowHouseBean.PERMIT_STATUE_SHOWING || item.getPermitType() == ShowHouseBean.PERMIT_STATUE_WAIT) {
                     getThis().start(ShowingActivity.class, new BaseActivity.BaseIntent() {
@@ -134,7 +146,7 @@ public class ShowingRecordFragment extends Fragment implements BGARefreshLayout.
                         public void setIntent(Intent intent) {
                             intent.putExtra(getThis().getString(R.string.extra_bean), item);
                         }
-                    }, REQUEST_CODE_SHOWING);
+                    }, REQUEST_CODE_GOT_RESULT);
                 }
             }
         };
@@ -169,9 +181,9 @@ public class ShowingRecordFragment extends Fragment implements BGARefreshLayout.
                 String message = json.getString("message");
                 if (resultCode == 1) {
                     ShowHouseBean mainBean = JSON.parseObject(json.toString(), ShowHouseBean.class);
-                    ContentBean bean = mainBean.getContent();
+                    ShowHouseBean.ContentBean bean = mainBean.getContent();
                     lastPage = bean.isLastPage();
-                    List<ContentBean.Content> list;
+                    List<Content> list;
                     switch (refreshType) {
                         case Const.RefreshType.REFRESH:
                             list = new ArrayList<>();
@@ -186,9 +198,9 @@ public class ShowingRecordFragment extends Fragment implements BGARefreshLayout.
                     }
 
                     if (bean.getContent().size() > 0) {
-                        for (ContentBean.Content item : bean.getContent()) {
+                        for (Content item : bean.getContent()) {
                             boolean add = false;
-                            for (ContentBean.Content listItem : list) {
+                            for (Content listItem : list) {
                                 if (item.getId().equals(listItem.getId())) {
                                     add = true;
                                     break;
@@ -198,19 +210,19 @@ public class ShowingRecordFragment extends Fragment implements BGARefreshLayout.
                                 list.add(item);
                             }
                         }
-                        Collections.sort(bean.getContent(), new Comparator<ContentBean.Content>() {
-                            public int compare(ContentBean.Content arg0, ContentBean.Content arg1) {
+                        Collections.sort(bean.getContent(), new Comparator<Content>() {
+                            public int compare(Content arg0, Content arg1) {
                                 return arg0.getCreateTimeCompare().compareTo(arg1.getCreateTimeCompare());
                             }
                         });
-//                        final List<ContentBean.Content> newList = list;
-//                        getThis().runOnUiThread(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                adapter.setDataList(newList);
-                        adapter.notifyDataSetChanged();
-//                            }
-//                        });
+                        final List<Content> newList = list;
+                        getThis().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                adapter.setDataList(newList);
+//                        adapter.notifyDataSetChanged();
+                            }
+                        });
                     }
 //                    adapter.setDataList(list);
                 } else {
@@ -267,20 +279,6 @@ public class ShowingRecordFragment extends Fragment implements BGARefreshLayout.
         if (!lastPage) {
             getDataByRefresh(pageIndex + 1, pageDefaultSize, Const.RefreshType.LOAD);
         }
-      /*  if (mVillages.size() > 0) {
-            if (!lastPage) {
-                getDataByRefresh(pageIndex, neighborAdapter.getData().get(mBuildSelectIndex).getId(), villageName, Const.RefreshType.LOAD);
-            }
-        } else {
-            QBLToast.show(R.string.text_no_data);
-        }
-    else
-
-    {
-        refreshView.endRefreshing();
-        QBLToast.show(R.string.text_no_village_tip);
-    }*/
-
         return false;
     }
 
@@ -289,11 +287,11 @@ public class ShowingRecordFragment extends Fragment implements BGARefreshLayout.
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
-            case REQUEST_CODE_SHOWING:
+            case REQUEST_CODE_GOT_RESULT:
                 if (resultCode == getActivity().RESULT_OK) {
-                    if (data != null) {
+                    /*if (data != null) {
                         try {
-                            ContentBean.Content bean = (ContentBean.Content) data.getSerializableExtra(getThis().getString(R.string.extra_bean));
+                            Content bean = (Content) data.getSerializableExtra(getThis().getString(R.string.extra_bean));
                             for (int i = 0; i < adapter.getItemCount(); i++) {
                                 if (adapter.getItem(i).getId().equals(bean.getId())) {
                                     adapter.updateItem(0, bean);
@@ -303,7 +301,8 @@ public class ShowingRecordFragment extends Fragment implements BGARefreshLayout.
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-                    }
+                    }*/
+
                 }
                 break;
             default:
