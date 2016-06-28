@@ -1,30 +1,37 @@
 package com.housingonitoringagent.homeworryagent.pages;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.housingonitoringagent.homeworryagent.Const;
 import com.housingonitoringagent.homeworryagent.R;
+import com.housingonitoringagent.homeworryagent.User;
+import com.housingonitoringagent.homeworryagent.activity.WebViewActivity;
+import com.housingonitoringagent.homeworryagent.beans.HouseRecommendBean;
+import com.housingonitoringagent.homeworryagent.beans.HouseRecommendBean.ContentBean.Content;
 import com.housingonitoringagent.homeworryagent.extents.BaseActivity;
-import com.housingonitoringagent.homeworryagent.utils.net.VolleyResponseListener;
-import com.housingonitoringagent.homeworryagent.utils.net.VolleyStringRequest;
-import com.housingonitoringagent.homeworryagent.utils.uikit.BGARefreshLayoutBuilder;
-import com.housingonitoringagent.homeworryagent.utils.uikit.QBLToast;
+import com.housingonitoringagent.homeworryagent.views.XRefreshView;
+import com.housingonitoringagent.homeworryagent.utils.StringUtil;
 import com.housingonitoringagent.homeworryagent.utils.uikit.recyclerview.HorizontalDividerItemDecoration;
 import com.housingonitoringagent.homeworryagent.views.XAdapter;
+import com.housingonitoringagent.homeworryagent.views.tags.FlowTagLayout;
+import com.housingonitoringagent.homeworryagent.views.tags.TagAdapter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -37,10 +44,7 @@ import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
  */
 
 @SuppressLint("ValidFragment")
-public class HouseFragment extends Fragment implements BGARefreshLayout.BGARefreshLayoutDelegate{
-
-//    @Bind(R.id.toolbar)
-//    Toolbar toolbar;
+public class HouseFragment extends Fragment {
     @Bind(R.id.rvMain)
     RecyclerView rvMain;
     @Bind(R.id.refreshView)
@@ -49,27 +53,15 @@ public class HouseFragment extends Fragment implements BGARefreshLayout.BGARefre
     public static final int TYPE_BUY = 0;
     public static final int TYPE_RENT = 1;
 
-    private static final int REQUEST_CODE_NEW_COMMENT = 0;
-
     private int fragmentType = 0;
 
-//    private XAdapter<ShowHouseBean.ContentBean> adapter;
-    private boolean lastPage;
-    private int pageIndex;
-    private int pageDefaultSize = 10;
-
-
-//    public HouseFragment() {
-//    }
+    private XAdapter<Content> adapter;
+    private XRefreshView<Content> refresher;
 
     @SuppressLint("ValidFragment")
-    public HouseFragment(int fragmentType) {
-        this.fragmentType = fragmentType;
+    public HouseFragment(int permitType) {
+        this.fragmentType = permitType;
     }
-
-//    public void setType(int fragmentType){
-//        this.fragmentType = fragmentType;
-//    }
 
     private BaseActivity getThis() {
         return ((BaseActivity) getActivity());
@@ -80,6 +72,7 @@ public class HouseFragment extends Fragment implements BGARefreshLayout.BGARefre
         View currentView = inflater.inflate(R.layout.layout_refresh_list, container, false);
         ButterKnife.bind(this, currentView);
         initViews();
+        initDate();
         return currentView;
     }
 
@@ -96,410 +89,104 @@ public class HouseFragment extends Fragment implements BGARefreshLayout.BGARefre
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initDate();
     }
 
     private void initViews() {
-//        toolbar.setTitle(R.string.title_me);
-//        getThis().setSupportActionBar(toolbar);
         rvMain.setLayoutManager(new LinearLayoutManager(getActivity()));
-//        houseAdapter = new HomeNeighbourAdapter(this, new ArrayList<NeighbourListBean.NeighbourMessagesBean.ContentBean>());
-        BGARefreshLayoutBuilder.init(getActivity(), refreshView, true);
         rvMain.addItemDecoration(new HorizontalDividerItemDecoration.Builder(getThis())
                 .colorResId(R.color.divider_line).sizeResId(R.dimen.line_1px)
                 .marginResId(R.dimen.item_margin_icon, R.dimen.item_margin_icon).build()
         );
 
-        String title = "租的";
-        if (fragmentType == TYPE_BUY) {
-            title = "买的";
-        }
-
-        List<String> list = new ArrayList<>();
-        for (int i = 0; i < 30; i++) {
-            list.add("超级大厦 第" + i+ title);
-        }
-        XAdapter<String> adapter = new XAdapter<String>(getThis(), list, R.layout.item_house) {
-
-           @Override
-           protected void handleItemViewClick(CustomHolder holder, String item) {
-               super.handleItemViewClick(holder, item);
-               QBLToast.show("ok");
-           }
-
-           @Override
-            public void creatingHolder(CustomHolder holder, List<String> dataList, int viewType) {
-               View.OnClickListener clickListener = new View.OnClickListener() {
-                   @Override
-                   public void onClick(View v) {
-                       switch (v.getId()) {
-                           case R.id.btnSendLink:
-                               getThis().setResult(getThis().RESULT_OK);
-                               getThis().finish();
-                               break;
-                           default:
-                               break;
-                       }
-                   }
-               };
-               holder.getView(R.id.btnSendLink).setOnClickListener(clickListener);
-            }
-
+        adapter = new XAdapter<Content>(getThis(), new ArrayList<Content>(), R.layout.item_house) {
             @Override
-            public void bindingHolder(CustomHolder holder, List<String> dataList, int pos) {
-                holder.setText(R.id.tvHouseName, dataList.get(pos));
-            }
-        };
-        rvMain.setAdapter(adapter);
-
-
-
-       /* List<> list = new ArrayList<>();
-        final ViewGroup.LayoutParams tvParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-
-        houseAdapter = new XAdapter<NeighbourListBean.NeighbourMessagesBean.ContentBean>(this, list, R.layout.item_home_neighbor) {
-            @Override
-            protected int getItemType(NeighbourListBean.NeighbourMessagesBean.ContentBean item) {
-                List<NeighbourListBean.NeighbourMessagesBean.ContentBean.NeighbourCommentsBean> comments = item.getNeighbourComments();
-                int count = 0;
-                for (int i = 0; i < comments.size(); i++) {
-                    count++;
-                    List<NeighbourListBean.NeighbourMessagesBean.ContentBean.NeighbourCommentsBean.NeighbourReplysBean> replies = comments.get(i).getNeighbourReplys();
-                    for (int j = 0; j < replies.size(); j++) {
-                        if (replies.get(j).getId() != null && !replies.get(j).getId().isEmpty()) {
-                            count++;
-                        }
-                    }
-                }
-                return count;
-            }
-
-            @Override
-            public void creatingHolder(final CustomHolder holder, final List<NeighbourListBean.NeighbourMessagesBean.ContentBean> dataList, final int adapterPos, int viewType) {
+            public void creatingHolder(final CustomHolder holder, final List<Content> dataList, int viewType) {
                 View.OnClickListener clickListener = new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         switch (v.getId()) {
-                            case R.id.comment_btn:
-                                inputContentWindow = new InputContentWindow<String>(getThis(), dataList.get(holder.getAdapterPosition()).getId(), new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        switch (v.getId()) {
-                                            case R.id.send:
-                                                String content = inputContentWindow.getEtContent().getText().toString();
-                                                String id = ((String) inputContentWindow.getData());
-                                                sendComment(id, CONTENT_TYPE_COMMENT, content);
-//                                                inputContentWindow.dismiss();
-                                                Toast.makeText(HomeNeighborActivity.this, "content:" + content + "\nid:" + id, Toast.LENGTH_SHORT).show();
-                                                break;
-                                            default:
-                                                break;
-                                        }
-                                    }
-                                });
-                                inputContentWindow.showAtLocation(getThis().findViewById(R.id.llMain), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
-                                inputContentWindow.getEtContent().postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        setInputMethodVisible(inputContentWindow.getEtContent(), true);
-                                    }
-                                }, 10);
-                                break;
-                            case R.id.delete:
-                                String id = dataList.get(holder.getAdapterPosition()).getId();
-                                Toast.makeText(HomeNeighborActivity.this, "id:" + id, Toast.LENGTH_SHORT).show();
-                                break;
-                            case R.id.more_comment:
-                                dataList.get(holder.getAdapterPosition()).setShowMore(!dataList.get(holder.getAdapterPosition()).isShowMore());
-                                notifyItemChanged(holder.getAdapterPosition());
+                            case R.id.btnSendLink:
+                                Intent intent = new Intent();
+                                Content bean = dataList.get(holder.getAdapterPosition());
+                                bean.setPermitType(fragmentType == TYPE_BUY ? 2 : 1);
+                                intent.putExtra(getString(R.string.extra_bean), bean);
+                                getThis().setResult(Activity.RESULT_OK, intent);
+                                getThis().finish();
                                 break;
                             default:
                                 break;
                         }
                     }
                 };
-                holder.getView(R.id.neighbor_head);
-                holder.getView(R.id.neighbor_name);
-                holder.getView(R.id.content);
-                holder.getView(R.id.date);
-                NineGridlayout glNine = holder.getView(R.id.photos);
-
-                holder.getView(R.id.delete).setOnClickListener(clickListener);
-                holder.getView(R.id.comment_btn).setOnClickListener(clickListener);
-                holder.getView(R.id.more_comment).setOnClickListener(clickListener);
-
-                LinearLayout ll = holder.getView(R.id.llComments);
-
-                View.OnClickListener clickListenerTextView = new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        CommentForTextView item = (CommentForTextView) v.getTag();
-                        if (item.getUserId().equals(User.getUserId())) {
-                            return;
-                        }
-                        inputContentWindow = new InputContentWindow<>(getThis(), item, new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                String content = inputContentWindow.getEtContent().getText().toString();
-                                String id = ((CommentForTextView) inputContentWindow.getData()).getNcId();
-
-                                sendComment(id, CONTENT_TYPE_REPLY, content);
-                                Toast.makeText(HomeNeighborActivity.this, "content:" + content + "\nid:" + id, Toast.LENGTH_SHORT).show();
-//                                inputContentWindow.dismiss();
-                            }
-                        });
-                        inputContentWindow.showAtLocation(getThis().findViewById(R.id.llMain), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
-                        inputContentWindow.getEtContent().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                setInputMethodVisible(inputContentWindow.getEtContent(), true);
-                            }
-                        }, 10);
-                    }
-                };
-
-                List<TextView> tvList = new ArrayList<>();
-                for (int i = 0; i < viewType; i++) {
-                    TextView tv = new TextView(getThis());
-                    tv.setLayoutParams(tvParams);
-                    tv.setVisibility(View.GONE);
-                    ll.addView(tv);
-                    tvList.add(tv);
-                    tv.setOnClickListener(clickListenerTextView);
-                }
-                ll.setTag(tvList);
+                holder.getView(R.id.btnSendLink).setOnClickListener(clickListener);
             }
 
             @Override
-            public void bindingHolder(CustomHolder holder, List<NeighbourListBean.NeighbourMessagesBean.ContentBean> dataList, int pos) {
-
-                SimpleDraweeView ivHead = holder.getView(R.id.neighbor_head);
-                TextView tvName = holder.getView(R.id.neighbor_name);
-                TextView tvContent = holder.getView(R.id.content);
-                NineGridlayout nglPhotos = holder.getView(R.id.photos);
-                TextView tvDate = holder.getView(R.id.date);
-                TextView tvDelete = holder.getView(R.id.delete);
-//                ImageView ivComment = holder.getView(R.id.comment_btn);
-                ImageView ivMoreComment = holder.getView(R.id.more_comment);
-                LinearLayout llComments = holder.getView(R.id.llComments);
-
-                NeighbourListBean.NeighbourMessagesBean.ContentBean item = dataList.get(pos);
-//                String item = dataList.get(pos);
-
-                ivHead.setImageURI(Uri.parse(Const.SERVER + item.getUser().getAvatar()));
-                tvContent.setText(item.getNmContent());
-                tvName.setText(item.getUser().getName());
-                tvDate.setText(DateUtil.DATE_FORMAT_SIMPLE.format(new Date(item.getNmDatetime())));
-
-                if (User.getUserId() != null && User.getUserId().equals(item.getUser().getId())) {
-                    tvDelete.setVisibility(View.VISIBLE);
-                } else {
-                    tvDelete.setVisibility(View.GONE);
-                }
-                final List<String> photoUrlList = new ArrayList<>();
-//                final String[] photoUrls = new String[item.getNeighbourPictures().size()];
-//                for (int i = 0; i < photoUrls.length; i++) {
-//                    photoUrls[i] = item.getNeighbourPictures().get(i).getUrl();
-//                }
-                for (NeighbourListBean.NeighbourMessagesBean.ContentBean.NeighbourPicturesBean pic : item.getNeighbourPictures()) {
-                    photoUrlList.add(pic.getUrl());
-                }
-//        new String[item.getNeighbourPictures().size()];
-                String[] photoUrls = photoUrlList.toArray(new String[0]);
-                if (photoUrls.length != 0) {
-                    nglPhotos.setImagesData(photoUrls, new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            int itemPos = (int) v.getTag();
-                            Intent intent = new Intent(getThis(), ImageBrowserActivity.class);
-                            intent.putExtra("position", itemPos);
-                            intent.putStringArrayListExtra("images", (ArrayList<String>) photoUrlList);
-                            startActivity(intent);
-                        }
-                    });
-                    nglPhotos.setVisibility(View.VISIBLE);
-                } else {
-                    nglPhotos.setVisibility(View.GONE);
-                }
-
-                List<CommentForTextView> commentList = new ArrayList<>();
-                List<NeighbourListBean.NeighbourMessagesBean.ContentBean.NeighbourCommentsBean> comments = item.getNeighbourComments();
-                for (int i = 0; i < comments.size(); i++) {
-                    NeighbourListBean.NeighbourMessagesBean.ContentBean.NeighbourCommentsBean aComment = comments.get(i);
-                    commentList.add(new CommentForTextView(aComment.getUser().getName(), aComment.getUser().getId(), "", aComment.getId(), aComment.getNcContent()));
-                    List<NeighbourListBean.NeighbourMessagesBean.ContentBean.NeighbourCommentsBean.NeighbourReplysBean> replies = aComment.getNeighbourReplys();
-                    for (int j = 0; j < replies.size(); j++) {
-                        NeighbourListBean.NeighbourMessagesBean.ContentBean.NeighbourCommentsBean.NeighbourReplysBean aReply = replies.get(j);
-                        if (aReply.getId() != null && !aReply.getId().isEmpty()) {
-                            commentList.add(new CommentForTextView(aReply.getUser().getName(), aReply.getUserId(), aReply.getReplyName(), aComment.getId(), aReply.getNrContent()));
-                        }
+            public void bindingHolder(CustomHolder holder, List<Content> dataList, int pos) {
+                Content bean = dataList.get(pos);
+                String unit = fragmentType == TYPE_BUY ? "万" : "元";
+                holder.setText(R.id.tvHouseName, bean.getTitle())
+                        .setText(R.id.tvHouseAddress, bean.getAddress())
+                        .setText(R.id.tvHouseDetail, bean.getHouseShape() + "　面积：" + bean.getHouseSize())
+                        .setText(R.id.tvHousePrice, StringUtil.formatNumber(bean.getPrice(), "#,##0.##") + unit);
+                ((SimpleDraweeView) holder.getView(R.id.sivHouse)).setImageURI(Uri.parse(bean.getCoverPicture()));
+                TagAdapter adapter = new TagAdapter();
+                bean.setTags("嘎嘎在右脚有人,胑主训斥是在要人工有霜叶,右脑满肠肥,可有中");
+                if (!TextUtils.isEmpty(bean.getTags())) {
+                    String[] labels = bean.getTags().split(",");
+                    if (labels.length > 0) {
+                        adapter.setDataList(Arrays.asList(labels));
                     }
                 }
-
-                if (llComments.getTag() != null && llComments.getTag() instanceof List) {
-                    List tvList = (List) llComments.getTag();
-                    for (int i = 0; i < tvList.size(); i++) {
-                        if (tvList.get(i) instanceof TextView) {
-                            TextView tv = (TextView) tvList.get(i);
-                            if (i >= commentList.size() || (!item.isShowMore() && i >= maxContentSize)) {
-                                tv.setVisibility(View.GONE);
-                            } else {
-                                tv.setText(commentList.get(i).getHtmlString());
-                                tv.setBackgroundColor(0x00000000);
-                                int pad = UIUtils.dip2px(getThis(), 8);
-                                tv.setPadding(pad, pad / 2, pad, pad / 2);
-                                tv.setTag(commentList.get(i));
-                                tv.setVisibility(View.VISIBLE);
-                            }
-                        }
-                    }
-                    ivMoreComment.setVisibility((!item.isShowMore() && commentList.size() > maxContentSize) ? View.VISIBLE : View.GONE);
-                }
+                ((FlowTagLayout) holder.getView(R.id.ftlTags)).setAdapter(adapter);
             }
-        };*/
-//        rvMain.setAdapter(houseAdapter);
-//        ivPost.setOnClickListener(this);
-//        ivBack.setOnClickListener(this);
+
+            @Override
+            protected void handleItemViewClick(final CustomHolder holder, final Content item) {
+                getThis().start(WebViewActivity.class, new BaseActivity.BaseIntent() {
+                    @Override
+                    public void setIntent(Intent intent) {
+                        String url = fragmentType == TYPE_BUY ? Const.serviceMethod.SECOND_HAND_HOUSE_INFO : Const.serviceMethod.RENTAL_HOUSE_INFO;
+                        url += "id=" + item.getId();
+                        intent.putExtra(getThis().getString(R.string.extra_url), url);
+                    }
+                });
+                super.handleItemViewClick(holder, item);
+            }
+        };
+        rvMain.setAdapter(adapter);
+
+        refresher = new XRefreshView<>(getThis(), refreshView, true, adapter, new XRefreshView.IRefreshRequest<Content>() {
+            @Override
+            public String setVolleyParamsReturnUrl(Map<String, String> params) {
+                params.put("intermediaryStoreId", User.getIntermediaryStoreId());
+                return fragmentType == TYPE_BUY ? Const.serviceMethod.OUTLET_HOUSE_SELL_LIST : Const.serviceMethod.OUTLET_HOUSE_RENT_LIST;
+            }
+
+            @Override
+            public List<Content> handleJson(JSONObject json, XRefreshView.RefreshState stateForSetLastPage) {
+                HouseRecommendBean mainBean = JSON.parseObject(json.toString(), HouseRecommendBean.class);
+                stateForSetLastPage.setLastPage(mainBean.getContent().isLastPage());
+                return mainBean.getContent().getContent();
+            }
+
+            @Override
+            public boolean ignoreSameItem(Content newItem, Content listItem) {
+                return newItem.getId().equals(listItem.getId());
+            }
+
+            @Override
+            public int compareTo(Content item0, Content item1) {
+                return 0;
+            }
+        });
+
+
     }
 
     private void initDate() {
-//        try {
-//            NeighbourListBean bean = JSON.parseObject(User.getNeighbours().toString(), NeighbourListBean.class);
-//            lastPage = bean.getNeighbourMessages().isLastPage();
-//            villages = bean.getVillageNames();
-//            houseAdapter.setDataList(bean.getNeighbourMessages().getContent());
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            getDataByRefresh(++pageIndex, 10, getSelectedVillage(selectedVillageIndex), Const.RefreshType.REFRESH);
-//        }
+        refresher.refreshList();
     }
 
-
-    /**
-     * 获取小区
-
-     * @param page        页码
-     * @param villageName 小区id
-     * @param refreshType 状态
-     */
-    private void getDataByRefresh(final int page, final int pageSize, final String villageName, final int refreshType) {
-        VolleyStringRequest request = new VolleyStringRequest(Request.Method.POST, Const.serviceMethod.NEIGHBOR_LIST, new VolleyResponseListener() {
-            @Override
-            public void handleJson(com.alibaba.fastjson.JSONObject json) {
-                super.handleJson(json);
-                int resultCode = json.getIntValue("resultCode");
-                String message = json.getString("message");
-                if (resultCode == 1) {
-                 /*   NeighbourListBean bean = JSON.parseObject(json.toString(), NeighbourListBean.class);
-                    lastPage = bean.getNeighbourMessages().isLastPage();
-                    villages = bean.getVillageNames();
-                    User.setNeighbours(json.toString());
-                    switch (refreshType) {
-                        case Const.RefreshType.REFRESH:
-//                            refreshView.endRefreshing();
-//                            houseAdapter.clearData();
-                            if (bean.getNeighbourMessages().getContent().size() > 0) {
-                                houseAdapter.setDataList(bean.getNeighbourMessages().getContent());
-                            }
-                            break;
-                        case Const.RefreshType.LOAD:
-//                            refreshView.endLoadingMore();
-                            pageIndex++;
-                            if (bean.getNeighbourMessages().getContent().size() > 0) {
-//                                houseAdapter.addAdapterData(bean.getNeighbourMessages().getContent());
-                            }
-                            break;
-                    }*/
-                } else {
-                    QBLToast.show(message);
-                    switch (refreshType) {
-                        case Const.RefreshType.REFRESH:
-//                            refreshView.endRefreshing();
-                            break;
-                        case Const.RefreshType.LOAD:
-//                            refreshView.endLoadingMore();
-                            break;
-                    }
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                QBLToast.show(R.string.network_exception);
-                switch (refreshType) {
-                    case Const.RefreshType.REFRESH:
-//                        refreshView.endRefreshing();
-                        break;
-                    case Const.RefreshType.LOAD:
-//                        refreshView.endLoadingMore();
-                        break;
-                }
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = super.getParams();
-                params.put("page", String.valueOf(page));
-                if (!villageName.isEmpty()) {
-                    params.put("villageName", villageName);
-                }
-                params.put("pageSize", String.valueOf(pageSize));
-                return params;
-            }
-        };
-        getThis().getVolleyRequestQueue().add(request);
-    }
-
-    @Override
-    public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
-//        getDataByRefresh(++pageIndex, 10, villages.get(selectedVillageIndex), Const.RefreshType.REFRESH);
-//        if (houseAdapter.getItemCount() > 0) {
-//            getDataByRefresh(pageIndex, houseAdapter.get.get(mBuildSelectIndex).getId(), villageName, Const.RefreshType.REFRESH);
-//        } else {
-//            refreshView.endRefreshing();
-//            QBLToast.show(R.string.text_no_data);
-//        }
-    }
-
-    @Override
-    public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
-        if (!lastPage) {
-//            getDataByRefresh(++pageIndex, 10, villages.get(selectedVillageIndex), Const.RefreshType.LOAD);
-        }
-      /*  if (mVillages.size() > 0) {
-            if (!lastPage) {
-                getDataByRefresh(pageIndex, houseAdapter.getData().get(mBuildSelectIndex).getId(), villageName, Const.RefreshType.LOAD);
-            }
-        } else {
-            QBLToast.show(R.string.text_no_data);
-        }
-    else
-
-    {
-        refreshView.endRefreshing();
-        QBLToast.show(R.string.text_no_village_tip);
-    }*/
-
-        return false;
-    }
-
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode) {
-            case REQUEST_CODE_NEW_COMMENT:
-//                if (resultCode == RESULT_OK) {
-//                    if (data != null && data.getStringExtra("data") != null) {
-//                        String json = data.getStringExtra("data");
-//                        NeighbourListBean.NeighbourMessagesBean.ContentBean bean = JSON.parseObject(json, NeighbourListBean.NeighbourMessagesBean.ContentBean.class);
-//                        houseAdapter.addItem(0, bean);
-//                    }
-//                }
-                break;
-            default:
-                break;
-        }
-    }
 
 }

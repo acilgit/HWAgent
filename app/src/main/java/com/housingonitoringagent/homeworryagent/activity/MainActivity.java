@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,12 +16,15 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.housingonitoringagent.homeworryagent.App;
 import com.housingonitoringagent.homeworryagent.R;
+import com.housingonitoringagent.homeworryagent.User;
 import com.housingonitoringagent.homeworryagent.extents.BaseActivity;
 import com.housingonitoringagent.homeworryagent.pages.ConversationListFragment;
 import com.housingonitoringagent.homeworryagent.pages.MeFragment;
 import com.housingonitoringagent.homeworryagent.pages.ShowingRecordFragment;
 import com.housingonitoringagent.homeworryagent.utils.easeui.EaseHelper;
+import com.housingonitoringagent.homeworryagent.utils.uikit.QBLToast;
 import com.hyphenate.EMConversationListener;
 import com.hyphenate.EMMessageListener;
 import com.hyphenate.chat.EMClient;
@@ -78,12 +82,12 @@ public class MainActivity extends BaseActivity {
     private EMMessageListener messageListener = new EMMessageListener() {
         @Override
         public void onMessageReceived(List<EMMessage> messages) {
-//            runOnUiThread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    updateUnreadLabel();
-//                }
-//            });
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    updateUnreadLabel();
+                }
+            });
             conversationFragment.refresh();
         }
 
@@ -100,7 +104,8 @@ public class MainActivity extends BaseActivity {
         }
 
         @Override
-        public void onMessageChanged(EMMessage message, Object change) {}
+        public void onMessageChanged(EMMessage message, Object change) {
+        }
     };
 
     EMConversationListener conversationListener = new EMConversationListener() {
@@ -196,8 +201,8 @@ public class MainActivity extends BaseActivity {
             TextView tvUnread = (TextView) view.findViewById(R.id.tvUnread);
             ImageView ivTab = (ImageView) view.findViewById(R.id.ivTab);
             tvTab.setText(titles[i]);
-            tvTab.setTextColor(getResources().getColor(i==currentPage ? R.color.colorPrimary :R.color.text_gray));
-            ivTab.setImageResource(i==currentPage ? tabIconsSelected[i] : tabIconsNormal[i]);
+            tvTab.setTextColor(getResources().getColor(i == currentPage ? R.color.colorPrimary : R.color.text_gray));
+            ivTab.setImageResource(i == currentPage ? tabIconsSelected[i] : tabIconsNormal[i]);
 
             tabMain.getTabAt(i).setCustomView(view);
         }
@@ -218,18 +223,17 @@ public class MainActivity extends BaseActivity {
         int unreadMsgCountTotal = 0;
         int chatRoomUnreadMsgCount = 0;
         unreadMsgCountTotal = EMClient.getInstance().chatManager().getUnreadMsgsCount();
-        for(EMConversation conversation:EMClient.getInstance().chatManager().getAllConversations().values()){
-            if(conversation.getType() == EMConversation.EMConversationType.ChatRoom)
-                chatRoomUnreadMsgCount=chatRoomUnreadMsgCount+conversation.getUnreadMsgCount();
+        for (EMConversation conversation : EMClient.getInstance().chatManager().getAllConversations().values()) {
+            if (conversation.getType() == EMConversation.EMConversationType.ChatRoom)
+                chatRoomUnreadMsgCount = chatRoomUnreadMsgCount + conversation.getUnreadMsgCount();
         }
-        return unreadMsgCountTotal-chatRoomUnreadMsgCount;
+        return unreadMsgCountTotal - chatRoomUnreadMsgCount;
     }
 
     private void init() {
 
         //聊天人或群id
 //        toChatUsername = getIntent().getExtras().getString("userId");
-
 
 
     }
@@ -344,6 +348,11 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
     protected void onStop() {
         super.onStop();
         EaseHelper.getInstance().popActivity(this);
@@ -354,22 +363,41 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        if (!EMClient.getInstance().isConnected() && !EMClient.getInstance().isLoggedInBefore()) {
+            App.getInstance().EaseLogIn(User.getEaseModId(), User.getEaseModId());
+        }
         EaseHelper.getInstance().pushActivity(this);
         EMClient.getInstance().chatManager().addMessageListener(messageListener);
         EMClient.getInstance().chatManager().addConversationListener(conversationListener);
         updateUnreadLabel();
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case REQUEST_CODE_GOT_RESULT:
                 if (resultCode == RESULT_OK) {
+                    showProgressDialog(getString(R.string.wait_a_few_times));
                     recordFragment.initDate();
                 }
                 break;
             default:
                 break;
         }
+    }
+
+    private long mExitTime;
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if ((System.currentTimeMillis() - mExitTime) > 800) {
+                QBLToast.show(getString(R.string.text_tap_one_more_exit));
+                mExitTime = System.currentTimeMillis();
+                return true;
+            }
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

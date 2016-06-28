@@ -8,6 +8,11 @@ import java.util.List;
  */
 public class ShowHouseBean implements Serializable {
 
+
+
+    public static final int PERMIT_TYPE_RENT = 1; // 租
+    public static final int PERMIT_TYPE_HOUSE = 2; // 二手
+
     public static final int PERMIT_STATUE_SHOWING = 0; //未确认
     public static final int PERMIT_STATUE_FINISH = 1; //已看房
     public static final int PERMIT_STATUE_WAIT = 2; //未看房
@@ -209,9 +214,9 @@ public class ShowHouseBean implements Serializable {
             }
             public String getPermitTypeString() {
                 switch (permitType) {
-                    case 1:
+                    case PERMIT_TYPE_RENT:
                         return "租房";
-                    case 2:
+                    case PERMIT_TYPE_HOUSE:
                         return "二手房";
                     default:
                         return "";

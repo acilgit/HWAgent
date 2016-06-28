@@ -15,6 +15,7 @@ public class User {
     // 安全存储对象
     public static SecurityStorage storage = new SecurityStorage(App.getInstance(), PreferencesKey.User.NAME);
     public static SecurityStorage publicStorage = new SecurityStorage(App.getInstance(), "publicStorage");
+    public static SecurityStorage accountStorage = new SecurityStorage(App.getInstance(), "accountStorage");
 
     public static void clear() {
         storage.clear();
@@ -66,6 +67,7 @@ public class User {
         setCertificatePicture(loginResp.getContent().getCertificatePicture());
         setCertificateInfo(loginResp.getContent().getCertificateInfo());
         setDuty(loginResp.getContent().getDuty());
+        setSafeLevel(loginResp.getContent().getSafeLevel());
         setAcademicTitle(loginResp.getContent().getAcademicTitle());
         setComplaintCount(loginResp.getContent().getComplaintCount());
         setComplaintAgreeCount(loginResp.getContent().getComplaintAgreeCount());
@@ -99,12 +101,20 @@ public class User {
     Boolean realName;	//是否实名制认证过
     String idCard;  //身份证*/
 
+    public static int getSafeLevel() {
+        return storage.getInt("safeLevel", 0);
+    }
+
+    public static void setSafeLevel(int safeLevel) {
+        storage.put("safeLevel", safeLevel);
+    }
+
     public static String getIntermediaryStoreId() {
-        return storage.getString("neighbourintermediaryStoreIdsJson", "");
+        return storage.getString("intermediaryStoreId", "");
     }
 
     public static void setIntermediaryStoreId(String intermediaryStoreId) {
-        storage.put("intermediaryStoreName", intermediaryStoreId);
+        storage.put("intermediaryStoreId", intermediaryStoreId);
     }
 
     public static String getIntermediaryStoreName() {
@@ -327,5 +337,26 @@ public class User {
     public static String getUserSexName() {
         return storage.getInt(PreferencesKey.User.sex, 0) == 1 ? "男" : "女";
     }
+
+    public static String getPassword() {
+        return storage.getString("password", "");
+    }
+
+    public static void setPassword(String password) {
+        storage.put("password", password);
+    }
+
+    /**
+     * accountStorage
+     * @return
+     */
+    public static String getAccountSaved() {
+        return accountStorage.getString("account", "");
+    }
+
+    public static void setAccountSaved(String account) {
+        accountStorage.put("account", account);
+    }
+
 
 }

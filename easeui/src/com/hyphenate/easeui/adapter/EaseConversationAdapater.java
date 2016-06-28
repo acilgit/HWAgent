@@ -1,9 +1,5 @@
 package com.hyphenate.easeui.adapter;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.TypedValue;
@@ -17,13 +13,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TextView.BufferType;
 
-import com.hyphenate.chat.EMChatManager;
 import com.hyphenate.chat.EMChatRoom;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMConversation.EMConversationType;
 import com.hyphenate.chat.EMGroup;
-import com.hyphenate.chat.EMGroupManager;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.domain.EaseUser;
@@ -31,6 +25,10 @@ import com.hyphenate.easeui.utils.EaseCommonUtils;
 import com.hyphenate.easeui.utils.EaseSmileUtils;
 import com.hyphenate.easeui.utils.EaseUserUtils;
 import com.hyphenate.util.DateUtils;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * 会话列表adapter
@@ -125,14 +123,18 @@ public class EaseConversationAdapater extends ArrayAdapter<EMConversation> {
         if (conversation.getAllMsgCount() != 0) {
             // 把最后一条消息的内容作为item的message内容
             EMMessage lastMessage = conversation.getLastMessage();
-            holder.message.setText(EaseSmileUtils.getSmiledText(getContext(), EaseCommonUtils.getMessageDigest(lastMessage, (this.getContext()))),
-                    BufferType.SPANNABLE);
 
-            holder.time.setText(DateUtils.getTimestampString(new Date(lastMessage.getMsgTime())));
-            if (lastMessage.direct() == EMMessage.Direct.SEND && lastMessage.status() == EMMessage.Status.FAIL) {
-                holder.msgState.setVisibility(View.VISIBLE);
-            } else {
-                holder.msgState.setVisibility(View.GONE);
+            if (lastMessage != null) {
+                holder.message.setText(EaseSmileUtils.getSmiledText(getContext(), EaseCommonUtils.getMessageDigest(lastMessage, (this.getContext()))),
+                        BufferType.SPANNABLE);
+
+                long msgTime = lastMessage.getMsgTime();
+                holder.time.setText(DateUtils.getTimestampString(new Date(msgTime)));
+                if (lastMessage.direct() == EMMessage.Direct.SEND && lastMessage.status() == EMMessage.Status.FAIL) {
+                    holder.msgState.setVisibility(View.VISIBLE);
+                } else {
+                    holder.msgState.setVisibility(View.GONE);
+                }
             }
         }
         

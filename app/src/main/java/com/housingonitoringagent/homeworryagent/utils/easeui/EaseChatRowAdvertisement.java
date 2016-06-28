@@ -2,10 +2,7 @@ package com.housingonitoringagent.homeworryagent.utils.easeui;
 
 import android.content.Context;
 import android.net.Uri;
-import android.util.Log;
-import android.view.View;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -13,7 +10,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.housingonitoringagent.homeworryagent.R;
 import com.housingonitoringagent.homeworryagent.beans.CustomerMsgBean;
-import com.housingonitoringagent.homeworryagent.utils.uikit.QBLToast;
+import com.housingonitoringagent.homeworryagent.utils.StringUtil;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMTextMessageBody;
 import com.hyphenate.easeui.widget.chatrow.EaseChatRow;
@@ -41,7 +38,7 @@ public class EaseChatRowAdvertisement extends EaseChatRow {
         mTitle = (TextView) findViewById(R.id.title);
         mShape = (TextView) findViewById(R.id.shape);
         mSize = (TextView) findViewById(R.id.size);
-        mPrice = (TextView) findViewById(R.id.Price);
+        mPrice = (TextView) findViewById(R.id.Price) ;
         mAppointment = (TextView) findViewById(R.id.appointment);
     }
 
@@ -54,13 +51,16 @@ public class EaseChatRowAdvertisement extends EaseChatRow {
     protected void onSetUpView() {
         EMTextMessageBody txtBody = (EMTextMessageBody) message.getBody();
 //        Log.e("消息内容",txtBody.getMessage().toString());
-        JSONObject parse = JSON.parseObject(txtBody.getMessage());
-         msg = JSON.toJavaObject(parse, CustomerMsgBean.class);
-        mSample.setImageURI(Uri.parse(msg.getHouseSellPicture()));
-//        ImageLoader.getInstance().displayImage(, mSample, ImageLoaderUtil.displayRoundedOptions);
-        mTitle.setText(msg.getTitle());
-        mShape.setText(msg.getHouseShape());
-        mPrice.setText(msg.getPrice());
+        try {
+            JSONObject parse = JSON.parseObject(txtBody.getMessage());
+            msg = JSON.toJavaObject(parse, CustomerMsgBean.class);
+            mSample.setImageURI(Uri.parse(msg.getHouseSellPicture()));
+            mTitle.setText(msg.getTitle()+ "（"+ (msg.getType().equals("1") ? "租" : "售") + "）");
+            mShape.setText(msg.getHouseShape());
+            mPrice.setText(StringUtil.formatNumber(Double.parseDouble(msg.getPrice()), "#,##0.##") + (msg.getType().equals("1") ? "元" : "万"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

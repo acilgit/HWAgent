@@ -83,7 +83,7 @@
                     android:layout_height="@dimen/head_side"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="16dp"
-                    fresco:placeholderImage="@color/btn_blue_normal"
+                    fresco:placeholderImage="@mipmap/holder_head"
                     fresco:placeholderImageScaleType="centerCrop"
                     fresco:roundAsCircle="true"
                     fresco:roundingBorderWidth="1dp" />
@@ -130,8 +130,8 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="8dp"
-                    fresco:placeholderImage="@color/btn_blue_normal"
-                    fresco:placeholderImageScaleType="centerCrop" />
+                    fresco:placeholderImage="@mipmap/holder_pic"
+                    fresco:placeholderImageScaleType="fitXY" />
 
                 <TextView
                     android:id="@+id/tvHouseName"

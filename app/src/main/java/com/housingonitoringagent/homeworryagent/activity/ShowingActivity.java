@@ -3,7 +3,6 @@ package com.housingonitoringagent.homeworryagent.activity;
 import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -38,8 +37,6 @@ public class ShowingActivity extends BaseActivity implements View.OnClickListene
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.appbar)
-    AppBarLayout appbar;
     @Bind(R.id.sivHead)
     SimpleDraweeView sivHead;
     @Bind(R.id.tvCompany)
@@ -132,10 +129,10 @@ public class ShowingActivity extends BaseActivity implements View.OnClickListene
                     return;
                 } else if(Integer.parseInt(outCount)<1){
                     QBLToast.show(getString(R.string.err_text_zero));
-//                    return;
-                }else if(Integer.parseInt(outCount)>Integer.parseInt(inCount)){
-                    QBLToast.show(getString(R.string.err_text_out_bigger_in));
                     return;
+//                }else if(Integer.parseInt(outCount)>Integer.parseInt(inCount)){
+//                    QBLToast.show(getString(R.string.err_text_out_bigger_in));
+//                    return;
                 }
                 url = Const.serviceMethod.VISIT_PERMISSSION_END;
                 break;

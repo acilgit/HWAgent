@@ -36,7 +36,10 @@ public class BaseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         thisActivity = this;
-        registerFinishReceiver();
+
+//        if (!(thisActivity instanceof LoginActivity)) {
+            registerFinishReceiver();
+//        }
         App.getInstance().addActivity(this);
     }
 
@@ -44,8 +47,8 @@ public class BaseActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         dismissProgressDialog();
+//        cancelVolleyRequestQueue();
         App.getInstance().removeActivity(this);
-        cancelVolleyRequestQueue();
     }
 
     protected BaseActivity getThis() {
@@ -172,9 +175,9 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     /**
-     * @param activity               设置的activity
-     * @param drawerLayout           设置的控件
-     * @param displayWidthPercentage 滑动范围
+     * @param // activity               设置的activity
+     * @param // drawerLayout           设置的控件
+     * @param // displayWidthPercentage 滑动范围
      */
     /*protected static void setDrawerLeftEdgeSize(Activity activity,
                                                 DrawerLayout drawerLayout, float displayWidthPercentage) {

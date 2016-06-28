@@ -40,6 +40,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
         <activity android:name=".activity.WelcomeActivity"
+            android:theme="@style/AppSplash"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -54,6 +55,13 @@
             android:launchMode="singleTop"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".activity.DialogActivity"
+            android:configChanges="orientation|screenSize"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppDialog"/>
 
         <activity
             android:name=".activity.GuideActivity"
@@ -99,6 +107,11 @@
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
+            android:name=".activity.PaymentDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
             android:name=".activity.WebViewActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -118,13 +131,13 @@
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
-            android:name=".activity.ForgetPasswordActivity"
+            android:name=".activity.PasswordForgetActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
-            android:name=".activity.ChangePasswordActivity"
+            android:name=".activity.PasswordChangeActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -142,7 +155,7 @@
 
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="9SDo9Af5h1Cn1oDUlf8ploxX" />
+            android:value="oq49YnptmAT1UklDhPE3KVRaXZLGLgD7" />
 
         <!-- 声明sdk所需的service SDK核心功能 -->
         <service

@@ -57,9 +57,9 @@
     <string name="text_property_services_unit">物业服务单位:</string>
     <string name="text_built_up_area">建筑面积:</string>
     <string name="text_property_address">物业地址:</string>
-    <string name="text_phone_no">手机号码:</string>
+    <string name="text_phone_no_">手机号码：</string>
     <string name="text_get_code">获取验证码</string>
-    <string name="text_verification_code">验证码:</string>
+    <string name="text_verification_code_">验证码：</string>
     <string name="text_add_binding_tip">提示:将按您物业登记时间先后顺序添加</string>
     <string name="text_personal_information">个人信息</string>
     <string name="text_edit_property_information">填写物业信息</string>
@@ -112,7 +112,7 @@
     <string name="text_bus">公交</string>
     <string name="text_metro">地铁</string>
     <string name="text_education">教育</string>
-    <string name="text_bank">银行</string>
+    <string name="text_bank">业主开户行</string>
     <string name="text_hospital">医院</string>
     <string name="text_casual">休闲</string>
     <string name="text_location_fail">定位失败</string>
@@ -177,7 +177,8 @@
     <string name="label_guide_record">带看记录</string>
     <string name="label_deal_record">成交记录</string>
     <string name="label_intermediary">委托中介</string>
-    <string name="confirm_giro_tips">请验证您的手机</string>
+    <string name="confirm_giro_tips">确认打款</string>
+    <string name="text_verify_phone">请验证您的手机</string>
     <string name="text_cancel">取消</string>
     <string name="text_back">返回</string>
     <array name="complaint_handle_states">
@@ -339,15 +340,15 @@
     <string name="text_modify">修改</string>
     <string name="text_login_password">登录密码</string>
     <string name="text_safe_phone">安全验证手机</string>
-    <string name="party_a">甲方</string>
-    <string name="party_b">乙方</string>
+    <string name="party_a">客户方</string>
+    <string name="party_b">业主方</string>
     <string name="party_agent">中介方</string>
-    <string name="party_b_id">乙方身份证</string>
+    <string name="party_b_id">业主身份证</string>
     <string name="party_agent_phone">中介电话</string>
-    <string name="party_b_bank_account">乙方银行账号</string>
+    <string name="party_b_bank_account">业主银行账号</string>
     <string name="amount_supervision">监管金额</string>
     <string name="order_no">订单编号：</string>
-    <string name="apply_deposit">申请转款</string>
+    <string name="apply_payment">申请转款</string>
     <string name="check_detail">查看详情</string>
     <string name="del_conversation">删除对话</string>
     <string name="item_showing_wait">待看房</string>
@@ -429,6 +430,24 @@
     <string name="mobile_phone_">手机号：</string>
     <string name="err_text_zero">人数不能为 0</string>
     <string name="err_text_out_bigger_in">带出人数不能大于带入看房人数</string>
+    <string name="text_time">时间</string>
+    <string name="text_operator">操作人</string>
+    <string name="text_operator_record">操作记录</string>
+    <string name="text_order_no_">订单编号：</string>
+    <string name="text_part_a_name_">客户姓名：</string>
+    <string name="text_part_a_id_card_">客户身份证号：</string>
+    <string name="text_part_b_id_card_">业主身份证号：</string>
+    <string name="text_part_b_name_">业主姓名：</string>
+    <string name="text_bank_account_">银行账号：</string>
+    <string name="text_bank_name_">开户行：</string>
+    <string name="text_money_">金额：</string>
+    <string name="text_order_detail">订单详情</string>
+    <string name="extra_message">message</string>
+    <string name="exit">退出</string>
+    <string name="text_relogin">重新登录</string>
+    <string name="text_empty_code">请输入验证码</string>
+    <string name="text_empty_password">密码不能为空</string>
+    <string name="text_tap_one_more_exit">再按一次退出程序</string>
 
 </resources>
 

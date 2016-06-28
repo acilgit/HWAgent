@@ -29,8 +29,6 @@ import com.hyphenate.easeui.ui.EaseChatFragment;
 import com.hyphenate.easeui.widget.emojicon.EaseEmojiconMenu;
 import com.hyphenate.util.PathUtil;
 
-import org.json.JSONObject;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.Map;
@@ -200,8 +198,8 @@ public class ChatFragment extends EaseChatFragment {
     }
     //发送消息方法
     //==========================================================================
-    public void sendCustomerMessage(JSONObject json) {
-        EMMessage message = EMMessage.createTxtSendMessage(json.toString(), toChatUsername);
+    public void sendCustomerMessage(String json) {
+        EMMessage message = EMMessage.createTxtSendMessage(json, toChatUsername);
         message.setAttribute("msgType", ChatActivity.MESSAGE_TYPE_CUSTOMER);
         sendMessage(message);
     }

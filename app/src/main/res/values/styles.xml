@@ -25,6 +25,16 @@
         <!--<item name="titleTextAppearance">@style/Theme.Toolbar.Title</item>-->
     </style>
 
+    <style name="AppSplash" parent="AppTheme.NoActionBar">
+        <item name="android:windowBackground">@mipmap/pic_splash</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <style name="AppDialog" parent="AppTheme.NoActionBar">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
     <style name="divider_line">
         <item name="android:layout_height">@dimen/line_1px</item>
         <item name="android:layout_width">match_parent</item>
@@ -42,6 +52,26 @@
         <item name="android:paddingBottom">16dp</item>
     </style>
 
+    <!--ripple-->
+    <style name="ripple">
+        <item name="rv_type">rectangle</item>
+        <item name="rv_color">@color/gray_lite</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <!--cardView -->
+    <style name="card_view_rec">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_marginBottom">8dp</item>
+        <item name="android:layout_marginLeft">16dp</item>
+        <item name="android:layout_marginRight">16dp</item>
+        <item name="cardBackgroundColor">@color/white</item>
+        <item name="cardCornerRadius">0dp</item>
+        <item name="cardMaxElevation">0dp</item>
+    </style>
+
     <!--buttons-->
     <style name="btn" parent="AppTheme">
         <item name="android:paddingTop">0dp</item>
@@ -53,6 +83,9 @@
     </style>
     <style name="btn_white" parent="btn">
         <item name="colorButtonNormal">@color/white</item>
+    </style>
+    <style name="btn_white_lite" parent="btn">
+        <item name="colorButtonNormal">@color/white_lite</item>
     </style>
   <!-- easeUI styles -->
 
@@ -222,7 +255,15 @@
 
     <style name="progress_horizontal">
         <item name="android:indeterminateOnly">false</item>
-        <item name="android:progressDrawable">@color/green</item><!-- progress_horizontal -->
+        <item name="android:progressDrawable">@drawable/progress_bar</item><!-- progress_horizontal -->
+        <item name="android:indeterminateDrawable">@android:drawable/progress_indeterminate_horizontal</item>
+        <item name="android:minHeight">12dp</item>
+        <item name="android:maxHeight">12dp</item>
+    </style>
+
+    <style name="progress_horizontal_security">
+        <item name="android:indeterminateOnly">false</item>
+        <item name="android:progressDrawable">@drawable/progress_bar_security</item><!-- progress_horizontal -->
         <item name="android:indeterminateDrawable">@android:drawable/progress_indeterminate_horizontal</item>
         <item name="android:minHeight">12dp</item>
         <item name="android:maxHeight">12dp</item>

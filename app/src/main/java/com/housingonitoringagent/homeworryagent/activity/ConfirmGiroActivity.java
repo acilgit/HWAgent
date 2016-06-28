@@ -47,7 +47,6 @@ import butterknife.ButterKnife;
  */
 public class ConfirmGiroActivity extends BaseActivity implements View.OnClickListener, OnCheckedChangeListener{
 
-
     // 验证码获取时间最小间隔
     private final int VERIFICATION_CODE_TIME_INTERVAL = 60;
     @Bind(R.id.toolbar)
@@ -171,7 +170,7 @@ public class ConfirmGiroActivity extends BaseActivity implements View.OnClickLis
                     @Override
                     public void setIntent(Intent intent) {
                         intent.putExtra(getString(R.string.extra_title), getString(R.string.title_capital_administration));
-                        intent.putExtra(getString(R.string.extra_url), Const.serviceMethod.USERREGISTERDEAL);
+                        intent.putExtra(getString(R.string.extra_url), Const.serviceMethod.USER_SUPERVISE_DEAL);
                     }
                 });
                 break;
@@ -244,6 +243,7 @@ public class ConfirmGiroActivity extends BaseActivity implements View.OnClickLis
         };
         getVolleyRequestQueue().add(request);
     }
+
     private void chooseParty(final String partyId) {
         showProgressDialog(getString(R.string.wait_a_few_times));
         StringRequest request = new VolleyStringRequest(Request.Method.POST, Const.serviceMethod.HOUSE_DEAL_CHOOSE_PARTY,
@@ -254,10 +254,11 @@ public class ConfirmGiroActivity extends BaseActivity implements View.OnClickLis
                         dismissProgressDialog();
                         int result = json.getIntValue("resultCode");
                         String msg = json.getString("message");
+                        String giroTitle = json.getJSONObject("content").getString("message");
                         switch (result) {
                             case 1:
                                 llGiro.setVisibility(View.VISIBLE);
-                                tvGiroTo.setText(msg);
+                                tvGiroTo.setText(giroTitle);
                                 break;
                             default:
                                 llGiro.setVisibility(View.GONE);

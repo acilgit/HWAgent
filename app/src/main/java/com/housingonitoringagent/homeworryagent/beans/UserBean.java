@@ -6,11 +6,10 @@ import java.io.Serializable;
  * Created by Administrator on 2016/3/30 0030.
  */
 public class UserBean implements Serializable {
-
     /**
      * resultCode : 1
      * message : 登录成功
-     * content : {"creator":"csp","createTime":1463706977000,"updater":"csp","updateTime":1464081035000,"activate":true,"id":"9b870b8c-1eb2-4599-a1a8-b1faa34ea80d","intermediaryStoreId":"16a3aec5-63ef-4c65-a99d-ef36802e6e55","intermediaryStoreName":"合富莞城店","intermediaryCompanyId":"fe4afccc-e256-44cb-b6a0-0dded3a83d18","intermediaryCompanyName":"东莞市合富置业有限公司","yearlyInspection":"2016","workingLife":26,"certificatePicture":"http://localhost:9000/upload/image/20160520/1463706969683027234.png","certificateInfo":"无","duty":2,"academicTitle":2,"complaintCount":0,"complaintAgreeCount":0,"complaintCompleteCount":0,"houseEvaluatePraiseAmount":0,"certStatus":1,"sessionId":"108fde4a-f923-4ba8-98f7-12fc9e51de84","name":"经纪人","avatar":"http://localhost:9000/upload/image/20160520/1463706933924015197.png","realName":false,"idCard":"340711199101010011"}
+     * content : {"creator":"csp","createTime":1463706977000,"updater":"合富置业","updateTime":1464695504000,"activate":true,"id":"9b870b8c-1eb2-4599-a1a8-b1faa34ea80d","intermediaryStoreId":"16a3aec5-63ef-4c65-a99d-ef36802e6e55","intermediaryStoreName":"合富莞城店","intermediaryCompanyId":"fe4afccc-e256-44cb-b6a0-0dded3a83d18","intermediaryCompanyName":"东莞市合富置业有限公司","yearlyInspection":"2016","workingLife":26,"certificatePicture":"http://localhost:9000/upload/image/20160520/1463706969683027234.png","certificateInfo":"无","duty":2,"academicTitle":2,"complaintCount":0,"complaintAgreeCount":0,"complaintCompleteCount":0,"houseEvaluatePraiseAmount":0,"certStatus":1,"sessionId":"330af610-8266-4a70-ab0a-1f0585ff46e2","name":"经纪人","mobilephone":"18918918909","sex":1,"avatar":"http://192.168.1.222:9000/upload/image/20160531/1464695499885084970.jpg","realName":false,"idCard":"340711199101010011","huanName":"fc_18918918909","safeLevel":1}
      */
 
     private int resultCode;
@@ -18,8 +17,8 @@ public class UserBean implements Serializable {
     /**
      * creator : csp
      * createTime : 1463706977000
-     * updater : csp
-     * updateTime : 1464081035000
+     * updater : 合富置业
+     * updateTime : 1464695504000
      * activate : true
      * id : 9b870b8c-1eb2-4599-a1a8-b1faa34ea80d
      * intermediaryStoreId : 16a3aec5-63ef-4c65-a99d-ef36802e6e55
@@ -37,11 +36,15 @@ public class UserBean implements Serializable {
      * complaintCompleteCount : 0
      * houseEvaluatePraiseAmount : 0
      * certStatus : 1
-     * sessionId : 108fde4a-f923-4ba8-98f7-12fc9e51de84
+     * sessionId : 330af610-8266-4a70-ab0a-1f0585ff46e2
      * name : 经纪人
-     * avatar : http://localhost:9000/upload/image/20160520/1463706933924015197.png
+     * mobilephone : 18918918909
+     * sex : 1
+     * avatar : http://192.168.1.222:9000/upload/image/20160531/1464695499885084970.jpg
      * realName : false
      * idCard : 340711199101010011
+     * huanName : fc_18918918909
+     * safeLevel : 1
      */
 
     private ContentBean content;
@@ -92,15 +95,15 @@ public class UserBean implements Serializable {
         private int complaintCompleteCount;
         private int houseEvaluatePraiseAmount;
         private int certStatus;
-        private int sex;
         private String sessionId;
-        private String huanName;
         private String name;
+        private String mobilephone;
+        private int sex;
         private String avatar;
-        private String phone;
         private boolean realName;
         private String idCard;
-
+        private String huanName;
+        private int safeLevel;
 
         public String getCreator() {
             return creator;
@@ -148,14 +151,6 @@ public class UserBean implements Serializable {
 
         public void setId(String id) {
             this.id = id;
-        }
-
-        public String getHuanName() {
-            return huanName;
-        }
-
-        public void setHuanName(String huanName) {
-            this.huanName = huanName;
         }
 
         public String getIntermediaryStoreId() {
@@ -295,11 +290,19 @@ public class UserBean implements Serializable {
         }
 
         public String getMobilephone() {
-            return phone;
+            return mobilephone;
         }
 
-        public void setMobilephone(String phone) {
-            this.phone = phone;
+        public void setMobilephone(String mobilephone) {
+            this.mobilephone = mobilephone;
+        }
+
+        public int getSex() {
+            return sex;
+        }
+
+        public void setSex(int sex) {
+            this.sex = sex;
         }
 
         public String getAvatar() {
@@ -326,18 +329,26 @@ public class UserBean implements Serializable {
             this.idCard = idCard;
         }
 
+        public String getHuanName() {
+            return huanName;
+        }
+
+        public void setHuanName(String huanName) {
+            this.huanName = huanName;
+        }
+
+        public int getSafeLevel() {
+            return safeLevel;
+        }
+
+        public void setSafeLevel(int safeLevel) {
+            this.safeLevel = safeLevel;
+        }
+
         public String getSexName() {
             return sex == 1 ? "男" : "女";
         }
 
-        public int getSex() {
-            return sex;
-        }
-
-        public void setSex(int sex) {
-            this.sex = sex;
-        }
-
-
     }
+
 }

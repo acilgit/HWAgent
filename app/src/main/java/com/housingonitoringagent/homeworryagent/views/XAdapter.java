@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,6 +20,7 @@ import java.util.List;
 public abstract class XAdapter<T> extends RecyclerView.Adapter {
 
     public static final int SINGLE_LAYOUT = -1;
+    private List<T> mainList;
     private List<T> dataList;
     private Context context;
     private SparseArray<Integer> layoutIdList;
@@ -34,7 +36,8 @@ public abstract class XAdapter<T> extends RecyclerView.Adapter {
      */
     public XAdapter(Context context, List<T> dataList, @LayoutRes int layoutId) {
         this.context = context;
-        this.dataList = dataList;
+        this.dataList = new ArrayList<>();
+        this.mainList = dataList;
         this.layoutIdList = new SparseArray<>();
         layoutIdList.put(SINGLE_LAYOUT, layoutId);
     }
@@ -47,7 +50,8 @@ public abstract class XAdapter<T> extends RecyclerView.Adapter {
      */
     public XAdapter(Context context, List<T> dataList, SparseArray layoutIdList) {
         this.context = context;
-        this.dataList = dataList;
+        this.dataList = new ArrayList<>();
+        this.mainList = dataList;
         this.layoutIdList = layoutIdList;
     }
 
@@ -55,6 +59,7 @@ public abstract class XAdapter<T> extends RecyclerView.Adapter {
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, final int viewType) {
         @LayoutRes int layoutId = (layoutIdList.size() == 1 ? layoutIdList.get(SINGLE_LAYOUT) : layoutIdList.get(viewType));
         View itemView = LayoutInflater.from(context).inflate(layoutId, parent, false);
+//        itemView = LayoutInflater.from(context).createView()
         final CustomHolder holder = new CustomHolder(itemView){
             @Override
             protected void createHolder(final CustomHolder holder) {
@@ -132,22 +137,24 @@ public abstract class XAdapter<T> extends RecyclerView.Adapter {
     }
 
     public List<T> getDataList() {
+        return mainList;
+    }
+
+    public List<T> getFilteredList() {
         return dataList;
     }
 
     public void setDataList(List<T> dataList) {
-        if (this.dataList != null) {
-//            this.dataList.clear();
-        }
-        this.dataList = dataList;
+        mainList.clear();
+        mainList.addAll(dataList);
+        this.dataList.clear();
+        this.dataList.addAll(setFilterForAdapter(mainList));
         notifyDataSetChanged();
     }
 
-    public void DataList(List<T> dataList) {
-        if (this.dataList != null) {
-//            this.dataList.clear();
-        }
-        this.dataList = dataList;
+    public void resetDataList() {
+        this.dataList.clear();
+        this.dataList.addAll(setFilterForAdapter(mainList));
         notifyDataSetChanged();
     }
 
@@ -197,6 +204,17 @@ public abstract class XAdapter<T> extends RecyclerView.Adapter {
      */
     protected void handleItemViewClick(CustomHolder holder, T item) {
 
+    }
+
+    /**
+     * 过滤数据
+     * @param mainList
+     * @return
+     */
+    protected List<T> setFilterForAdapter(List<T> mainList) {
+        List<T> list = new ArrayList<>();
+        list.addAll(mainList);
+        return list;
     }
 
     /**

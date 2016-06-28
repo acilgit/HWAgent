@@ -2,88 +2,92 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="90dp"
-    android:orientation="horizontal"
-    >
+    android:orientation="horizontal">
+
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="0.35"
-        android:layout_marginRight="5dp">
-    <com.facebook.drawee.view.SimpleDraweeView
-        android:id="@+id/sample"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="fitXY"
-        />
+        android:layout_marginRight="5dp"
+        android:layout_weight="0.35">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/sample"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="0.65"
         android:orientation="vertical">
+
         <TextView
             android:id="@+id/title"
             android:layout_width="match_parent"
-            android:gravity="center_vertical"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:textSize="14dp"
+            android:gravity="center_vertical"
             android:textColor="@android:color/black"
-            />
+            android:textSize="15dp" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:orientation="horizontal"
-            >
+            android:orientation="horizontal">
+
             <TextView
                 android:id="@+id/shape"
-                android:gravity="center_vertical"
+                android:paddingRight="8dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center_vertical"
                 android:textColor="@color/text_gray"
-                android:textSize="12dp"
-                />
+                android:textSize="13dp" />
+
             <TextView
                 android:id="@+id/size"
-                android:layout_marginLeft="10dp"
-                android:gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="12dp"
+                android:layout_marginLeft="10dp"
+                android:gravity="center_vertical"
                 android:textColor="@color/text_gray"
-                />
+                android:textSize="12dp" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:orientation="horizontal"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="horizontal">
+
             <TextView
                 android:id="@+id/Price"
                 android:layout_width="0dp"
-                android:gravity="center"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textSize="12dp"
+                android:gravity="center_vertical"
                 android:textColor="@color/gules"
-                />
+                android:textSize="14dp" />
+
             <TextView
-                android:visibility="gone"
                 android:id="@+id/appointment"
                 android:layout_width="0dp"
-                android:gravity="center"
                 android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
                 android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:gravity="center"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
-                android:layout_marginLeft="5dp"
-                android:textSize="12dp"
-                android:layout_marginRight="5dp"
-                android:background="@color/colorPrimary"
+                android:text="预约"
                 android:textColor="@color/white"
-                android:text="预约"/>
+                android:textSize="12dp"
+                android:visibility="gone" />
         </LinearLayout>
 
     </LinearLayout>

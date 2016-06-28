@@ -1,4 +1,4 @@
-package com.housingonitoringagent.homeworryagent.utils;
+package com.housingonitoringagent.homeworryagent.views;
 
 /**
  * Created by XY on 2016/6/18.
@@ -18,9 +18,9 @@ import com.housingonitoringagent.homeworryagent.utils.net.VolleyResponseListener
 import com.housingonitoringagent.homeworryagent.utils.net.VolleyStringRequest;
 import com.housingonitoringagent.homeworryagent.utils.uikit.BGARefreshLayoutBuilder;
 import com.housingonitoringagent.homeworryagent.utils.uikit.QBLToast;
-import com.housingonitoringagent.homeworryagent.views.XAdapter;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -31,9 +31,9 @@ import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 /**
  * Created by XY on 2016/6/17.
  */
-public class RefreshListUtil<T> implements BGARefreshLayout.BGARefreshLayoutDelegate {
+public class XRefreshView<T> implements BGARefreshLayout.BGARefreshLayoutDelegate {
 
-    //    private static List<RefreshListUtil> refreshListUtils = new ArrayList<>();
+    //    private static List<XRefreshView> refreshListUtils = new ArrayList<>();
 
     private final BGARefreshLayout refreshView;
     private static final int REFRESH = 1;
@@ -46,14 +46,14 @@ public class RefreshListUtil<T> implements BGARefreshLayout.BGARefreshLayoutDele
 
     private IRefreshRequest iRefreshRequest;
 
-    private RefreshListUtil(BaseActivity activity, BGARefreshLayout refreshView, boolean loadMore) {
+    private XRefreshView(BaseActivity activity, BGARefreshLayout refreshView, boolean loadMore) {
         BGARefreshLayoutBuilder.init(activity, refreshView, loadMore);
         refreshView.setDelegate(this);
         this.activity = activity;
         this.refreshView = refreshView;
     }
 
-    public RefreshListUtil(BaseActivity activity, BGARefreshLayout refreshView, boolean loadMore, XAdapter<T> adapter, @NonNull IRefreshRequest iRefreshRequest) {
+    public XRefreshView(final BaseActivity activity, BGARefreshLayout refreshView, boolean loadMore, XAdapter<T> adapter, @NonNull IRefreshRequest iRefreshRequest) {
         BGARefreshLayoutBuilder.init(activity, refreshView, loadMore);
         refreshView.setDelegate(this);
         this.activity = activity;
@@ -61,10 +61,10 @@ public class RefreshListUtil<T> implements BGARefreshLayout.BGARefreshLayoutDele
         this.adapter = adapter;
         this.iRefreshRequest = iRefreshRequest;
         this.state = new RefreshState(10);
-//        this.refreshView.setRefreshViewHolder();
+
     }
 
-    public RefreshListUtil(BaseActivity activity, BGARefreshLayout refreshView, boolean loadMore, XAdapter<T> adapter, @NonNull IRefreshRequest iRefreshRequest, int refreshPageSize) {
+    public XRefreshView(BaseActivity activity, BGARefreshLayout refreshView, boolean loadMore, XAdapter<T> adapter, @NonNull IRefreshRequest iRefreshRequest, int refreshPageSize) {
         BGARefreshLayoutBuilder.init(activity, refreshView, loadMore);
         refreshView.setDelegate(this);
         this.activity = activity;
@@ -74,20 +74,6 @@ public class RefreshListUtil<T> implements BGARefreshLayout.BGARefreshLayoutDele
         this.state = new RefreshState(refreshPageSize);
     }
 
-   /* private static RefreshListUtil getBGARefresher(RefreshListUtil refreshListUtil, IRefreshRequest iRefreshRequest) {
-        getBGARefresher(refreshListUtil, iRefreshRequest, 10);
-        return refreshListUtil;
-    }
-
-    private static RefreshListUtil getBGARefresher(RefreshListUtil refreshListUtil, IRefreshRequest iRefreshRequest, int refreshPageSize) {
-        //        if (!refreshListUtils.contains(refreshListUtil)) {
-        //            refreshListUtils.add(refreshListUtil);
-        refreshListUtil.iRefreshRequest = iRefreshRequest;
-        refreshListUtil.state = new RefreshState(refreshPageSize);
-        return refreshListUtil;
-        //        }
-        //        return null;
-    }*/
 
     /**
      * 获取小区
@@ -113,14 +99,14 @@ public class RefreshListUtil<T> implements BGARefreshLayout.BGARefreshLayoutDele
                 String message = json.getString("message");
                 if (resultCode == 1) {
                     List<T> newList = iRefreshRequest.handleJson(json, state);
-                    final List<T> list = adapter.getDataList();
+                    final List<T> list = new ArrayList<>();
                     switch (refreshType) {
                         case REFRESH:
                             refreshView.endRefreshing();
                             if (state.pageIndex == 0) state.pageIndex++;
-                            list.clear();
                             break;
                         default:
+                            list.addAll(adapter.getDataList());
                             refreshView.endLoadingMore();
                             state.pageIndex++;
                             break;
@@ -194,8 +180,15 @@ public class RefreshListUtil<T> implements BGARefreshLayout.BGARefreshLayoutDele
      * 刷新列表
      */
     public void refreshList() {
-        if (adapter.getItemCount() > 0) {
-            getDataByRefresh(adapter.getItemCount());
+        refreshList(false);
+    }
+
+    public void refreshList(boolean showDialog) {
+        if (showDialog) {
+            activity.showProgressDialog(activity.getString(R.string.wait_a_few_times));
+        }
+        if (adapter.getDataList().size() > 0) {
+            getDataByRefresh(adapter.getDataList().size());
         } else {
             activity.showProgressDialog(activity.getString(R.string.wait_a_few_times));
             getDataByRefresh(state.pageDefaultSize);
@@ -215,7 +208,7 @@ public class RefreshListUtil<T> implements BGARefreshLayout.BGARefreshLayoutDele
             getDataByRefresh(state.pageIndex + 1, state.pageDefaultSize);
             return true;
         }
-        QBLToast.show(R.string.text_no_more_data);
+//        QBLToast.show(R.string.text_no_more_data);
         return false;
     }
 

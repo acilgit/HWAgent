@@ -12,7 +12,6 @@ import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 
 public class BGARefreshLayoutBuilder {
 
-
     static Bitmap originalBitmap;
     static int ultimateColor = -1;
 

@@ -16,10 +16,10 @@ import com.housingonitoringagent.homeworryagent.User;
 import com.housingonitoringagent.homeworryagent.beans.HouseDealBean;
 import com.housingonitoringagent.homeworryagent.beans.HouseDealBean.ContentBean.PsBean.Content;
 import com.housingonitoringagent.homeworryagent.extents.BaseActivity;
-import com.housingonitoringagent.homeworryagent.utils.DateUtil;
-import com.housingonitoringagent.homeworryagent.utils.RefreshListUtil;
+import com.housingonitoringagent.homeworryagent.views.XRefreshView;
 import com.housingonitoringagent.homeworryagent.utils.StringUtil;
 import com.housingonitoringagent.homeworryagent.views.XAdapter;
+import com.jaredrummler.materialspinner.MaterialSpinner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +33,7 @@ import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
  * HomeWorry
  * Created by Administrator on 2016/3/2 0002.
  */
-public class OrderListActivity extends BaseActivity implements View.OnClickListener{
+public class OrderListActivity extends BaseActivity implements View.OnClickListener, MaterialSpinner.OnItemSelectedListener {
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
@@ -41,11 +41,11 @@ public class OrderListActivity extends BaseActivity implements View.OnClickListe
     RecyclerView rvMain;
     @Bind(R.id.refreshView)
     BGARefreshLayout refreshView;
+    @Bind(R.id.spnMain)
+    MaterialSpinner spnMain;
 
     private XAdapter<Content> adapter;
-    private RefreshListUtil<Content> refresher;
-
-    private static final int REQUEST_CODE_GOT_RESULT = 100;
+    private XRefreshView<Content> refresher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +60,8 @@ public class OrderListActivity extends BaseActivity implements View.OnClickListe
     }
 
     private void initViews() {
+        spnMain.setItems(getResources().getStringArray(R.array.admin_statue));
+        spnMain.setOnItemSelectedListener(this);
         rvMain.setLayoutManager(new LinearLayoutManager(getThis()));
 
         adapter = new XAdapter<Content>(getThis(), new ArrayList<Content>(), R.layout.item_order) {
@@ -70,14 +72,20 @@ public class OrderListActivity extends BaseActivity implements View.OnClickListe
                     public void onClick(View v) {
                         switch (v.getId()) {
                             case R.id.btnDeposit:
-                                getThis().start(ConfirmGiroActivity.class, new BaseActivity.BaseIntent() {
+                                getThis().start(ConfirmGiroActivity.class, new BaseIntent() {
                                     @Override
                                     public void setIntent(Intent intent) {
                                         intent.putExtra(getString(R.string.extra_bean), dataList.get(holder.getAdapterPosition()));
                                     }
-                                });
+                                }, REQUEST_CODE_GOT_RESULT);
                                 break;
                             case R.id.btnDetail:
+                                getThis().start(PaymentDetailActivity.class, new BaseIntent() {
+                                    @Override
+                                    public void setIntent(Intent intent) {
+                                        intent.putExtra(getString(R.string.extra_bean), dataList.get(holder.getAdapterPosition()));
+                                    }
+                                }, REQUEST_CODE_GOT_RESULT);
                                 break;
                             default:
                                 break;
@@ -85,16 +93,22 @@ public class OrderListActivity extends BaseActivity implements View.OnClickListe
                     }
                 };
                 holder.getView(R.id.btnDeposit).setOnClickListener(clickListener);
+                holder.getView(R.id.btnDetail).setOnClickListener(clickListener);
             }
 
             @Override
             public void bindingHolder(CustomHolder holder, List<Content> dataList, int pos) {
                 Content bean = dataList.get(pos);
-                String strBIdCard = bean.getBIdCard().substring(0, 4)+ "****"+ bean.getBIdCard().substring(bean.getBIdCard().length() -3);
-                String strBankNum = bean.getBankNumber().substring(0, 4)+ "****"+ bean.getBankNumber().substring(bean.getBIdCard().length() -3);
 
+                String strBIdCard = null;
+                String strBankNum = null;
+                try {
+                    strBIdCard = bean.getBIdCard().substring(0, 4) + "****" + bean.getBIdCard().substring(bean.getBIdCard().length() - 3);
+                    strBankNum = bean.getBankNumber().substring(0, 4) + "****" + bean.getBankNumber().substring(bean.getBIdCard().length() - 3);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 holder.setText(R.id.tvOrderNo, bean.getOrderNo())
-                        .setText(R.id.tvOrderNo, DateUtil.formatDateToString(bean.getCreateTime()))
                         .setText(R.id.tvState, getResources().getStringArray(R.array.admin_statue)[bean.getOrderStatus()])
                         .setText(R.id.tvPartyA, bean.getAUserName())
                         .setText(R.id.tvPartyB, bean.getBUserName())
@@ -104,18 +118,36 @@ public class OrderListActivity extends BaseActivity implements View.OnClickListe
                         .setText(R.id.tvBank, bean.getBankName())
                         .setText(R.id.tvPartyBBankAccount, strBankNum)
                         .setText(R.id.tvAmountSupervision, StringUtil.formatNumber(bean.getOrderMoney()));
+                /* todo: OrderStatus 显示 申请转款 */
+                holder.getView(R.id.btnDeposit).setVisibility(bean.getOrderStatus()== 3 ? View.VISIBLE : View.GONE);
+            }
+
+               @Override
+            protected List<Content> setFilterForAdapter(List<Content> mainList) {
+                List<Content> list = new ArrayList<>();
+                int intFilter = spnMain.getSelectedIndex();
+                if (intFilter == 0) {
+                    return super.setFilterForAdapter(mainList);
+                } else {
+                    for (Content item : mainList) {
+                        if (item.getOrderStatus() == intFilter) {
+                            list.add(item);
+                        }
+                    }
+                }
+                return list;
             }
         };
         rvMain.setAdapter(adapter);
 
-        refresher = new RefreshListUtil<>(getThis(), refreshView, true, adapter, new RefreshListUtil.IRefreshRequest<Content>() {
+        refresher = new XRefreshView<>(getThis(), refreshView, true, adapter, new XRefreshView.IRefreshRequest<Content>() {
             @Override
             public String setVolleyParamsReturnUrl(Map<String, String> params) {
                 return Const.serviceMethod.HOUSE_DEAL_LIST;
             }
 
             @Override
-            public List<Content> handleJson(JSONObject json, RefreshListUtil.RefreshState stateForSetLastPage) {
+            public List<Content> handleJson(JSONObject json, XRefreshView.RefreshState stateForSetLastPage) {
                 HouseDealBean mainBean = JSON.parseObject(json.toString(), HouseDealBean.class);
                 stateForSetLastPage.setLastPage(mainBean.getContent().getPs().isLastPage());
                 return mainBean.getContent().getPs().getContent();
@@ -160,11 +192,15 @@ public class OrderListActivity extends BaseActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btnApply:
-
-                break;
+//            case R.id.btnApply:
+//                break;
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
+        adapter.resetDataList();
     }
 }

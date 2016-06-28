@@ -12,7 +12,8 @@
 
         <include layout="@layout/app_bar" />
 
-        <com.housingonitoringagent.homeworryagent.views.AdvancedWebView
+        <!--<com.housingonitoringagent.homeworryagent.views.AdvancedWebView-->
+        <WebView
             android:id="@+id/web"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />

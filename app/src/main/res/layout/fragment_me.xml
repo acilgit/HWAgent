@@ -29,7 +29,7 @@
                     android:layout_height="72dp"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="16dp"
-                    fresco:placeholderImage="@mipmap/head_2"
+                    fresco:placeholderImage="@mipmap/holder_head"
                     fresco:placeholderImageScaleType="centerCrop"
                     fresco:roundAsCircle="true"
                     fresco:roundingBorderColor="@color/gray_lite"

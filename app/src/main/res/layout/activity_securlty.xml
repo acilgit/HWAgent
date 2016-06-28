@@ -22,16 +22,16 @@
 
             <ProgressBar
                 android:id="@+id/pbSecurity"
-                style="@style/progress_horizontal"
+                style="@style/progress_horizontal_security"
                 android:layout_width="match_parent"
                 android:layout_height="12dp"
                 android:layout_marginBottom="12dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="12dp"
-                android:background="@mipmap/security_level"
                 android:max="100"
-                android:progress="70" />
+                android:secondaryProgress="0"
+                android:progress="30" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -107,7 +107,7 @@
                 android:id="@+id/rlSafeModifyPhone"
                 android:layout_width="match_parent"
                 android:layout_height="64dp"
-                android:background="@drawable/bg_btn_item"
+                android:background="@color/white"
                 android:paddingLeft="12dp"
                 android:paddingRight="12dp">
 

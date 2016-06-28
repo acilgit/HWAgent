@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/white"
+    android:id="@+id/llItem"
+    android:background="@drawable/bg_btn_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:fitsSystemWindows="true"
@@ -20,7 +21,7 @@
             android:layout_height="@dimen/item_photo_height"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="8dp"
-            fresco:placeholderImage="@color/btn_blue_normal"
+            fresco:placeholderImage="@mipmap/holder_pic"
             fresco:placeholderImageScaleType="centerCrop" />
 
         <TextView
@@ -29,9 +30,9 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/sivHouse"
             android:maxLines="1"
-            android:padding="2dp"
-            android:text="奥格瑞玛"
+            android:paddingLeft="2dp"
             android:textColor="@color/text_black_lite"
+            android:text=""
             android:textSize="@dimen/text_size_normal" />
 
         <TextView
@@ -41,45 +42,42 @@
             android:layout_below="@id/tvHouseName"
             android:layout_toRightOf="@+id/sivHouse"
             android:lines="1"
-            android:padding="2dp"
-            android:text="20室8厅 面积72平方"
+            android:layout_marginTop="2dp"
+            android:paddingLeft="2dp"
+            android:text=""
             android:textColor="@color/text_gray"
             android:textSize="@dimen/text_size_item_normal" />
+
+        <ImageView
+            android:layout_toRightOf="@id/tvHouseDetail"
+            android:layout_alignBottom="@id/tvHouseDetail"
+            android:padding="4dp"
+            android:layout_marginBottom="2dp"
+            android:src="@mipmap/m2"
+            android:layout_width="20dp"
+            android:layout_height="20dp" />
 
         <TextView
             android:id="@+id/tvHousePrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_alignBaseline="@+id/tvHouseDetail"
+            android:layout_alignBaseline="@+id/tvHouseName"
             android:padding="0dp"
             android:layout_marginRight="16dp"
-            android:text="98万"
+            android:text=""
             android:textColor="@color/red"
             android:textSize="@dimen/text_size_item_normal"
             android:textStyle="bold" />
 
-        <LinearLayout
-            android:id="@+id/llStatues"
+        <com.housingonitoringagent.homeworryagent.views.tags.FlowTagLayout
+            android:id="@+id/ftlTags"
             android:layout_marginTop="4dp"
+            android:layout_marginRight="8dp"
             android:layout_below="@id/tvHouseDetail"
             android:layout_toRightOf="@+id/sivHouse"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/tvStatue1"
-                android:text="随时看房"
-                android:paddingLeft="4dp"
-                android:paddingRight="4dp"
-                android:paddingTop="2dp"
-                android:paddingBottom="2dp"
-                android:background="@drawable/round_rectangle_bg"
-                android:textSize="@dimen/text_size_item_table"
-                android:textColor="@color/text_gray"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
+            android:layout_height="24dp"/>
 
         <ImageView
             android:src="@mipmap/icon_location"
@@ -93,7 +91,7 @@
             android:id="@+id/tvHouseAddress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/llStatues"
+            android:layout_below="@id/ftlTags"
             android:layout_toRightOf="@+id/sivHouse"
             android:layout_toLeftOf="@+id/btnSendLink"
             android:layout_marginLeft="16dp"
@@ -108,6 +106,7 @@
             android:id="@+id/btnSendLink"
             style="@style/btn"
             android:text="发送连接"
+            android:textColor="@color/gray_normal"
             android:background="@drawable/round_rectangle_bg"
             android:layout_alignTop="@+id/tvHouseAddress"
             android:layout_alignParentRight="true"

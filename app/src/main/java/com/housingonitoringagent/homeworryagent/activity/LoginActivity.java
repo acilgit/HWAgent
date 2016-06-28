@@ -2,6 +2,7 @@ package com.housingonitoringagent.homeworryagent.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -48,8 +49,8 @@ public class LoginActivity extends BaseActivity {
 
     public static Activity instance;
 
-    private final String account = "18918918909";
-    private final String password = "123456";
+//    private final String account = "18918918909";
+//    private final String password = "123456";
 
     public static void finishInstance() {
         if (instance != null) {
@@ -77,8 +78,8 @@ public class LoginActivity extends BaseActivity {
         ButterKnife.bind(this);
         underLine(tvRetrieve);
         setListener();
-        etAccount.setText(account);
-        etPassword.setText(password);
+        etAccount.setText(User.getAccountSaved());
+        etPassword.setText(User.getPassword());
     }
 
     private void setListener() {
@@ -103,7 +104,7 @@ public class LoginActivity extends BaseActivity {
 //            case R.id.agreement_tv:
 //                break;
             case R.id.tvRetrieve:
-                start(ForgetPasswordActivity.class);
+                start(PasswordForgetActivity.class);
                 break;
         }
     }
@@ -132,7 +133,15 @@ public class LoginActivity extends BaseActivity {
                         switch (result){
                             case 1:
 //                                JSONObject userJSON = json.getJSONObject("content");
-                                UserBean userInfo = JSON.toJavaObject(json, UserBean.class);
+
+                                UserBean userInfo = null;
+                                try {
+                                    userInfo = JSON.toJavaObject(json, UserBean.class);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                    QBLToast.show("你的个人资料信息有误，请联系管理员");
+                                    return;
+                                }
                                 userInfo.getContent().setMobilephone(username);
 //                                userInfo.setSessionId(userInfo.getSessionId("sessionId"));
                                 onLogin(userInfo);
@@ -148,13 +157,14 @@ public class LoginActivity extends BaseActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         dismissProgressDialog();
-
                         QBLToast.show(R.string.network_exception);
                     }
                 }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = super.getParams();
+                User.setAccountSaved(username);
+                User.setPassword(password);
                 params.put("mobilephone", username);
                 params.put("password", password);
                 return params;
@@ -178,10 +188,21 @@ public class LoginActivity extends BaseActivity {
 
         QBLToast.show(R.string.sign_in_success);
 
+        hideSoftInput();
 
+        LoginActivity.finishInstance();
         if (!getIntent().getBooleanExtra("FromVisitor", false)) {
             start(MainActivity.class);
         }
-        LoginActivity.finishInstance();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+            App.getInstance().getOut();
+//            finish();
+//            android.os.Process.killProcess(android.os.Process.myPid());
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

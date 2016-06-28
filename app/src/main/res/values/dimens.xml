@@ -32,7 +32,7 @@
     <dimen name="line_table">1.5px</dimen>
     <dimen name="head_side">48dp</dimen>
     <dimen name="item_photo_height">84dp</dimen>
-    <dimen name="item_photo_width">112dp</dimen>
+    <dimen name="item_photo_width">100dp</dimen>
     <dimen name="item_agent_head_height">112dp</dimen>
     <dimen name="item_agent_head_width">80dp</dimen>
     <dimen name="item_height">72dp</dimen>

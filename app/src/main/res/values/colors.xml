@@ -5,6 +5,7 @@
     <color name="colorPrimaryDark">#2F9FD1</color>
     <color name="colorAccent">#FF4081</color>
     <color name="white">#FFFFFF</color>
+    <color name="white_lite">#FDFDFD</color>
     <color name="base_bg">#f4f4f5</color>
     <color name="grey_divider_thin">#E5E5E5</color>
     <color name="orange_common">#FFA200</color>

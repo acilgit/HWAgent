@@ -9,14 +9,20 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.BaseAdapter;
 
+import com.alibaba.fastjson.JSON;
+import com.housingonitoringagent.homeworryagent.Const;
 import com.housingonitoringagent.homeworryagent.R;
 import com.housingonitoringagent.homeworryagent.User;
+import com.housingonitoringagent.homeworryagent.beans.CustomerMsgBean;
+import com.housingonitoringagent.homeworryagent.beans.HouseRecommendBean;
 import com.housingonitoringagent.homeworryagent.extents.BaseActivity;
 import com.housingonitoringagent.homeworryagent.pages.ChatFragment;
 import com.housingonitoringagent.homeworryagent.utils.easeui.ChatRowVoiceCall;
 import com.housingonitoringagent.homeworryagent.utils.easeui.Constant;
 import com.housingonitoringagent.homeworryagent.utils.easeui.EaseChatRowAdvertisement;
+import com.housingonitoringagent.homeworryagent.utils.easeui.EaseHelper;
 import com.hyphenate.chat.EMMessage;
+import com.hyphenate.chat.EMTextMessageBody;
 import com.hyphenate.easeui.ui.EaseChatFragment;
 import com.hyphenate.easeui.utils.EaseUserUtils;
 import com.hyphenate.easeui.widget.chatrow.EaseChatRow;
@@ -100,14 +106,7 @@ public class ChatActivity extends BaseActivity {
                     //设置消息扩展属性
                     message.setAttribute("em_robot_message", true);
                 }
-                JSONObject json = new JSONObject();
-                try {
-                    json.put("avatar", User.getHeadUrl());
-                    json.put("nickname", User.getNickname());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                message.setAttribute("user", json.toString());
+                message.setAttribute("user", EaseHelper.getInstance().getUserAttributie());
             }
 
             @Override
@@ -124,18 +123,35 @@ public class ChatActivity extends BaseActivity {
             }
 
             @Override
-            public boolean onMessageBubbleClick(EMMessage message) {
-//                if (message.getIntAttribute("msgType", 0)==1) {
-//                    onClickItem();
-//                    return true;
-//                }
+            public boolean onMessageBubbleClick(final EMMessage message) {
+                if (message.getIntAttribute("msgType", 0)== MESSAGE_TYPE_CUSTOMER) {
+                    try {
+                        String body = ((EMTextMessageBody) message.getBody()).getMessage();
+                        JSONObject json = new JSONObject(body);
+                    final String id = json.getString("id");
+                    final boolean forSell = json.getString("type").equals("2");
+                        if (id != null && !id.isEmpty()) {
+                            getThis().start(WebViewActivity.class, new BaseActivity.BaseIntent() {
+                            @Override
+                            public void setIntent(Intent intent) {
+                                String url = forSell ? Const.serviceMethod.SECOND_HAND_HOUSE_INFO : Const.serviceMethod.RENTAL_HOUSE_INFO;
+                                url += "id=" + id;
+                                intent.putExtra(getThis().getString(R.string.extra_url), url);
+                            }
+                        });
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+//                    checkHouseDetail(message);
+                    return true;
+                }
                 return false;
             }
 
             @Override
             public void onMessageBubbleLongClick(EMMessage message) {
-                startActivityForResult((new Intent(getThis(), ContextMenuActivity.class)).putExtra("message", message),
-                        REQUEST_CODE_CONTEXT_MENU);
+//                startActivityForResult((new Intent(getThis(), ContextMenuActivity.class)).putExtra("message", message), REQUEST_CODE_CONTEXT_MENU);
             }
 
             @Override
@@ -217,6 +233,43 @@ public class ChatActivity extends BaseActivity {
         });
     }
 
+   /* private void checkHouseDetail(EMMessage message) {
+        showProgressDialog(getString(R.string.wait_a_few_times));
+        StringRequest request = new VolleyStringRequest(Request.Method.POST, Const.serviceMethod.OUTLET_DETAIL,
+                new VolleyResponseListener() {
+                    @Override
+                    public void handleJson(com.alibaba.fastjson.JSONObject json) {
+                        super.handleJson(json);
+                        dismissProgressDialog();
+                        int result = json.getIntValue("resultCode");
+                        String msg = json.getString("message");
+                        switch (result) {
+                            case 1:
+                                break;
+                            default:
+                                QBLToast.show(msg);
+                                break;
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        dismissProgressDialog();
+                        QBLToast.show(R.string.network_exception);
+                    }
+                }) {
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = super.getParams();
+                params.put("storeId", User.getIntermediaryStoreId());
+                return params;
+            }
+        };
+        getVolleyRequestQueue().add(request);
+    }*/
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -233,12 +286,7 @@ public class ChatActivity extends BaseActivity {
 
         switch (id) {
             case R.id.action_outlet:
-                start(OutletActivity.class, new BaseIntent() {
-                    @Override
-                    public void setIntent(Intent intent) {
-                        intent.putExtra("", "");
-                    }
-                }, REQUEST_CODE_SEND_LINK);
+                start(OutletActivity.class, REQUEST_CODE_SEND_LINK);
                 break;
             default:
                 break;
@@ -259,8 +307,18 @@ public class ChatActivity extends BaseActivity {
             switch (requestCode) {
                 case REQUEST_CODE_SEND_LINK:
                     JSONObject json = new JSONObject();
-                    try {
-                        json.put("type", "houseSells");
+                    HouseRecommendBean.ContentBean.Content bean = (HouseRecommendBean.ContentBean.Content) data.getSerializableExtra(getString(R.string.extra_bean));
+                    CustomerMsgBean msgBean = new CustomerMsgBean();
+                    msgBean.setHouseSellPicture(bean.getCoverPicture());
+                    msgBean.setAddress(bean.getAddress());
+                    msgBean.setHouseShape(bean.getHouseShape());
+                    msgBean.setId(bean.getId());
+                    msgBean.setPrice(String.valueOf(bean.getPrice()));
+                    msgBean.setTitle(bean.getVillageName());
+                    msgBean.setType(String.valueOf(bean.getPermitType()));
+                    msgBean.setAgentId(User.getUserId());
+                    msgBean.setStoreId(User.getIntermediaryStoreId());
+                        /*json.put("type", "houseSells");
                         json.put("id", "86dae364-79c4-45bc-b467-55095fb69f1c");
                         json.put("houseSellPicture", "http://192.168.1.222:9000/upload/image/20160601/1464781717490034364.jpg");
                         json.put("title", "精装2房");
@@ -268,11 +326,8 @@ public class ChatActivity extends BaseActivity {
                         json.put("address", "元美路口");
                         json.put("price", "150.0");
                         json.put("storeId", "16a3aec5-63ef-4c65-a99d-ef36802e6e55");
-                        json.put("agentId", "9b870b8c-1eb2-4599-a1a8-b1faa34ea80d");
-                        chatFragment.sendCustomerMessage(json);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                    json.put("agentId", "9b870b8c-1eb2-4599-a1a8-b1faa34ea80d");*/
+                    chatFragment.sendCustomerMessage(JSON.toJSONString(msgBean));
                     break;
                 default:
                     break;

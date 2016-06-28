@@ -20,6 +20,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -141,7 +142,8 @@ public class EaseConversationListFragment extends EaseBaseFragment{
         @Override
         public void onDisconnected(int error) {
             if (error == EMError.USER_REMOVED || error == EMError.USER_LOGIN_ANOTHER_DEVICE) {
-                isConflict = true;
+//                isConflict = true;
+                Log.e("qqq", "onDisconnected error == EMError.USER_REMOVED || error == EMError.USER_LOGIN_ANOTHER_DEVICE  "+ error);
             } else {
                handler.sendEmptyMessage(0);
             }

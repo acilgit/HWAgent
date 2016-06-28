@@ -6,7 +6,7 @@ import android.util.Log;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.android.volley.Response;
-import com.housingonitoringagent.homeworryagent.User;
+import com.housingonitoringagent.homeworryagent.App;
 import com.housingonitoringagent.homeworryagent.utils.uikit.QBLToast;
 
 public abstract class VolleyResponseListener implements Response.Listener<String> {
@@ -35,9 +35,16 @@ public abstract class VolleyResponseListener implements Response.Listener<String
             if (respModel.getResultCode()==NOT_LOGIN) {
                 QBLToast.show("登录失败，请重新登录");
                 // 退出用户登录
-                User.logOut();
+//                User.logOut();
                 // 重启应用
-//                App.getInstance().restart();
+               /* App.getInstance().getActivity().start(LoginActivity.class, new BaseActivity.BaseIntent() {
+                    @Override
+                    public void setIntent(Intent intent) {
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    }
+                });*/
+                App.getInstance().restartAndLogin();
+
                 return;
             }
             Log.d(VolleyResponseListener.class.getName(), "message : " + respModel.getMessage());

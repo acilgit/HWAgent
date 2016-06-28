@@ -11,11 +11,10 @@ import android.widget.Toast;
 import com.housingonitoringagent.homeworryagent.App;
 import com.housingonitoringagent.homeworryagent.User;
 import com.housingonitoringagent.homeworryagent.activity.ChatActivity;
-import com.housingonitoringagent.homeworryagent.activity.ConversationListActivity;
+import com.housingonitoringagent.homeworryagent.utils.LogUtils;
 import com.housingonitoringagent.homeworryagent.utils.easeui.receiver.CallReceiver;
 import com.housingonitoringagent.homeworryagent.utils.easeui.util.EmojiconExampleGroupData;
 import com.housingonitoringagent.homeworryagent.utils.easeui.util.RobotUser;
-import com.hyphenate.EMCallBack;
 import com.hyphenate.EMConnectionListener;
 import com.hyphenate.EMError;
 import com.hyphenate.EMMessageListener;
@@ -94,8 +93,7 @@ public class EaseHelper {
     /**
      * init helper
      *
-     * @param context
-     *            application context
+     * @param context application context
      */
     public void init(Context context) {
         EMOptions options = initChatOptions();
@@ -115,7 +113,7 @@ public class EaseHelper {
     }
 
 
-    private EMOptions initChatOptions(){
+    private EMOptions initChatOptions() {
         Log.d(TAG, "init HuanXin Options");
 
         // 获取到EMChatOptions对象
@@ -152,7 +150,7 @@ public class EaseHelper {
                     user.setAvatar(User.getHeadUrl());
                     user.setNick(User.getNickname());
                 } else {
-                    JSONObject json ;
+                    JSONObject json;
                     String imUser = User.getIMUser(username);
                     try {
                         if (null != imUser) {
@@ -230,8 +228,8 @@ public class EaseHelper {
             @Override
             public EaseEmojicon getEmojiconInfo(String emojiconIdentityCode) {
                 EaseEmojiconGroupEntity data = EmojiconExampleGroupData.getData();
-                for(EaseEmojicon emojicon : data.getEmojiconList()){
-                    if(emojicon.getIdentityCode().equals(emojiconIdentityCode)){
+                for (EaseEmojicon emojicon : data.getEmojiconList()) {
+                    if (emojicon.getIdentityCode().equals(emojiconIdentityCode)) {
                         return emojicon;
                     }
                 }
@@ -264,13 +262,13 @@ public class EaseHelper {
             public String getDisplayedText(EMMessage message) {
                 // 设置状态栏的消息提示，可以根据message的类型做相应提示
                 String ticker = EaseCommonUtils.getMessageDigest(message, appContext);
-                if(message.getType() == EMMessage.Type.TXT){
+                if (message.getType() == EMMessage.Type.TXT) {
                     ticker = ticker.replaceAll("\\[.{2,3}\\]", "[表情]");
                 }
                 EaseUser user = EaseUserUtils.getUserInfo(message.getFrom());
-                if(user != null){
+                if (user != null) {
                     return user.getNick() + ": " + ticker;
-                }else{
+                } else {
                     return message.getFrom() + ": " + ticker;
                 }
             }
@@ -317,7 +315,7 @@ public class EaseHelper {
     /**
      * 设置全局事件监听
      */
-    protected void setGlobalListeners(){
+    protected void setGlobalListeners() {
 //        syncGroupsListeners = new ArrayList<DataSyncListener>();
 //        syncContactsListeners = new ArrayList<DataSyncListener>();
 //        syncBlackListListeners = new ArrayList<DataSyncListener>();
@@ -331,17 +329,32 @@ public class EaseHelper {
             @Override
             public void onDisconnected(int error) {
                 if (error == EMError.USER_REMOVED) {
-                    User.logOut();
-                    EMClient.getInstance().logout(true);
-                    if (easeUI.hasForegroundActivies()) {
-//                        onCurrentAccountRemoved();
-                    }
-                }else if (error == EMError.USER_LOGIN_ANOTHER_DEVICE) {
-                    User.logOut();
-                    EMClient.getInstance().logout(true);
-                    if (easeUI.hasForegroundActivies()) {
-//                        onConnectionConflict();
-                    }
+                    LogUtils.e("您的帐号已经被移除");
+//                    QBLToast.show("您的帐号已经被移除");
+                    App.getInstance().restartAndLogin("您的帐号已经被移除", "请联系管理员");
+                } else if (error == EMError.USER_LOGIN_ANOTHER_DEVICE) {
+//                    User.logOut();
+//                    EMClient.getInstance().logout(true);
+                    LogUtils.e("帐号在其他设备登录  thread:" + Thread.currentThread().getName());
+                    App.getInstance().restartAndLogin();
+//                    QBLToast.show("帐号在其他设备登录");
+                    /*final BaseActivity activity = App.getInstance().getActivity();
+                    activity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            User.logOut();
+                            EMClient.getInstance().logout(true);
+//                            App.getInstance().restartAndLogin();
+                            activity.start(LoginActivity.class, new BaseActivity.BaseIntent() {
+                                @Override
+                                public void setIntent(Intent intent) {
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                }
+                            });
+                            App.getInstance().getOut();
+
+                        }
+                    });*/
                 }
             }
 
@@ -349,14 +362,14 @@ public class EaseHelper {
             public void onConnected() {
 
                 // in case group and contact were already synced, we supposed to notify sdk we are ready to receive the events
-                if(isGroupsSyncedWithServer && isContactsSyncedWithServer){
-                    new Thread(){
+                if (isGroupsSyncedWithServer && isContactsSyncedWithServer) {
+                    new Thread() {
                         @Override
-                        public void run(){
+                        public void run() {
                             EaseHelper.getInstance().notifyForRecevingEvents();
                         }
                     }.start();
-                }else{
+                } else {
                   /*  if(!isGroupsSyncedWithServer){
                         asyncFetchGroupsFromServer(null);
                     }
@@ -371,42 +384,22 @@ public class EaseHelper {
                 }
             }
         };
+        //注册连接监听
+        EMClient.getInstance().addConnectionListener(connectionListener);
 
 
         IntentFilter callFilter = new IntentFilter(EMClient.getInstance().callManager().getIncomingCallBroadcastAction());
-        if(callReceiver == null){
+        if (callReceiver == null) {
 //            callReceiver = new CallReceiver();
         }
 
         //注册通话广播接收者
         appContext.registerReceiver(callReceiver, callFilter);
-        //注册连接监听
-        EMClient.getInstance().addConnectionListener(connectionListener);
         //注册群组和联系人监听
 //        registerGroupAndContactListener();
         //注册消息事件监听
         registerEventListener();
 
-    }
-
-    /**
-     * 账号在别的设备登录
-     */
-    protected void onConnectionConflict(){
-        Intent intent = new Intent(appContext, ConversationListActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.putExtra(Constant.ACCOUNT_CONFLICT, true);
-        appContext.startActivity(intent);
-    }
-
-    /**
-     * 账号被移除
-     */
-    protected void onCurrentAccountRemoved(){
-        Intent intent = new Intent(appContext, ConversationListActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.putExtra(Constant.ACCOUNT_REMOVED, true);
-        appContext.startActivity(intent);
     }
 
    /* private EaseUser getUserInfo(String username){
@@ -423,6 +416,7 @@ public class EaseHelper {
         }
         return user;
     }*/
+
     /**
      * 全局事件监听
      * 因为可能会有UI页面先处理到这个消息，所以一般如果UI页面已经处理，这里就不需要再次处理
@@ -464,14 +458,14 @@ public class EaseHelper {
 
                     //获取扩展属性 此处省略
                     //message.getStringAttribute("");
-                    EMLog.d(TAG, String.format("透传消息：action:%s,message:%s", action,message.toString()));
+                    EMLog.d(TAG, String.format("透传消息：action:%s,message:%s", action, message.toString()));
                     final String str = appContext.getString(com.hyphenate.easeui.R.string.receive_the_passthrough);
 
                     final String CMD_TOAST_BROADCAST = "hyphenate.demo.cmd.toast";
                     IntentFilter cmdFilter = new IntentFilter(CMD_TOAST_BROADCAST);
 
-                    if(broadCastReceiver == null){
-                        broadCastReceiver = new BroadcastReceiver(){
+                    if (broadCastReceiver == null) {
+                        broadCastReceiver = new BroadcastReceiver() {
 
                             @Override
                             public void onReceive(Context context, Intent intent) {
@@ -481,11 +475,11 @@ public class EaseHelper {
                         };
 
                         //注册广播接收者
-                        appContext.registerReceiver(broadCastReceiver,cmdFilter);
+                        appContext.registerReceiver(broadCastReceiver, cmdFilter);
                     }
 
                     Intent broadcastIntent = new Intent(CMD_TOAST_BROADCAST);
-                    broadcastIntent.putExtra("cmd_value", str+action);
+                    broadcastIntent.putExtra("cmd_value", str + action);
                     appContext.sendBroadcast(broadcastIntent, null);
                 }
             }
@@ -523,7 +517,7 @@ public class EaseHelper {
      * @param callback
      *            callback
      */
-    public void logout(boolean unbindDeviceToken, final EMCallBack callback, final Activity activity) {
+   /* public void logout(boolean unbindDeviceToken, final EMCallBack callback, final Activity activity) {
         endCall();
         Log.d(TAG, "logout: " + unbindDeviceToken);
         EMClient.getInstance().logout(unbindDeviceToken, new EMCallBack() {
@@ -554,12 +548,14 @@ public class EaseHelper {
             }
         });
     }
+*/
 
     /**
      * 获取消息通知类
+     *
      * @return
      */
-    public EaseNotifier getNotifier(){
+    public EaseNotifier getNotifier() {
         return easeUI.getNotifier();
     }
 
@@ -569,10 +565,9 @@ public class EaseHelper {
 
     /**
      * 设置好友user list到内存中
-     *
      */
     public void setContactList(Map<String, EaseUser> aContactList) {
-        if(aContactList == null){
+        if (aContactList == null) {
             if (contactList != null) {
                 contactList.clear();
             }
@@ -585,9 +580,20 @@ public class EaseHelper {
     /**
      * 保存单个user
      */
-    public void saveContact(EaseUser user){
+    public void saveContact(EaseUser user) {
         contactList.put(user.getUsername(), user);
 //        model.saveContact(user);
+    }
+
+    public String getUserAttributie() {
+        JSONObject json = new JSONObject();
+        try {
+            json.put("avatar", User.getHeadUrl());
+            json.put("nickname", User.getNickname());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return json.toString();
     }
 
     /**
@@ -601,7 +607,7 @@ public class EaseHelper {
 //        }
 
         // return a empty non-null object to avoid app crash
-        if(contactList == null){
+        if (contactList == null) {
             return new Hashtable<String, EaseUser>();
         }
 
@@ -610,9 +616,10 @@ public class EaseHelper {
 
     /**
      * 设置当前用户的环信id
+     *
      * @param username
      */
-    public void setCurrentUserName(String username){
+    public void setCurrentUserName(String username) {
         this.username = username;
 //        model.setCurrentUserName(username);
     }
@@ -620,8 +627,8 @@ public class EaseHelper {
     /**
      * 获取当前用户的环信id
      */
-    public String getCurrentUsernName(){
-        if(username == null){
+    public String getCurrentUsernName() {
+        if (username == null) {
 //            username = model.getCurrentUsernName();
         }
         return username;
@@ -640,7 +647,6 @@ public class EaseHelper {
 
     /**
      * update user list to cach And db
-     *
      */
     public void updateContactList(List<EaseUser> contactInfoList) {
         for (EaseUser u : contactInfoList) {
@@ -666,15 +672,15 @@ public class EaseHelper {
         }
     }
 
-    public synchronized void notifyForRecevingEvents(){
-        if(alreadyNotified){
+    public synchronized void notifyForRecevingEvents() {
+        if (alreadyNotified) {
             return;
         }
         // 通知sdk，UI 已经初始化完毕，注册了相应的receiver和listener, 可以接受broadcast了
         alreadyNotified = true;
     }
 
-    synchronized void reset(Activity activity){
+   /* synchronized void reset(Activity activity){
         isSyncingGroupsWithServer = false;
         isSyncingContactsWithServer = false;
         isSyncingBlackListWithServer = false;
@@ -691,8 +697,9 @@ public class EaseHelper {
 //        getUserProfileManager().reset();
 //       EaseDBManager.getInstance().closeDB();
         User.logOut();
-        App.getInstance().restart(activity);
-    }
+//        App.getInstance().restartAndLogin();
+//        App.getInstance().restart(activity);
+    }*/
 
     public void pushActivity(Activity activity) {
         easeUI.pushActivity(activity);

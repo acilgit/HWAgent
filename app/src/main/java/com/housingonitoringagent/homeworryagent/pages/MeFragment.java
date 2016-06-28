@@ -7,8 +7,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -16,10 +14,9 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.housingonitoringagent.homeworryagent.R;
 import com.housingonitoringagent.homeworryagent.User;
 import com.housingonitoringagent.homeworryagent.activity.OrderListActivity;
-import com.housingonitoringagent.homeworryagent.activity.OutletActivity;
 import com.housingonitoringagent.homeworryagent.activity.SecurityActivity;
 import com.housingonitoringagent.homeworryagent.extents.BaseActivity;
-
+import com.hyphenate.chat.EMClient;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -64,12 +61,15 @@ public class MeFragment extends Fragment implements View.OnClickListener {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+//        sivHead.setOnClickListener(this);
+
         rlOrderList.setOnClickListener(this);
         rlSecurityCenter.setOnClickListener(this);
 
         sivHead.setImageURI(Uri.parse(User.getHeadUrl()));
         tvName.setText(User.getUsername());
         tvDetail.setText(User.getUserSexName());
+
     }
 
     @Override
@@ -89,6 +89,9 @@ public class MeFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.sivHead:
+                EMClient.getInstance().logout(true);
+                break;
             case R.id.rlOrderList:
 //                getThis().start(OutletActivity.class);
                 getThis().start(OrderListActivity.class);

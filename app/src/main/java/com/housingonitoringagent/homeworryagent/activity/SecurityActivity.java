@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
-import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -54,6 +53,9 @@ public class SecurityActivity extends BaseActivity implements View.OnClickListen
 //        tvSecurityLevel.setText(User.get);
         tvSafeModifyPhone.setText(User.getMobilephone());
 
+        int level = User.getSafeLevel();
+        pbSecurity.setProgress(level==0 ? 30 : (level==1 ? 60 : 100));
+        tvSecurityLevel.setText(level==0 ? "低" : (level==1 ? "中" : "高"));
 
         /* init listeners */
         rlLoginPassword.setOnClickListener(this);
@@ -72,7 +74,7 @@ public class SecurityActivity extends BaseActivity implements View.OnClickListen
             case R.id.rlSafeModifyPhone:
                 break;
             case R.id.rlPassword:
-                start(ChangePasswordActivity.class);
+                start(PasswordChangeActivity.class);
                 break;
             case R.id.btnLogout:
                 new AlertDialog.Builder(getThis()).setCancelable(true).setTitle(getString(R.string.logout))
@@ -80,13 +82,16 @@ public class SecurityActivity extends BaseActivity implements View.OnClickListen
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 User.logOut();
-                                EMClient.getInstance().logout(true);
+                                if (EMClient.getInstance().isConnected() || EMClient.getInstance().isLoggedInBefore()) {
+                                    EMClient.getInstance().logout(true);
+                                }
                                 start(LoginActivity.class, new BaseIntent() {
                                     @Override
                                     public void setIntent(Intent intent) {
                                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                     }
                                 });
+                                finish();
                             }
                         }).setNegativeButton(R.string.cancel, null)
                         .show();
@@ -102,9 +107,5 @@ public class SecurityActivity extends BaseActivity implements View.OnClickListen
         //App.getRefWatcher(this).watch(this);
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        return super.onKeyDown(keyCode, event);
 
-    }
 }

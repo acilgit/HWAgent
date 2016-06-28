@@ -5,7 +5,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -38,7 +37,7 @@ import butterknife.ButterKnife;
  * HomeWorry
  * Created by Administrator on 2016/2/24 0024.
  */
-public class ForgetPasswordActivity extends BaseActivity implements View.OnClickListener {
+public class PasswordForgetActivity extends BaseActivity implements View.OnClickListener {
     @Bind(R.id.etPhone)
     EditText etPhone;
     @Bind(R.id.btnCode)
@@ -107,7 +106,7 @@ public class ForgetPasswordActivity extends BaseActivity implements View.OnClick
             @Override
             public void onRequestVerificationCode(boolean success, String reason) {
                 dismissProgressDialog();
-                ForgetPasswordActivity.this.onGetVerificationCode(success, reason);
+                PasswordForgetActivity.this.onGetVerificationCode(success, reason);
             }
 
             @Override
@@ -124,7 +123,7 @@ public class ForgetPasswordActivity extends BaseActivity implements View.OnClick
             @Override
             public void onReceivedVerificationCode(String verificationCode) {
                 dismissProgressDialog();
-                ForgetPasswordActivity.this.onVerificationCodeReceived(verificationCode);
+                PasswordForgetActivity.this.onVerificationCodeReceived(verificationCode);
             }
         });
     }
@@ -138,8 +137,12 @@ public class ForgetPasswordActivity extends BaseActivity implements View.OnClick
         switch (v.getId()) {
             case R.id.btnCode:
                 String phone = etPhone.getText().toString();
-                if (TextUtils.isEmpty(phone)) {
+                int phoneLength = phone.length();
+                if (phoneLength < 1) {
                     QBLToast.show(R.string.text_hint_edit_phone);
+                    return ;
+                } else if (phoneLength < Const.Account.PHONE_LENGTH) {
+                    QBLToast.show(R.string.please_input_vaild_phone);
                     return;
                 }
                 mSMSHelper.getVerificationCode(phone.toString().trim());
@@ -180,7 +183,7 @@ public class ForgetPasswordActivity extends BaseActivity implements View.OnClick
                         String msg = json.getString("message");
                         switch (result) {
                             case 1:
-                                ForgetPasswordActivity.this.finish();
+                                PasswordForgetActivity.this.finish();
                                 QBLToast.show("密码找回成功");
                                 break;
                             default:

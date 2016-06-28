@@ -20,8 +20,8 @@ import com.housingonitoringagent.homeworryagent.beans.ShowHouseBean;
 import com.housingonitoringagent.homeworryagent.beans.ShowHouseBean.ContentBean.Content;
 import com.housingonitoringagent.homeworryagent.extents.BaseActivity;
 import com.housingonitoringagent.homeworryagent.utils.DateUtil;
-import com.housingonitoringagent.homeworryagent.utils.RefreshListUtil;
 import com.housingonitoringagent.homeworryagent.views.XAdapter;
+import com.housingonitoringagent.homeworryagent.views.XRefreshView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +44,7 @@ public class ShowingRecordFragment extends Fragment {
 
     private XAdapter<Content> adapter;
 
-    private RefreshListUtil<Content> refresher;
+    private XRefreshView<Content> refresher;
 
     public ShowingRecordFragment() {
 
@@ -62,6 +62,13 @@ public class ShowingRecordFragment extends Fragment {
         initDate();
         return currentView;
     }
+
+   /* @Override
+    public void onResume() {
+        super.onResume();
+        if (adapter.getItemCount() == 0) {
+        }
+    }*/
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -89,64 +96,48 @@ public class ShowingRecordFragment extends Fragment {
         adapter = new XAdapter<Content>(getThis(), new ArrayList<Content>(), R.layout.item_showing) {
             @Override
             public void creatingHolder(final CustomHolder holder, final List<Content> dataList, int viewType) {
-                /*View.OnClickListener clickListener = new View.OnClickListener() {
+                holder.getView(R.id.llMain).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        switch (v.getId()) {
-                            case R.id.llMain:
-                                final Content item = dataList.get(holder.getAdapterPosition());
-                                if (item.getPermitType() == ShowHouseBean.PERMIT_STATUE_SHOWING || item.getPermitType() == ShowHouseBean.PERMIT_STATUE_WAIT) {
-                                    getThis().start(ShowingActivity.class, new BaseActivity.BaseIntent() {
-                                        @Override
-                                        public void setIntent(Intent intent) {
-                                            intent.putExtra(getThis().getString(R.string.extra_bean), item);
-                                        }
-                                    }, BaseActivity.REQUEST_CODE_GOT_RESULT);
+                        final Content item = dataList.get(holder.getAdapterPosition());
+                        if (item.getPermitStatus() == ShowHouseBean.PERMIT_STATUE_SHOWING || item.getPermitStatus() == ShowHouseBean.PERMIT_STATUE_WAIT) {
+                            getThis().start(ShowingActivity.class, new BaseActivity.BaseIntent() {
+                                @Override
+                                public void setIntent(Intent intent) {
+                                    intent.putExtra(getThis().getString(R.string.extra_bean), item);
                                 }
-                                break;
-                            default:
-                                break;
+                            }, BaseActivity.REQUEST_CODE_GOT_RESULT);
                         }
                     }
-                };
-                holder.getView(R.id.llMain).setOnClickListener(clickListener);*/
+                });
             }
 
             @Override
             public void bindingHolder(CustomHolder holder, List<Content> dataList, int pos) {
-                Content bean = dataList.get(pos);
-                long appointmentTime = bean.getCreateTime();
-                long startTime = bean.getStartTime();
-                String unit = bean.getPermitType() == 0 ? "元" : "万";
-                holder.setText(R.id.tvState, bean.getPermitStateString())
-                        .setText(R.id.tvOrderType, bean.getPermitTypeString())
-                        .setText(R.id.tvName, bean.getApplyUserName())
-                        .setText(R.id.tvPhone, bean.getApplyUserMobilephone())
-                        .setText(R.id.tvHouseName, bean.getVillageName())
-                        .setText(R.id.tvHouseDetail, bean.getHouseShape())
-                        .setText(R.id.tvHousePrice, bean.getPrice() + unit)
-                        .setText(R.id.tvAppointmentTime, appointmentTime == 0 ? getThis().getString(R.string.wait_commit) : DateUtil.formatDateToString(appointmentTime))
-                        .setText(R.id.tvStartTime, startTime == 0 ? getThis().getString(R.string.wait_commit) : DateUtil.formatDateToString(startTime));
-                ((SimpleDraweeView) holder.getView(R.id.sivHead)).setImageURI(Uri.parse(bean.getAvatar()));
-                ((SimpleDraweeView) holder.getView(R.id.sivHouse)).setImageURI(Uri.parse(bean.getHouseCoverPicture()));
-            }
-
-            @Override
-            protected void handleItemViewClick(CustomHolder holder, final Content item) {
-                super.handleItemViewClick(holder, item);
-                if (item.getPermitType() == ShowHouseBean.PERMIT_STATUE_SHOWING || item.getPermitType() == ShowHouseBean.PERMIT_STATUE_WAIT) {
-                    getThis().start(ShowingActivity.class, new BaseActivity.BaseIntent() {
-                        @Override
-                        public void setIntent(Intent intent) {
-                            intent.putExtra(getThis().getString(R.string.extra_bean), item);
-                        }
-                    }, BaseActivity.REQUEST_CODE_GOT_RESULT);
+                try {
+                    Content bean = dataList.get(pos);
+                    long appointmentTime = bean.getCreateTime();
+                    long startTime = bean.getStartTime();
+                    String unit = bean.getPermitType() == ShowHouseBean.PERMIT_TYPE_RENT ? "元" : "万";
+                    holder.setText(R.id.tvState, bean.getPermitStateString())
+                            .setText(R.id.tvOrderType, bean.getPermitTypeString())
+                            .setText(R.id.tvName, bean.getApplyUserName())
+                            .setText(R.id.tvPhone, bean.getApplyUserMobilephone())
+                            .setText(R.id.tvHouseName, bean.getVillageName())
+                            .setText(R.id.tvHouseDetail, bean.getHouseShape())
+                            .setText(R.id.tvHousePrice, bean.getPrice() + unit)
+                            .setText(R.id.tvAppointmentTime, appointmentTime == 0 ? getThis().getString(R.string.wait_commit) : DateUtil.formatDateToString(appointmentTime))
+                            .setText(R.id.tvStartTime, startTime == 0 ? getThis().getString(R.string.wait_commit) : DateUtil.formatDateToString(startTime));
+                    ((SimpleDraweeView) holder.getView(R.id.sivHead)).setImageURI(Uri.parse(bean.getAvatar()));
+                    ((SimpleDraweeView) holder.getView(R.id.sivHouse)).setImageURI(Uri.parse(bean.getHouseCoverPicture()));
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         };
         rvMain.setAdapter(adapter);
 
-        refresher = new RefreshListUtil<>(getThis(), refreshView, true, adapter, new RefreshListUtil.IRefreshRequest<Content>() {
+        refresher = new XRefreshView<>(getThis(), refreshView, true, adapter, new XRefreshView.IRefreshRequest<Content>() {
             @Override
             public String setVolleyParamsReturnUrl(Map<String, String> params) {
                 params.put("permitType", "0");
@@ -154,7 +145,7 @@ public class ShowingRecordFragment extends Fragment {
             }
 
             @Override
-            public List<Content> handleJson(JSONObject json, RefreshListUtil.RefreshState stateForSetLastPage) {
+            public List<Content> handleJson(JSONObject json, XRefreshView.RefreshState stateForSetLastPage) {
                 ShowHouseBean mainBean = JSON.parseObject(json.toString(), ShowHouseBean.class);
                 stateForSetLastPage.setLastPage(mainBean.getContent().isLastPage());
                 return mainBean.getContent().getContent();

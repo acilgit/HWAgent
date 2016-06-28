@@ -42,7 +42,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="16dp"
                         android:layout_marginRight="8dp"
-                        fresco:placeholderImage="@color/btn_blue_normal"
+                        fresco:placeholderImage="@mipmap/holder_head"
                         fresco:placeholderImageScaleType="centerCrop" />
 
                     <TableLayout
@@ -73,7 +73,6 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:lines="1"
-                                android:text="链家网"
                                 android:textColor="@color/text_gray_dark"
                                 android:textSize="@dimen/text_size_item_big" />
 
@@ -99,7 +98,6 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="链家宝超级无知超级无知欢乐喜剧人独家冠名链家网"
                                 android:textColor="@color/text_gray_dark"
                                 android:textSize="@dimen/text_size_item_big" />
 
@@ -127,7 +125,6 @@
                                 android:layout_height="wrap_content"
                                 android:background="@color/white"
                                 android:lines="1"
-                                android:text="岳云鹏"
                                 android:textColor="@color/text_gray_dark"
                                 android:textSize="@dimen/text_size_item_big" />
 
@@ -190,7 +187,6 @@
                             android:layout_height="wrap_content"
                             android:background="@color/white"
                             android:lines="1"
-                            android:text="香树利舍"
                             android:textColor="@color/text_gray_dark"
                             android:textSize="@dimen/text_size_item_big" />
 
@@ -218,7 +214,6 @@
                             android:layout_height="wrap_content"
                             android:background="@color/white"
                             android:lines="1"
-                            android:text="2栋-1928"
                             android:textColor="@color/text_gray_dark"
                             android:textSize="@dimen/text_size_item_big" />
 
@@ -279,7 +274,7 @@
                             android:layout_height="wrap_content"
                             android:background="@color/white"
                             android:lines="1"
-                            android:text="2人"
+                            android:text="0人"
                             android:textColor="@color/text_gray_dark"
                             android:textSize="@dimen/text_size_item_big" />
 
