@@ -258,10 +258,9 @@ public class PasswordChangeActivity extends BaseActivity implements View.OnClick
                 int resultCode = json.getIntValue("resultCode");
                 String message = json.getString("message");
                 if (resultCode == 1) {
-                } else {
+                    finish();
                 }
                 QBLToast.show(message);
-                finish();
             }
         }, new Response.ErrorListener() {
             @Override

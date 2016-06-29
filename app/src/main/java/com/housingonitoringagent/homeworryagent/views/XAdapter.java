@@ -30,6 +30,7 @@ public abstract class XAdapter<T> extends RecyclerView.Adapter {
 
     /**
      * 使用单一Layout
+     *
      * @param context
      * @param dataList
      * @param layoutId
@@ -44,6 +45,7 @@ public abstract class XAdapter<T> extends RecyclerView.Adapter {
 
     /**
      * 使用Holder分类列表Layout
+     *
      * @param context
      * @param dataList
      * @param layoutIdList key: viewType  value: layoutId
@@ -60,31 +62,32 @@ public abstract class XAdapter<T> extends RecyclerView.Adapter {
         @LayoutRes int layoutId = (layoutIdList.size() == 1 ? layoutIdList.get(SINGLE_LAYOUT) : layoutIdList.get(viewType));
         View itemView = LayoutInflater.from(context).inflate(layoutId, parent, false);
 //        itemView = LayoutInflater.from(context).createView()
-        final CustomHolder holder = new CustomHolder(itemView){
+        final CustomHolder holder = new CustomHolder(itemView) {
             @Override
             protected void createHolder(final CustomHolder holder) {
                 holder.getRootView().setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    handleItemViewClick(holder, dataList.get(holder.getAdapterPosition()));
-                    if (onItemClickListener != null) {
-                        onItemClickListener.onItemClick(holder, dataList.get(holder.getAdapterPosition()));
+                    @Override
+                    public void onClick(View v) {
+                        handleItemViewClick(holder, dataList.get(holder.getAdapterPosition()));
+                        if (onItemClickListener != null) {
+                            onItemClickListener.onItemClick(holder, dataList.get(holder.getAdapterPosition()));
+                        }
                     }
-                }
-            });
+                });
 
                 if (onItemLongClickListener != null) {
-                    holder.getRootView().setOnClickListener(new View.OnClickListener() {
+                    holder.getRootView().setOnLongClickListener(new View.OnLongClickListener() {
                         @Override
-                        public void onClick(View v) {
+                        public boolean onLongClick(View v) {
                             onItemLongClickListener.onItemLongClick(holder, dataList.get(holder.getAdapterPosition()));
+                            return false;
                         }
                     });
                 }
-                 creatingHolder(holder, dataList, viewType);
+                creatingHolder(holder, dataList, viewType);
             }
         };
-        
+
 
         return holder;
     }
@@ -96,6 +99,7 @@ public abstract class XAdapter<T> extends RecyclerView.Adapter {
 
     /**
      * 创建Holder时绑定控件
+     *
      * @param holder
      * @param dataList
      * @param viewType
@@ -104,6 +108,7 @@ public abstract class XAdapter<T> extends RecyclerView.Adapter {
 
     /**
      * 在适配器中显示数据集
+     *
      * @param holder
      * @param dataList
      * @param pos
@@ -113,6 +118,7 @@ public abstract class XAdapter<T> extends RecyclerView.Adapter {
 
     /**
      * 复写此方法可以在不同的layout中显示
+     *
      * @param item
      * @return
      */
@@ -130,7 +136,7 @@ public abstract class XAdapter<T> extends RecyclerView.Adapter {
     }
 
     public T getItem(int pos) {
-        if (dataList.size() >pos && pos>0) {
+        if (dataList.size() > pos && pos > 0) {
             return dataList.get(pos);
         }
         return null;
@@ -158,17 +164,17 @@ public abstract class XAdapter<T> extends RecyclerView.Adapter {
         notifyDataSetChanged();
     }
 
-    public void removeItem( int pos) {
+    public void removeItem(int pos) {
         dataList.remove(pos);
         notifyItemRemoved(pos);
     }
 
-    public void addItem( int pos, T item) {
+    public void addItem(int pos, T item) {
         dataList.add(pos, item);
         notifyItemInserted(pos);
     }
 
-    public void updateItem( int pos, T item) {
+    public void updateItem(int pos, T item) {
         dataList.set(pos, item);
         notifyItemChanged(pos);
     }
@@ -187,18 +193,20 @@ public abstract class XAdapter<T> extends RecyclerView.Adapter {
             return type;
         }
     }
+
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
-        if(this.onItemClickListener!= null) this.onItemClickListener = null;
+        if (this.onItemClickListener != null) this.onItemClickListener = null;
         this.onItemClickListener = onItemClickListener;
     }
 
     public void setOnItemLongClickListener(OnItemLongClickListener onItemLongClickListener) {
-        if(this.onItemLongClickListener!= null) this.onItemLongClickListener = null;
+        if (this.onItemLongClickListener != null) this.onItemLongClickListener = null;
         this.onItemLongClickListener = onItemLongClickListener;
     }
 
     /**
      * 重写此事件，用于处理holder rootView点击事件，处理完毕后再处理onItemClickListener()
+     *
      * @param holder
      * @param item
      */
@@ -208,6 +216,7 @@ public abstract class XAdapter<T> extends RecyclerView.Adapter {
 
     /**
      * 过滤数据
+     *
      * @param mainList
      * @return
      */
@@ -231,7 +240,7 @@ public abstract class XAdapter<T> extends RecyclerView.Adapter {
         void onItemLongClick(CustomHolder holder, T item);
     }
 
-    public  static abstract class CustomHolder extends RecyclerView.ViewHolder {
+    public static abstract class CustomHolder extends RecyclerView.ViewHolder {
 
         private SparseArray<View> viewList;
         private View itemView;

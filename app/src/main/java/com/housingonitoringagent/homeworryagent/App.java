@@ -41,13 +41,14 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        instance = this;
-
-        // 初始化环信SDK
-        initEaseMob();
+        if (instance == null) {
+            instance = this;
+            // 初始化环信SDK
+            initEaseMob();
 //        App.getInstance().getPackageName();
+            Log.e("qqq", " create App " + 70);
+        }
 
-        Log.e("qqq", " create App " + 70);
     }
 
   /*  @Override
@@ -150,6 +151,7 @@ public class App extends Application {
 
     /**
      * 结束所有Activity
+     * DialogActivity不在管理范围内
      */
     public void finishAllActivities() {
         // 发送广播，接收到广播的Activity将会执行finish()方法
@@ -226,7 +228,9 @@ public class App extends Application {
 
     public void finishAllActivity() {
         for (Activity activity : activities) {
-            activity.finish();
+            if (activity != null) {
+                activity.finish();
+            }
         }
     }
 

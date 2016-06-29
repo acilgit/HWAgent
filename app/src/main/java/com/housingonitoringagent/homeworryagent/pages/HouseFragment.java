@@ -124,21 +124,20 @@ public class HouseFragment extends Fragment {
             @Override
             public void bindingHolder(CustomHolder holder, List<Content> dataList, int pos) {
                 Content bean = dataList.get(pos);
-                String unit = fragmentType == TYPE_BUY ? "万" : "元";
+                String unit = fragmentType == TYPE_BUY ? "万" : "元/月";
                 holder.setText(R.id.tvHouseName, bean.getTitle())
                         .setText(R.id.tvHouseAddress, bean.getAddress())
                         .setText(R.id.tvHouseDetail, bean.getHouseShape() + "　面积：" + bean.getHouseSize())
                         .setText(R.id.tvHousePrice, StringUtil.formatNumber(bean.getPrice(), "#,##0.##") + unit);
                 ((SimpleDraweeView) holder.getView(R.id.sivHouse)).setImageURI(Uri.parse(bean.getCoverPicture()));
                 TagAdapter adapter = new TagAdapter();
-                bean.setTags("嘎嘎在右脚有人,胑主训斥是在要人工有霜叶,右脑满肠肥,可有中");
-                if (!TextUtils.isEmpty(bean.getTags())) {
+                ((FlowTagLayout) holder.getView(R.id.ftlTags)).setAdapter(adapter);
+                if (bean.getTags()!=null && !TextUtils.isEmpty(bean.getTags())) {
                     String[] labels = bean.getTags().split(",");
                     if (labels.length > 0) {
                         adapter.setDataList(Arrays.asList(labels));
                     }
                 }
-                ((FlowTagLayout) holder.getView(R.id.ftlTags)).setAdapter(adapter);
             }
 
             @Override

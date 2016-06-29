@@ -17,8 +17,8 @@
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/sivHouse"
-            android:layout_width="@dimen/item_photo_width"
-            android:layout_height="@dimen/item_photo_height"
+            android:layout_width="@dimen/item_house_photo_width"
+            android:layout_height="@dimen/item_house_photo_height"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="8dp"
             fresco:placeholderImage="@mipmap/holder_pic"
@@ -77,7 +77,7 @@
             android:layout_below="@id/tvHouseDetail"
             android:layout_toRightOf="@+id/sivHouse"
             android:layout_width="match_parent"
-            android:layout_height="24dp"/>
+            android:layout_height="wrap_content"/>
 
         <ImageView
             android:src="@mipmap/icon_location"
@@ -115,6 +115,7 @@
             android:layout_marginTop="-4dp"
             android:layout_width="72dp"
             android:layout_height="@dimen/btn_height_small" />
+
     </RelativeLayout>
 
 

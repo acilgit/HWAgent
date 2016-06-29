@@ -54,6 +54,17 @@ public class Const {
 
 
         /*检查sessionId是否过期*/
+        String CHECK_VERSION = SERVER + "/append/versions/latest";  // 提交参数：	Integer type; //1用户端  2经纪人端
+      /*  返回参数	String id;	//id
+        Integer platformType; // 平台类型
+        Integer versionType; // 版本类型
+        String versionCode; // 版本号
+        Integer interiorCode; // 内部版本号
+        Boolean isCompel; // 是否强制升级
+        String dlUrl; // 下载地址
+        String upgradePoromet; // 更新提示*/
+
+        /*检查sessionId是否过期*/
         String CHECKSESSIONID = SERVER + "/agent_app/checksessionid";
         /*用户协议*/
         String USERREGISTERDEAL = SERVER + "/frontend/userRegisterDeal";

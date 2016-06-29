@@ -55,7 +55,8 @@ public class EaseChatRowAdvertisement extends EaseChatRow {
             JSONObject parse = JSON.parseObject(txtBody.getMessage());
             msg = JSON.toJavaObject(parse, CustomerMsgBean.class);
             mSample.setImageURI(Uri.parse(msg.getHouseSellPicture()));
-            mTitle.setText(msg.getTitle()+ "（"+ (msg.getType().equals("1") ? "租" : "售") + "）");
+//            mTitle.setText(msg.getTitle()+ "（"+ (msg.getType().equals("1") ? "租" : "售") + "）");
+            mTitle.setText(msg.getTitle());
             mShape.setText(msg.getHouseShape());
             mPrice.setText(StringUtil.formatNumber(Double.parseDouble(msg.getPrice()), "#,##0.##") + (msg.getType().equals("1") ? "元" : "万"));
         } catch (Exception e) {

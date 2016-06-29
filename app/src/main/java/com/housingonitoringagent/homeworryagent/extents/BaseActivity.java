@@ -36,7 +36,6 @@ public class BaseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         thisActivity = this;
-
 //        if (!(thisActivity instanceof LoginActivity)) {
             registerFinishReceiver();
 //        }

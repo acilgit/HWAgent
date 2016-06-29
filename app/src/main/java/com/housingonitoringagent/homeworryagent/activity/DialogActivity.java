@@ -11,6 +11,7 @@ import com.housingonitoringagent.homeworryagent.R;
 
 /**
  * Created by Administrator on 2016/2/22 0022.
+ * 这个Activity用于重新加载应用到登录页面，不在Activity管理内。
  */
 public class DialogActivity extends AppCompatActivity {
 
