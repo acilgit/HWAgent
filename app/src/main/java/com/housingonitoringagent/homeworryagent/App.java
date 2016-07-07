@@ -12,7 +12,7 @@ import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
-import com.housingonitoringagent.homeworryagent.activity.DialogActivity;
+import com.housingonitoringagent.homeworryagent.activity.ReLoginActivity;
 import com.housingonitoringagent.homeworryagent.extents.BaseActivity;
 import com.housingonitoringagent.homeworryagent.utils.LogUtils;
 import com.housingonitoringagent.homeworryagent.utils.easeui.EaseHelper;
@@ -171,7 +171,7 @@ public class App extends Application {
                     User.logOut();
                     EMClient.getInstance().logout(true);
                     finishAllActivities();
-                    Intent intent = new Intent(activity, DialogActivity.class);
+                    Intent intent = new Intent(activity, ReLoginActivity.class);
                     intent.putExtra(getInstance().getString(R.string.extra_title), title);
                     intent.putExtra(getInstance().getString(R.string.extra_message), message);
                     activity.startActivity(intent);

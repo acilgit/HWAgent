@@ -454,6 +454,14 @@
     <string name="no_result">对不起，没有搜索到相关数据！</string>
     <string name="text_no_surrounding_facilityies">该小区未设置周边信息</string>
     <string name="ease_mob_password">123456</string>
+    <string name="text_latest_version">已经是最新版本了</string>
+    <string name="text_update_tips">更新提示</string>
+    <string name="extra_show_dialog">showDialog</string>
+    <string name="text_login_orther_phone">帐号在其它设备登录</string>
+    <string name="text_local_version">当前版本号</string>
+    <string name="text_low">低</string>
+    <string name="text_middle">中</string>
+    <string name="text_high">高</string>
 
 </resources>
 

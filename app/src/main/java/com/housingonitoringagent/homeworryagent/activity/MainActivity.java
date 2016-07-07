@@ -16,14 +16,28 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.housingonitoringagent.homeworryagent.App;
+import com.housingonitoringagent.homeworryagent.Const;
 import com.housingonitoringagent.homeworryagent.R;
 import com.housingonitoringagent.homeworryagent.User;
+import com.housingonitoringagent.homeworryagent.beans.UpdaterBean;
 import com.housingonitoringagent.homeworryagent.extents.BaseActivity;
 import com.housingonitoringagent.homeworryagent.pages.ConversationListFragment;
 import com.housingonitoringagent.homeworryagent.pages.MeFragment;
 import com.housingonitoringagent.homeworryagent.pages.ShowingRecordFragment;
+import com.housingonitoringagent.homeworryagent.utils.DateUtil;
+import com.housingonitoringagent.homeworryagent.utils.UIUtils;
+import com.housingonitoringagent.homeworryagent.utils.Update;
 import com.housingonitoringagent.homeworryagent.utils.easeui.EaseHelper;
+import com.housingonitoringagent.homeworryagent.utils.net.VolleyResponseListener;
+import com.housingonitoringagent.homeworryagent.utils.net.VolleyStringRequest;
 import com.housingonitoringagent.homeworryagent.utils.uikit.QBLToast;
 import com.hyphenate.EMConversationListener;
 import com.hyphenate.EMMessageListener;
@@ -34,6 +48,7 @@ import com.hyphenate.easeui.EaseConstant;
 import com.hyphenate.easeui.ui.EaseConversationListFragment;
 
 import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -231,13 +246,45 @@ public class MainActivity extends BaseActivity {
     }
 
     private void init() {
-
+        updater();
         //聊天人或群id
 //        toChatUsername = getIntent().getExtras().getString("userId");
 
-
     }
 
+    private void updater() {
+        StringRequest request = new VolleyStringRequest(Request.Method.POST, Const.serviceMethod.LATEST, new VolleyResponseListener() {
+            @Override
+            public void handleJson(JSONObject json) {
+                super.handleJson(json);
+                int result = json.getIntValue("resultCode");
+                switch (result) {
+                    case 1:
+                        UpdaterBean bean = JSON.parseObject(json.toJSONString(), UpdaterBean.class);
+                        int version = bean.getContent().getInteriorCode();
+                        int version2 = UIUtils.getVersionCode(MainActivity.this);
+                        if (version > version2) {
+                            new Update(getString(R.string.text_update_tips), DateUtil.getStrTime(bean.getContent().getUpdateTime()), bean.getContent().getUpgradePoromet(), bean.getContent().getDlUrl(),MainActivity.this);
+                        } else {
+//                            QBLToast.show(getString(R.string.text_latest_version));
+                        }
+                        break;
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> params = super.getParams();
+                params.put("type","2"); // 2为经纪人端
+                return params;
+            }
+        };
+        getVolleyRequestQueue().add(request);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

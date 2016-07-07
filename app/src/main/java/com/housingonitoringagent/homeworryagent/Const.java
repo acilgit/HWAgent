@@ -83,6 +83,8 @@ public class Const {
         String USER_SUPERVISE_DEAL = SERVER + "/frontend/userSuperviseDeal";
         /*关于我们*/
         String ABOUT_US = SERVER + "/frontend/aboutus";
+        /*版本升级*/
+        String LATEST = SERVER + "/append/versions/latest";
 
     }
 

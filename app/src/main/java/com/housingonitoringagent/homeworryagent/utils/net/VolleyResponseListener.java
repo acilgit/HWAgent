@@ -7,6 +7,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.android.volley.Response;
 import com.housingonitoringagent.homeworryagent.App;
+import com.housingonitoringagent.homeworryagent.R;
 import com.housingonitoringagent.homeworryagent.utils.uikit.QBLToast;
 
 public abstract class VolleyResponseListener implements Response.Listener<String> {
@@ -43,7 +44,7 @@ public abstract class VolleyResponseListener implements Response.Listener<String
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     }
                 });*/
-                App.getInstance().restartAndLogin();
+                App.getInstance().restartAndLogin(App.getInstance().getString(R.string.text_relogin), App.getInstance().getString(R.string.app_name) + App.getInstance().getString(R.string.text_login_orther_phone));
 
                 return;
             }

@@ -3,6 +3,8 @@ package com.housingonitoringagent.homeworryagent.utils;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
@@ -22,13 +24,16 @@ import com.housingonitoringagent.homeworryagent.R;
  */
 public class UIUtils {
 
-    private UIUtils() { throw new UnsupportedOperationException("cannot be instantiated"); }
+    private UIUtils() {
+        throw new UnsupportedOperationException("cannot be instantiated");
+    }
 
 
     /**
      * 返回当前屏幕是否为竖屏。
+     *
      * @param context
-     * @return 当且仅当当前屏幕为竖屏时返回true,否则返回false。
+     * @return 当且仅当当前屏幕为竖屏时返回true, 否则返回false。
      */
     public static boolean isScreenOrientationPortrait(Context context) {
         return context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT;
@@ -37,18 +42,19 @@ public class UIUtils {
 
     /**
      * 点击小图显示大图
+     *
      * @param context
-     * @param view 需放大的图片
-     * @param style dialog样式
+     * @param view    需放大的图片
+     * @param style   dialog样式
      */
-    public static void showBigImg(final Context context,final ImageView view,final int style) {
+    public static void showBigImg(final Context context, final ImageView view, final int style) {
         view.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View arg0) {
 
-                final Dialog dialog = new Dialog(context,style);
-                ImageView imgView = getView(context,view);
+                final Dialog dialog = new Dialog(context, style);
+                ImageView imgView = getView(context, view);
                 dialog.setContentView(imgView);
                 dialog.show();
 
@@ -66,7 +72,7 @@ public class UIUtils {
      * 显示的大图
      *
      * @param context
-     * @param view 点击的图片
+     * @param view    点击的图片
      * @return 大图控件
      */
     private static ImageView getView(Context context, ImageView view) {
@@ -80,6 +86,7 @@ public class UIUtils {
 
         return imgView;
     }
+
     /**
      * 根据手机的分辨率从 dp 的单位 转成为 px(像素)
      */
@@ -189,18 +196,43 @@ public class UIUtils {
     }
 
 
-    public static int getWindowHeight(Activity activity){
+    public static int getWindowHeight(Activity activity) {
         WindowManager wm = activity.getWindowManager();
         return wm.getDefaultDisplay().getHeight();
     }
-    public static int getWindowWidth(Activity activity){
+
+    public static int getWindowWidth(Activity activity) {
         WindowManager wm = activity.getWindowManager();
         return wm.getDefaultDisplay().getWidth();
     }
 
 
     public static void underLine(TextView textView) {
-        textView.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG ); //下划线
+        textView.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG); //下划线
         textView.getPaint().setAntiAlias(true);//抗锯齿
+    }
+
+    /*获取版本号(内部识别号)*/
+    public static int getVersionCode(Context context) {
+        try {
+            PackageInfo pi = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+            return pi.versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    /*获取版本*/
+    public static String getVersionName(Context context) {
+        try {
+            PackageInfo pi = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+            return pi.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return "";
+        }
     }
 }

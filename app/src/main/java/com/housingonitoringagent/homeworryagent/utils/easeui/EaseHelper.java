@@ -9,6 +9,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.housingonitoringagent.homeworryagent.App;
+import com.housingonitoringagent.homeworryagent.R;
 import com.housingonitoringagent.homeworryagent.User;
 import com.housingonitoringagent.homeworryagent.activity.ChatActivity;
 import com.housingonitoringagent.homeworryagent.utils.LogUtils;
@@ -336,7 +337,7 @@ public class EaseHelper {
 //                    User.logOut();
 //                    EMClient.getInstance().logout(true);
                     LogUtils.e("帐号在其他设备登录  thread:" + Thread.currentThread().getName());
-                    App.getInstance().restartAndLogin();
+                    App.getInstance().restartAndLogin(App.getInstance().getString(R.string.text_relogin), App.getInstance().getString(R.string.app_name) + appContext.getString(R.string.text_login_orther_phone));
 //                    QBLToast.show("帐号在其他设备登录");
                     /*final BaseActivity activity = App.getInstance().getActivity();
                     activity.runOnUiThread(new Runnable() {
