@@ -345,12 +345,13 @@
 
             <Button
                 android:id="@+id/btnDetail"
-                android:layout_width="100dp"
+                android:layout_width="wrap_content"
                 android:layout_height="@dimen/btn_height_big"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
                 android:theme="@style/btn_white_lite"
                 android:text="@string/check_detail"
+                android:maxLines="1"
                 android:textColor="@color/btn_blue_normal" />
         </com.andexert.library.RippleView>
 
@@ -361,12 +362,13 @@
 
             <Button
                 android:id="@+id/btnDeposit"
-                android:layout_width="100dp"
+                android:layout_width="wrap_content"
                 android:layout_height="@dimen/btn_height_big"
                 android:layout_marginLeft="8dp"
                 android:paddingRight="20dp"
                 android:paddingLeft="20dp"
                 android:text="@string/apply_payment"
+                android:maxLines="1"
                 android:textColor="@color/white"
                 android:theme="@style/btn_orange" />
         </com.andexert.library.RippleView>

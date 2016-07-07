@@ -149,14 +149,7 @@ public class App extends Application {
         return instance;
     }
 
-    /**
-     * 结束所有Activity
-     * DialogActivity不在管理范围内
-     */
-    public void finishAllActivities() {
-        // 发送广播，接收到广播的Activity将会执行finish()方法
-        LocalBroadcastManager.getInstance(getInstance()).sendBroadcast(new Intent(BaseActivity.ACTION_FINISH_ACTIVITY));
-    }
+
 
     public void restartAndLogin() {
         restartAndLogin("", "");
@@ -187,14 +180,6 @@ public class App extends Application {
         }
     }
 
-    public void getOut() {
-        // 销毁线程池
-//        ThreadPool.restart();
-        // 结束所有Activity
-        finishAllActivities();
-//        finishAllActivity();
-    }
-
    /* public void restart(Activity activity) {
         // 销毁线程池
 //        ThreadPool.restart();
@@ -207,13 +192,29 @@ public class App extends Application {
         this.startActivity(intent);
     }*/
 
+   public void getOut() {
+       // 销毁线程池
+//        ThreadPool.restart();
+       // 结束所有Activity
+       finishAllActivities();
+//        finishAllActivity();
+   }
+
+    /**
+     * 结束所有Activity
+     * DialogActivity不在管理范围内
+     */
+    public void finishAllActivities() {
+        // 发送广播，接收到广播的Activity将会执行finish()方法
+        LocalBroadcastManager.getInstance(getInstance()).sendBroadcast(new Intent(BaseActivity.ACTION_FINISH_ACTIVITY));
+    }
     public void addActivity(Activity activity) {
         activities.add(activity);
         LogUtils.e("当前存在" + activities.size() + "个Activity");
     }
 
     public void removeActivity(Activity activity) {
-        if (activity != null) {
+        if (activities.contains(activity)) {
             activities.remove(activity);
         }
         LogUtils.e("当前存在" + activities.size() + "个Activity");
@@ -226,19 +227,19 @@ public class App extends Application {
         }*/
     }
 
+    public BaseActivity getActivity() {
+        for (Activity activity : activities) {
+            return (BaseActivity) activity;
+        }
+        return null;
+    }
+
     public void finishAllActivity() {
         for (Activity activity : activities) {
             if (activity != null) {
                 activity.finish();
             }
         }
-    }
-
-    public BaseActivity getActivity() {
-        for (Activity activity : activities) {
-            return (BaseActivity) activity;
-        }
-        return null;
     }
 
     @Override

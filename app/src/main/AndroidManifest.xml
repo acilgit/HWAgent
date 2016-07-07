@@ -54,7 +54,7 @@
             android:screenOrientation="portrait"
             android:launchMode="singleTop"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize|stateHidden" />
 
         <activity
             android:name=".activity.DialogActivity"
@@ -83,6 +83,41 @@
 
         <activity
             android:name=".activity.ConfirmGiroActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity
+            android:name=".activity.CommentActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity
+            android:name=".activity.EstateAnnouncementInfoActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity
+            android:name=".activity.EstateAnnouncementListActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity
+            android:name=".activity.HousingAssessmentActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity
+            android:name=".activity.SurroundingFacilitiesActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize"
@@ -150,7 +185,8 @@
 
         <!-- 设置环信应用的 appkey 换成自己的 -->
         <meta-data
-            android:name="EASEMOB_APPKEY" android:value="308704471#zhijia51" />
+            android:name="EASEMOB_APPKEY" android:value="dongruan520#zhijia51" />
+            <!--android:name="EASEMOB_APPKEY" android:value="308704471#zhijia51" />-->
             <!--android:value="dongruan520#zhijia51" />-->
 
         <meta-data

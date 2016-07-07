@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <RelativeLayout
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:background="#C1C1C1"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <EditText
+            style="@style/MultiLineEdit"
+            android:id="@+id/edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="3"
+            android:hint="@string/comment_input_hint"
+            android:background="@drawable/rounded_normal"
+            android:textColorHint="@color/text_gray"
+            android:textSize="@dimen/text_size_subhead_material"
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@+id/send"/>
+
+        <TextView
+            android:id="@+id/send"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="14dp"
+            android:paddingRight="14dp"
+            android:gravity="center"
+            android:background="@drawable/selector_rounded"
+            android:text="@string/send"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="10dp"
+            android:layout_alignTop="@+id/edit"
+            android:layout_alignBottom="@+id/edit" />
+    </RelativeLayout>

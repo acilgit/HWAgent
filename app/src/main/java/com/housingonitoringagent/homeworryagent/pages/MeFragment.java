@@ -68,7 +68,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
 
         sivHead.setImageURI(Uri.parse(User.getHeadUrl()));
         tvName.setText(User.getUsername());
-        tvDetail.setText(User.getUserSexName());
+        tvDetail.setText(User.getIntermediaryStoreName());
 
     }
 

@@ -41,7 +41,6 @@ public class DialogActivity extends AppCompatActivity {
                 .show();
     }
 
-
     @Override
     protected void onDestroy() {
         super.onDestroy();

@@ -326,7 +326,7 @@ public class User {
         return storage.getString(PreferencesKey.User.NICKNAME, null);
     }
 
-    public static String getEaseModId() {
+    public static String getEaseMobId() {
         return storage.getString("huanName", null);
     }
 

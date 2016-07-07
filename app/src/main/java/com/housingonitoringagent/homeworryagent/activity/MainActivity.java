@@ -316,33 +316,6 @@ public class MainActivity extends BaseActivity {
 
         @Override
         public CharSequence getPageTitle(int position) {
-
-        /*    String title ="";
-            Drawable image;
-            SpannableString sb = new SpannableString(title + "   ");
-            switch (position) {
-                case 0:
-                    title = "消息";
-                    image = getResources().getDrawable(currentPage==0? R.mipmap.icon_msg_1 : R.mipmap.icon_msg_0);
-                    break;
-                case 1:
-                    title = "看房";
-                    image = getResources().getDrawable(currentPage==1? R.mipmap.icon_showing_1 : R.mipmap.icon_showing_0);
-                    break;
-                case 2:
-                    title = "我的";
-                    image = getResources().getDrawable(currentPage==2? R.mipmap.icon_me_1 : R.mipmap.icon_me_0);
-                    break;
-                default:
-                    image = getResources().getDrawable(R.mipmap.icon_contact_0);
-                    break;
-            }
-
-            image.setBounds(0, 0, image.getIntrinsicWidth(), image.getIntrinsicHeight());
-            // Replace blank spaces with image icon
-            ImageSpan imageSpan = new ImageSpan(image, ImageSpan.ALIGN_BOTTOM);
-            sb.setSpan(imageSpan, title.length(), title.length() + 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-*/
             return "";
         }
     }
@@ -364,7 +337,11 @@ public class MainActivity extends BaseActivity {
     protected void onStart() {
         super.onStart();
         if (!EMClient.getInstance().isConnected() && !EMClient.getInstance().isLoggedInBefore()) {
-            App.getInstance().EaseLogIn(User.getEaseModId(), User.getEaseModId());
+            if (User.getEaseMobId() == null || User.getEaseMobId().isEmpty()) {
+               QBLToast.show("即时通讯登录信息错误，请联系管理员开通此功能后重新登录");
+            } else {
+                App.getInstance().EaseLogIn(User.getEaseMobId(), getString(R.string.ease_mob_password));
+            }
         }
         EaseHelper.getInstance().pushActivity(this);
         EMClient.getInstance().chatManager().addMessageListener(messageListener);

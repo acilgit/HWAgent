@@ -448,6 +448,12 @@
     <string name="text_empty_code">请输入验证码</string>
     <string name="text_empty_password">密码不能为空</string>
     <string name="text_tap_one_more_exit">再按一次退出程序</string>
+    <string name="extra_longitude">longitude</string>
+    <string name="extra_latitude">latitude</string>
+    <string name="gd_key">4cba8a92d8ce106ea574158ca854c557</string>
+    <string name="no_result">对不起，没有搜索到相关数据！</string>
+    <string name="text_no_surrounding_facilityies">该小区未设置周边信息</string>
+    <string name="ease_mob_password">123456</string>
 
 </resources>
 

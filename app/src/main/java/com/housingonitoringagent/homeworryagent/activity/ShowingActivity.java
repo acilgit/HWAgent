@@ -98,6 +98,7 @@ public class ShowingActivity extends BaseActivity implements View.OnClickListene
                 finish();
                 break;
         }
+
         sivHead.setImageURI(Uri.parse(User.getHeadUrl()));
         tvName.setText(User.getNickname());
         tvCompany.setText(bean.getCompanyName());

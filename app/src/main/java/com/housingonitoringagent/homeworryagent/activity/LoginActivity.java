@@ -132,8 +132,6 @@ public class LoginActivity extends BaseActivity {
                         String  msg = json.getString("message");
                         switch (result){
                             case 1:
-//                                JSONObject userJSON = json.getJSONObject("content");
-
                                 UserBean userInfo = null;
                                 try {
                                     userInfo = JSON.toJavaObject(json, UserBean.class);
@@ -145,7 +143,6 @@ public class LoginActivity extends BaseActivity {
                                 userInfo.getContent().setMobilephone(username);
 //                                userInfo.setSessionId(userInfo.getSessionId("sessionId"));
                                 onLogin(userInfo);
-                                App.getInstance().EaseLogIn(User.getEaseModId(), User.getEaseModId());
                                 break;
                             default:
                                 QBLToast.show(msg);
@@ -186,10 +183,17 @@ public class LoginActivity extends BaseActivity {
         // 设置登录态
         User.logIn(provider, loginResp);
 
-        QBLToast.show(R.string.sign_in_success);
 
         hideSoftInput();
 
+        if (User.getEaseMobId() == null || User.getEaseMobId().isEmpty() || User.getEaseMobId() == null || User.getEaseMobId().isEmpty()) {
+            App.getInstance().restartAndLogin("即时通讯登录信息错误", "请联系管理员开通此功能后重新登录");
+            finish();
+            return;
+        } else {
+            QBLToast.show(R.string.sign_in_success);
+            App.getInstance().EaseLogIn(User.getEaseMobId(), getString(R.string.ease_mob_password));
+        }
         LoginActivity.finishInstance();
         if (!getIntent().getBooleanExtra("FromVisitor", false)) {
             start(MainActivity.class);

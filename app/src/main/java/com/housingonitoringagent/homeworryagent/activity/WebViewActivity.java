@@ -1,5 +1,6 @@
 package com.housingonitoringagent.homeworryagent.activity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -14,6 +15,7 @@ import android.webkit.WebViewClient;
 import com.housingonitoringagent.homeworryagent.R;
 import com.housingonitoringagent.homeworryagent.extents.BaseActivity;
 import com.housingonitoringagent.homeworryagent.utils.LogUtils;
+import com.housingonitoringagent.homeworryagent.utils.uikit.QBLToast;
 import com.housingonitoringagent.homeworryagent.views.AdvancedWebView;
 
 import butterknife.Bind;
@@ -25,7 +27,7 @@ import butterknife.ButterKnife;
 public class WebViewActivity extends BaseActivity implements AdvancedWebView.Listener {
     @Bind(R.id.web)
     WebView webView;
-//    AdvancedWebView webView;
+    //    AdvancedWebView webView;
     @Bind(R.id.toolbar)
     Toolbar toolbar;
     private String url;
@@ -85,8 +87,8 @@ public class WebViewActivity extends BaseActivity implements AdvancedWebView.Lis
         webSettings.setDisplayZoomControls(false);
 //        webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
 
-            webView.setWebViewClient(new MyWebViewClient());
-        webView.setWebChromeClient(new WebChromeClient(){
+        webView.setWebViewClient(new MyWebViewClient());
+        webView.setWebChromeClient(new WebChromeClient() {
 
             @Override
             public void onReceivedTitle(WebView webView, String s) {
@@ -95,7 +97,7 @@ public class WebViewActivity extends BaseActivity implements AdvancedWebView.Lis
 
             @Override
             public boolean onJsPrompt(WebView view, String url, String message, String defaultValue, JsPromptResult result) {
-                LogUtils.e("onJsPrompt msg:" + message + " defVal:"+ defaultValue);
+                LogUtils.e("onJsPrompt msg:" + message + " defVal:" + defaultValue);
                 if (defaultValue.equals("Advanced")) {
                     if (message.equals("back")) {
                         if (webView.canGoBack()) {
@@ -108,14 +110,14 @@ public class WebViewActivity extends BaseActivity implements AdvancedWebView.Lis
                     }
                     result.confirm("ok1");
                     return true;
-                }else
-                return super.onJsPrompt(view, url, message, defaultValue, result);
+                } else
+                    return super.onJsPrompt(view, url, message, defaultValue, result);
             }
         });
         webView.addJavascriptInterface(new InJavaScriptLocalObj(), "interactive");
 
         webView.loadUrl(url);
-                webView.loadUrl("javascript:\n" + "prompt(\"backJs \" + BackJS, \"Advanced\");" + "");
+        webView.loadUrl("javascript:\n" + "prompt(\"backJs \" + BackJS, \"Advanced\");" + "");
     }
 
     @Override
@@ -160,8 +162,7 @@ public class WebViewActivity extends BaseActivity implements AdvancedWebView.Lis
                         "   prompt(\"back\", \"Advanced\"); " +
                         "   return true; " +
                         "}\n"
-                        +  "alter(BackJS); backJS = backJava;"
-                        ;
+                        + "alter(BackJS); backJS = backJava;";
 //                webView.loadUrl("javascript:\n" + script + "");
                 LogUtils.e(" 5  script: " + script);
                 LogUtils.e("  onPageFinished ");
@@ -189,6 +190,7 @@ public class WebViewActivity extends BaseActivity implements AdvancedWebView.Lis
        cookieManager.setCookie(url, VolleyManager.getCookies());
        CookieSyncManager.getInstance().sync();
    }*/
+
     private class InJavaScriptLocalObj {
         @JavascriptInterface
         public void back() {
@@ -203,6 +205,269 @@ public class WebViewActivity extends BaseActivity implements AdvancedWebView.Lis
                 }
             });
         }
+
+
+        //经理人
+//        @JavascriptInterface
+//        public void manager(final String id) {
+//            runOnUiThread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    if (null != id && !id.isEmpty()) {
+//                        start(ManagerActivity.this, new BaseIntent() {
+//                            @Override
+//                            public void setIntent(Intent intent) {
+//                                intent.putExtra(getString(R.string.extra_id), id);
+//                            }
+//                        });
+//                    }
+//                }
+//            });
+//        }
+//
+//        //投票
+//        @JavascriptInterface
+//        public void vote(final String id) {
+//            runOnUiThread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    if (null != id && !id.isEmpty()) {
+//                        start(QuartersVoteActivity.this, new BaseIntent() {
+//                            @Override
+//                            public void setIntent(Intent intent) {
+//                                intent.putExtra(getString(R.string.extra_id), id);
+//                            }
+//                        });
+//                    }
+//                }
+//            });
+//
+//        }
+
+        //公告
+        @JavascriptInterface
+        public void notice(final String id) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    if (null != id && !id.isEmpty()) {
+                        start(EstateAnnouncementListActivity.class, new BaseIntent() {
+                            @Override
+                            public void setIntent(Intent intent) {
+                                intent.putExtra(getString(R.string.extra_id), id);
+                            }
+                        });
+                    }
+                }
+            });
+        }
+
+
+        //打电话
+     /*   @JavascriptInterface
+        public void call(final String number) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    if (null != number && !number.isEmpty()) {
+                        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"+number));
+                        startActivity(intent);
+                    }
+                }
+            });
+        }*/
+
+        //问题
+//        @JavascriptInterface
+//        public void fault(final String id) {
+//            runOnUiThread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    if (null != id && !id.isEmpty()) {
+//                        start(HouseQuestionActivity.this, new BaseIntent() {
+//                            @Override
+//                            public void setIntent(Intent intent) {
+//                                intent.putExtra(getString(R.string.extra_id), id);
+//                            }
+//                        });
+//                    }
+//                }
+//            });
+//        }
+//
+//        //投诉
+//        @JavascriptInterface
+//        public void complaint(final String id) {
+//            runOnUiThread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    if (null != id && !id.isEmpty()) {
+//                        start(QuartersComplaintListActivity.this, new BaseIntent() {
+//                            @Override
+//                            public void setIntent(Intent intent) {
+//                                intent.putExtra(getString(R.string.extra_id), id);
+//                            }
+//                        });
+//                    }
+//                }
+//            });
+//        }
+
+        /**
+         未用，通过公告列表调用
+         *
+         */
+        @JavascriptInterface
+        public void announcement(final String id) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    if (null != id && id != "") {
+                        start(EstateAnnouncementInfoActivity.class, new BaseIntent() {
+                            @Override
+                            public void setIntent(Intent intent) {
+                                intent.putExtra(getString(R.string.extra_id), id);
+                            }
+                        });
+                    }
+                }
+            });
+        }
+
+        /**
+         * 小区评价
+         * @param id
+         */
+        @JavascriptInterface
+        public void evaluate(final String id) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    if (null != id && !id.isEmpty()) {
+                        start(CommentActivity.class, new BaseIntent() {
+                            @Override
+                            public void setIntent(Intent intent) {
+                                intent.putExtra(getString(R.string.extra_id), id);
+                            }
+                        });
+                    }
+                }
+            });
+        }
+
+        /**
+         * 小区周边
+         * @param longitude
+         * @param latitude
+         */
+        @JavascriptInterface
+        public void peripheral(final String longitude, final String latitude) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    if (null != longitude && !longitude.isEmpty() && null != latitude && !latitude.isEmpty()) {
+                        start(SurroundingFacilitiesActivity.class, new BaseIntent() {
+                            @Override
+                            public void setIntent(Intent intent) {
+                                intent.putExtra(getString(R.string.extra_longitude), longitude);
+                                intent.putExtra(getString(R.string.extra_latitude), latitude);
+                            }
+                        });
+                    } else {
+                        QBLToast.show(getString(R.string.text_no_surrounding_facilityies));
+                    }
+                }
+            });
+        }
+
+        /**
+         *
+         * @param id
+         */
+        @JavascriptInterface
+        public void assessment(final String id) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    if (null != id && !id.isEmpty()) {
+                        start(HousingAssessmentActivity.class, new BaseIntent() {
+                            @Override
+                            public void setIntent(Intent intent) {
+                                intent.putExtra(getString(R.string.extra_id), id);
+                            }
+                        });
+                    }
+                }
+            });
+        }
+
+       /*  @JavascriptInterface
+       public void houseRecord(final String houseId, final String agentId, final String permitType) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    if (User.isLogin()) {
+                        if (null != houseId && !houseId .isEmpty() && null != agentId && !agentId.isEmpty() && null != permitType && !permitType.isEmpty()) {
+                            StringRequest request = new VolleyStringRequest(Request.Method.POST, Const.serviceMethod.APPLY_VISIT_PERMIT_ADD,
+                                    new VolleyResponseListener() {
+                                        @Override
+                                        public void handleJson(JSONObject json) {
+                                            super.handleJson(json);
+                                            String msg = json.getString("message");
+                                            int result = json.getIntValue("resultCode");
+                                            switch (result) {
+                                                case 1:
+                                                    QBLToast.show(msg);
+                                                    showRecordDialog();
+                                                    break;
+                                                default:
+                                                    showRecordDialog();
+                                                    QBLToast.show(msg);
+                                                    break;
+                                            }
+
+                                        }
+
+                                    }, new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    QBLToast.show(R.string.network_exception);
+                                }
+                            }) {
+                                @Override
+                                protected Map<String, String> getParams() throws AuthFailureError {
+                                    Map<String, String> params = super.getParams();
+                                    params.put("permitType", permitType);
+                                    params.put("houseId", houseId);
+                                    params.put("agentId", agentId);
+                                    return params;
+                                }
+                            };
+                            getVolleyRequestQueue().add(request);
+                        }
+                    }
+                }
+            });
+        }*/
+
+
+      /*  @JavascriptInterface
+        public void chat(final String hxId,final String nickname) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    if (User.isLogin()) {
+                        if (null != hxId && !hxId .isEmpty() && null != nickname && !nickname .isEmpty() ) {
+                            Intent intent = new Intent(HouseDetailsActivity.this, ChatActivity.class);
+                            intent.putExtra(Constant.EXTRA_USER_ID, hxId);
+                            intent.putExtra("nickname",nickname);
+                            startActivity(intent);
+                        }
+                    }
+                }
+            });
+        }*/
+
 
     }
 }

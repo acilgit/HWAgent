@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/contentSorted"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="[小区公告]"
+        android:textColor="@color/satisfy_btn_bg"
+        android:textSize="14dp"/>
+    <TextView
+        android:id="@+id/title"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@+id/contentSorted"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14dp"
+        android:ellipsize="end"
+        android:maxEms="10"
+        android:singleLine="true"
+       />
+    <TextView
+        android:id="@+id/timeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:text="2015年12月31日"
+        android:textSize="14dp"/>
+</RelativeLayout>

@@ -4,9 +4,8 @@ package com.housingonitoringagent.homeworryagent;
  * Created by Administrator on 2016/2/27 0027.
  */
 public class Const {
-//     public static  String SERVER ="http://www.zhijia51.com";
-    public static String SERVER = "http://192.168.1.233:9000";
-
+     public static  String SERVER ="http://www.zhijia51.com";
+//    public static String SERVER = "http://192.168.1.233:9000";
 
     public interface RequestCode {
         int REQUESTPHONE = 0;
@@ -52,6 +51,18 @@ public class Const {
         /*二手房详情*/
         String SECOND_HAND_HOUSE_INFO = SERVER + "/append/secondhandhouse/secondhandhouseinfo?";
 
+        /*坐标转换*/
+        String AMAP = "http://restapi.amap.com/v3/assistant/coordinate/convert?";
+        /*获取小区评价列表*/
+        String EVALUATIONLIST = SERVER + "/append/village/evaluationList";
+        /*添加小区评价*/
+        String ADDEVALUATION = SERVER + "/agent_app/agent_evaluate/addevaluation";
+        /*获取房评列表*/
+        String HOUSEEVALUATELIST = SERVER + "/append/secondhandhouse/houseEvaluateList";
+        /*获取小区公告详情*/
+        String ANNOUNCEMENTINFO = SERVER + "/append/village/announcementinfo";
+        /*获取小区公告列表*/
+        String ANNOUNCEMENTLIST = SERVER + "/append/village/announcementList";
 
         /*检查sessionId是否过期*/
         String CHECK_VERSION = SERVER + "/append/versions/latest";  // 提交参数：	Integer type; //1用户端  2经纪人端

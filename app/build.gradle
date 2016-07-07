@@ -28,9 +28,9 @@ android {
         multiDexEnabled true
         applicationId "com.housingonitoringagent.homeworryagent"
         minSdkVersion 17
-        targetSdkVersion 23
-        versionCode 3
-        versionName "1.0.2"
+        targetSdkVersion 17
+        versionCode 10
+        versionName "1.0.10"
     }
     buildTypes {
         release {
@@ -69,5 +69,6 @@ dependencies {
     compile 'com.github.traex.rippleeffect:library:1.3'
     compile 'com.android.support:cardview-v7:23.4.0'
     compile 'com.jaredrummler:material-spinner:1.0.5'
+    compile 'com.ms-square:expandableTextView:0.1.4'
     compile project(':easeui')
 }

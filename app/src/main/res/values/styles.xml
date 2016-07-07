@@ -87,6 +87,21 @@
     <style name="btn_white_lite" parent="btn">
         <item name="colorButtonNormal">@color/white_lite</item>
     </style>
+
+    <style name="parting_line">
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">1dp</item>
+        <item name="android:background">@color/grey_text</item>
+    </style>
+
+    <style name="MultiLineEdit" parent="@android:style/Widget.EditText">
+        <item name="android:padding">8dp</item>
+        <item name="android:textCursorDrawable">@drawable/edit_cursor</item>
+        <item name="android:background">@android:color/white</item>
+        <item name="android:gravity">top</item>
+        <!--<item name="clearButton">false</item>-->
+    </style>
+
   <!-- easeUI styles -->
 
     <style name="chat_content_date_style">

@@ -8,15 +8,13 @@ import java.util.List;
  */
 public class ShowHouseBean implements Serializable {
 
-
-
     public static final int PERMIT_TYPE_RENT = 1; // 租
     public static final int PERMIT_TYPE_HOUSE = 2; // 二手
 
-    public static final int PERMIT_STATUE_SHOWING = 0; //未确认
+    public static final int PERMIT_STATUE_SHOWING = 3; //未确认
     public static final int PERMIT_STATUE_FINISH = 1; //已看房
-    public static final int PERMIT_STATUE_WAIT = 2; //未看房
-    public static final int PERMIT_STATUE_CANCEL = 3; //取消
+    public static final int PERMIT_STATUE_WAIT = 0; //未看房
+    public static final int PERMIT_STATUE_CANCEL = 2; //取消
     /**
      * resultCode : 1
      * message : 获取列表成功
